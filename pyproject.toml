@@ -5,22 +5,28 @@ name = "suryasaathi"
 version = "0.0.0"
 description = "SuryaSaathi Python workspace"
 requires-python = ">=3.12"
-dependencies = ["suryasaathi-agents", "suryasaathi-ingest", "suryasaathi-expected-output", "suryasaathi-whatsapp", "suryasaathi-rollups"]
+dependencies = ["suryasaathi-core", "suryasaathi-device-sim", "suryasaathi-agents", "suryasaathi-ingest", "suryasaathi-expected-output", "suryasaathi-whatsapp", "suryasaathi-rollups"]
 
 [dependency-groups]
 dev = [
+    "boto3-stubs[dynamodb,dynamodbstreams,iot,lambda,secretsmanager,sesv2,stepfunctions]>=1.40",
+    "moto[awslambda,cloudformation,dynamodb,iot,secretsmanager,ses,stepfunctions]>=5.1",
     "mypy>=1.18",
+    "pandas-stubs>=2.2",
     "pytest>=8.4",
     "ruff>=0.14",
+    "types-jsonschema>=4.25",
 ]
 
 [tool.uv]
 package = false
 
 [tool.uv.workspace]
-members = ["services/*"]
+members = ["services/*", "tools/device-sim"]
 
 [tool.uv.sources]
+suryasaathi-core = { workspace = true }
+suryasaathi-device-sim = { workspace = true }
 suryasaathi-agents = { workspace = true }
 suryasaathi-ingest = { workspace = true }
 suryasaathi-expected-output = { workspace = true }
@@ -33,14 +39,21 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+# The formatter enforces line length; long message strings are left whole.
+ignore = ["E501"]
 
 [tool.mypy]
 python_version = "3.12"
 strict = true
 files = ["services", "tools/device-sim"]
 explicit_package_bases = true
-mypy_path = "services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src"
+mypy_path = "tools/device-sim/src:services/core/src:services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src"
+
+[[tool.mypy.overrides]]
+# pvlib ships no type information.
+module = ["pvlib", "pvlib.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-testpaths = ["services"]
+testpaths = ["services", "tools"]
 addopts = "--import-mode=importlib"

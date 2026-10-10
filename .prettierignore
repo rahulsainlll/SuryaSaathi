@@ -6,3 +6,4 @@ uv.lock
 **/generated
 README.md
 docs/reference
+packages/schemas/fixtures

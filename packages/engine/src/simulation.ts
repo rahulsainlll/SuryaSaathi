@@ -130,7 +130,8 @@ export function step(state: SimState): SimState {
   const { config } = s;
   const d = ++s.day;
 
-  if (d === 0) s.soiling = 0;
+  // Scripted rain (config.rainDays) washes the panels just like rain the viewer adds.
+  if (d === 0 || s.rainDays.includes(d)) s.soiling = 0;
   if (s.pending.rain) {
     s.soiling = 0;
     s.rainDays.push(d);

@@ -5,3 +5,4 @@ export * from "./diagnosis.js";
 export { nextRandom } from "./rng.js";
 export * from "./simulation.js";
 export * from "./world.js";
+export * from "./scenarios.js";

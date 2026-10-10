@@ -18,7 +18,8 @@
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "fixtures": "pnpm build && node scripts/export-fixtures.mjs"
   },
   "dependencies": {
     "@suryasaathi/schemas": "workspace:*"

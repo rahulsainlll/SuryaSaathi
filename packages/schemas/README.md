@@ -19,3 +19,17 @@ import type { Reading, System, Case } from "@suryasaathi/schemas";
 ```
 
 Python services can load the same files from `packages/schemas/schemas/`.
+
+## Golden fixtures
+
+`fixtures/*.json` are 30-day scenarios exported from `@suryasaathi/engine` (dust, smog-day,
+fault, rain, vendor-misses-deadline). Each day records the reading, expected and clear-sky
+output, rain, the engine's diagnosis and the case state, so the Python agent can be tested
+against exactly what the demo shows. Regenerate after changing the engine:
+
+```bash
+pnpm --filter @suryasaathi/engine fixtures
+```
+
+The engine's tests fail if the committed fixtures are stale; the Python services' tests replay
+them through the Python rules and must agree day for day.

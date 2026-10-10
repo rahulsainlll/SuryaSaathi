@@ -1,0 +1,757 @@
+{
+  "scenario": "smog-day",
+  "description": "Three smog days cut expected output; regular rain keeps the panels clean. No case is ever opened.",
+  "config": {
+    "days": 30,
+    "startDate": "2026-09-29",
+    "seed": 42,
+    "capacityKw": 3,
+    "peakSunHours": 4.3,
+    "tariffInr": 7,
+    "deadlineDays": 3,
+    "initialTotalKwh": 2730.4,
+    "script": {
+      "6": "smog",
+      "16": "smog",
+      "24": "smog"
+    },
+    "rainDays": [
+      0,
+      9,
+      18,
+      27
+    ],
+    "firstCaseNumber": 142,
+    "systemId": "SS-000123",
+    "deviceId": "SS-DL-000123",
+    "vendorId": "VND-DL-0042",
+    "vendorName": "[Vendor name] Solar"
+  },
+  "vendorFixesOnTime": true,
+  "actions": [],
+  "days": [
+    {
+      "day": 0,
+      "date": "2026-09-29",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-09-29",
+        "source": "data_logger",
+        "energyKwh": 11.42,
+        "receivedAt": "2026-09-29T13:00:00.000Z"
+      },
+      "actualKwh": 11.418385058630715,
+      "expectedKwh": 11.50566092801839,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": true,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 1,
+      "date": "2026-09-30",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-09-30",
+        "source": "data_logger",
+        "energyKwh": 11.21,
+        "receivedAt": "2026-09-30T13:00:00.000Z"
+      },
+      "actualKwh": 11.212112103100132,
+      "expectedKwh": 11.246255301117897,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 2,
+      "date": "2026-10-01",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-01",
+        "source": "data_logger",
+        "energyKwh": 11.75,
+        "receivedAt": "2026-10-01T13:00:00.000Z"
+      },
+      "actualKwh": 11.747024564615606,
+      "expectedKwh": 11.945592056494204,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 3,
+      "date": "2026-10-02",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-02",
+        "source": "data_logger",
+        "energyKwh": 11.63,
+        "receivedAt": "2026-10-02T13:00:00.000Z"
+      },
+      "actualKwh": 11.627438220108125,
+      "expectedKwh": 11.844028709851203,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 4,
+      "date": "2026-10-03",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-03",
+        "source": "data_logger",
+        "energyKwh": 10.87,
+        "receivedAt": "2026-10-03T13:00:00.000Z"
+      },
+      "actualKwh": 10.870929050056718,
+      "expectedKwh": 11.232830162946133,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 5,
+      "date": "2026-10-04",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-04",
+        "source": "data_logger",
+        "energyKwh": 11.6,
+        "receivedAt": "2026-10-04T13:00:00.000Z"
+      },
+      "actualKwh": 11.59718980980675,
+      "expectedKwh": 11.868078706277533,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 6,
+      "date": "2026-10-05",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-05",
+        "source": "data_logger",
+        "energyKwh": 7.74,
+        "receivedAt": "2026-10-05T13:00:00.000Z"
+      },
+      "actualKwh": 7.74208551459941,
+      "expectedKwh": 7.997999999999999,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "smog",
+      "case": null
+    },
+    {
+      "day": 7,
+      "date": "2026-10-06",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-06",
+        "source": "data_logger",
+        "energyKwh": 11.04,
+        "receivedAt": "2026-10-06T13:00:00.000Z"
+      },
+      "actualKwh": 11.0448721438845,
+      "expectedKwh": 11.809174438141286,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 8,
+      "date": "2026-10-07",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-07",
+        "source": "data_logger",
+        "energyKwh": 11.05,
+        "receivedAt": "2026-10-07T13:00:00.000Z"
+      },
+      "actualKwh": 11.053227031226884,
+      "expectedKwh": 11.609247168648988,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 9,
+      "date": "2026-10-08",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-08",
+        "source": "data_logger",
+        "energyKwh": 11.15,
+        "receivedAt": "2026-10-08T13:00:00.000Z"
+      },
+      "actualKwh": 11.15317295373534,
+      "expectedKwh": 11.49583923282288,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": true,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 10,
+      "date": "2026-10-09",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-09",
+        "source": "data_logger",
+        "energyKwh": 11.68,
+        "receivedAt": "2026-10-09T13:00:00.000Z"
+      },
+      "actualKwh": 11.680136980445932,
+      "expectedKwh": 11.640153054703026,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 11,
+      "date": "2026-10-10",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-10",
+        "source": "data_logger",
+        "energyKwh": 11.91,
+        "receivedAt": "2026-10-10T13:00:00.000Z"
+      },
+      "actualKwh": 11.911627617093382,
+      "expectedKwh": 12.073152037180959,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 12,
+      "date": "2026-10-11",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-11",
+        "source": "data_logger",
+        "energyKwh": 11.66,
+        "receivedAt": "2026-10-11T13:00:00.000Z"
+      },
+      "actualKwh": 11.66017485721118,
+      "expectedKwh": 12.093452829793094,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 13,
+      "date": "2026-10-12",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-12",
+        "source": "data_logger",
+        "energyKwh": 11.51,
+        "receivedAt": "2026-10-12T13:00:00.000Z"
+      },
+      "actualKwh": 11.505244131695846,
+      "expectedKwh": 12.0622416030094,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 14,
+      "date": "2026-10-13",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-13",
+        "source": "data_logger",
+        "energyKwh": 10.91,
+        "receivedAt": "2026-10-13T13:00:00.000Z"
+      },
+      "actualKwh": 10.911424631519626,
+      "expectedKwh": 11.317379193456842,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 15,
+      "date": "2026-10-14",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-14",
+        "source": "data_logger",
+        "energyKwh": 11.38,
+        "receivedAt": "2026-10-14T13:00:00.000Z"
+      },
+      "actualKwh": 11.377970075671872,
+      "expectedKwh": 12.098008435176684,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 16,
+      "date": "2026-10-15",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-15",
+        "source": "data_logger",
+        "energyKwh": 7.71,
+        "receivedAt": "2026-10-15T13:00:00.000Z"
+      },
+      "actualKwh": 7.71043191,
+      "expectedKwh": 7.997999999999999,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "smog",
+      "case": null
+    },
+    {
+      "day": 17,
+      "date": "2026-10-16",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-16",
+        "source": "data_logger",
+        "energyKwh": 11.13,
+        "receivedAt": "2026-10-16T13:00:00.000Z"
+      },
+      "actualKwh": 11.128457225015222,
+      "expectedKwh": 11.62265240528807,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 18,
+      "date": "2026-10-17",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-17",
+        "source": "data_logger",
+        "energyKwh": 11.71,
+        "receivedAt": "2026-10-17T13:00:00.000Z"
+      },
+      "actualKwh": 11.70778161146503,
+      "expectedKwh": 11.796315478462724,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": true,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 19,
+      "date": "2026-10-18",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-18",
+        "source": "data_logger",
+        "energyKwh": 11.68,
+        "receivedAt": "2026-10-18T13:00:00.000Z"
+      },
+      "actualKwh": 11.679389267935916,
+      "expectedKwh": 12.08736273156479,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 20,
+      "date": "2026-10-19",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-19",
+        "source": "data_logger",
+        "energyKwh": 11.4,
+        "receivedAt": "2026-10-19T13:00:00.000Z"
+      },
+      "actualKwh": 11.399553960767742,
+      "expectedKwh": 11.551589027775451,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 21,
+      "date": "2026-10-20",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-20",
+        "source": "data_logger",
+        "energyKwh": 11.67,
+        "receivedAt": "2026-10-20T13:00:00.000Z"
+      },
+      "actualKwh": 11.668054103435503,
+      "expectedKwh": 11.872979736825451,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 22,
+      "date": "2026-10-21",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-21",
+        "source": "data_logger",
+        "energyKwh": 11.43,
+        "receivedAt": "2026-10-21T13:00:00.000Z"
+      },
+      "actualKwh": 11.428234011412975,
+      "expectedKwh": 11.909785175694152,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 23,
+      "date": "2026-10-22",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-22",
+        "source": "data_logger",
+        "energyKwh": 11.1,
+        "receivedAt": "2026-10-22T13:00:00.000Z"
+      },
+      "actualKwh": 11.104365315226307,
+      "expectedKwh": 11.363742743343114,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 24,
+      "date": "2026-10-23",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-23",
+        "source": "data_logger",
+        "energyKwh": 7.65,
+        "receivedAt": "2026-10-23T13:00:00.000Z"
+      },
+      "actualKwh": 7.650720615160577,
+      "expectedKwh": 7.997999999999999,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "smog",
+      "case": null
+    },
+    {
+      "day": 25,
+      "date": "2026-10-24",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-24",
+        "source": "data_logger",
+        "energyKwh": 11.19,
+        "receivedAt": "2026-10-24T13:00:00.000Z"
+      },
+      "actualKwh": 11.193553005038055,
+      "expectedKwh": 11.91527581888251,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 26,
+      "date": "2026-10-25",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-25",
+        "source": "data_logger",
+        "energyKwh": 10.91,
+        "receivedAt": "2026-10-25T13:00:00.000Z"
+      },
+      "actualKwh": 10.914401494037465,
+      "expectedKwh": 11.823632630595936,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 27,
+      "date": "2026-10-26",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-26",
+        "source": "data_logger",
+        "energyKwh": 11.49,
+        "receivedAt": "2026-10-26T13:00:00.000Z"
+      },
+      "actualKwh": 11.491244814297039,
+      "expectedKwh": 11.445024693114682,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": true,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 28,
+      "date": "2026-10-27",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-27",
+        "source": "data_logger",
+        "energyKwh": 11.45,
+        "receivedAt": "2026-10-27T13:00:00.000Z"
+      },
+      "actualKwh": 11.449928931752927,
+      "expectedKwh": 11.410733063679189,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 29,
+      "date": "2026-10-28",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-28",
+        "source": "data_logger",
+        "energyKwh": 12,
+        "receivedAt": "2026-10-28T13:00:00.000Z"
+      },
+      "actualKwh": 11.997546768389316,
+      "expectedKwh": 12.035216997591778,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": true,
+      "diagnosis": "healthy",
+      "case": null
+    }
+  ],
+  "cases": [],
+  "decisions": [
+    {
+      "day": 0,
+      "date": "2026-09-29",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.5 kWh (99%). No action."
+    },
+    {
+      "day": 1,
+      "date": "2026-09-30",
+      "kind": "neutral",
+      "text": "Reading received: 11.2 of 11.2 kWh (100%). No action."
+    },
+    {
+      "day": 2,
+      "date": "2026-10-01",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 11.9 kWh (98%). No action."
+    },
+    {
+      "day": 3,
+      "date": "2026-10-02",
+      "kind": "neutral",
+      "text": "Reading received: 11.6 of 11.8 kWh (98%). No action."
+    },
+    {
+      "day": 4,
+      "date": "2026-10-03",
+      "kind": "neutral",
+      "text": "Reading received: 10.9 of 11.2 kWh (97%). No action."
+    },
+    {
+      "day": 5,
+      "date": "2026-10-04",
+      "kind": "neutral",
+      "text": "Reading received: 11.6 of 11.9 kWh (98%). No action."
+    },
+    {
+      "day": 6,
+      "date": "2026-10-05",
+      "kind": "info",
+      "text": "Smog cut the sunlight: expected only 8.0 kWh. System healthy at 97%. No complaint."
+    },
+    {
+      "day": 7,
+      "date": "2026-10-06",
+      "kind": "neutral",
+      "text": "Reading received: 11.0 of 11.8 kWh (94%). No action."
+    },
+    {
+      "day": 8,
+      "date": "2026-10-07",
+      "kind": "neutral",
+      "text": "Reading received: 11.1 of 11.6 kWh (95%). No action."
+    },
+    {
+      "day": 9,
+      "date": "2026-10-08",
+      "kind": "neutral",
+      "text": "Reading received: 11.2 of 11.5 kWh (97%). No action."
+    },
+    {
+      "day": 10,
+      "date": "2026-10-09",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 11.6 kWh (100%). No action."
+    },
+    {
+      "day": 11,
+      "date": "2026-10-10",
+      "kind": "neutral",
+      "text": "Reading received: 11.9 of 12.1 kWh (99%). No action."
+    },
+    {
+      "day": 12,
+      "date": "2026-10-11",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 12.1 kWh (96%). No action."
+    },
+    {
+      "day": 13,
+      "date": "2026-10-12",
+      "kind": "neutral",
+      "text": "Reading received: 11.5 of 12.1 kWh (95%). No action."
+    },
+    {
+      "day": 14,
+      "date": "2026-10-13",
+      "kind": "neutral",
+      "text": "Reading received: 10.9 of 11.3 kWh (96%). No action."
+    },
+    {
+      "day": 15,
+      "date": "2026-10-14",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 12.1 kWh (94%). No action."
+    },
+    {
+      "day": 16,
+      "date": "2026-10-15",
+      "kind": "info",
+      "text": "Smog cut the sunlight: expected only 8.0 kWh. System healthy at 96%. No complaint."
+    },
+    {
+      "day": 17,
+      "date": "2026-10-16",
+      "kind": "neutral",
+      "text": "Reading received: 11.1 of 11.6 kWh (96%). No action."
+    },
+    {
+      "day": 18,
+      "date": "2026-10-17",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 11.8 kWh (99%). No action."
+    },
+    {
+      "day": 19,
+      "date": "2026-10-18",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 12.1 kWh (97%). No action."
+    },
+    {
+      "day": 20,
+      "date": "2026-10-19",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.6 kWh (99%). No action."
+    },
+    {
+      "day": 21,
+      "date": "2026-10-20",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 11.9 kWh (98%). No action."
+    },
+    {
+      "day": 22,
+      "date": "2026-10-21",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.9 kWh (96%). No action."
+    },
+    {
+      "day": 23,
+      "date": "2026-10-22",
+      "kind": "neutral",
+      "text": "Reading received: 11.1 of 11.4 kWh (98%). No action."
+    },
+    {
+      "day": 24,
+      "date": "2026-10-23",
+      "kind": "info",
+      "text": "Smog cut the sunlight: expected only 8.0 kWh. System healthy at 96%. No complaint."
+    },
+    {
+      "day": 25,
+      "date": "2026-10-24",
+      "kind": "neutral",
+      "text": "Reading received: 11.2 of 11.9 kWh (94%). No action."
+    },
+    {
+      "day": 26,
+      "date": "2026-10-25",
+      "kind": "neutral",
+      "text": "Reading received: 10.9 of 11.8 kWh (92%). No action."
+    },
+    {
+      "day": 27,
+      "date": "2026-10-26",
+      "kind": "neutral",
+      "text": "Reading received: 11.5 of 11.4 kWh (100%). No action."
+    },
+    {
+      "day": 28,
+      "date": "2026-10-27",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.4 kWh (100%). No action."
+    },
+    {
+      "day": 29,
+      "date": "2026-10-28",
+      "kind": "neutral",
+      "text": "Reading received: 12.0 of 12.0 kWh (100%). No action."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Build context for services/Dockerfile (the repository root): only what the images need.
+*
+!pyproject.toml
+!uv.lock
+!services/
+!tools/device-sim/
+!packages/schemas/schemas/
+!packages/schemas/fixtures/
+**/__pycache__
+**/.pytest_cache
+**/tests

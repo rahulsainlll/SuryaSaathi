@@ -254,17 +254,21 @@ The demo runs fully in the browser with simulated data, so no AWS account is nee
 
 ```bash
 cd infra
-cdk bootstrap                # once per account and region
-cdk deploy --all
+cdk bootstrap                            # once per account and region
+cdk deploy --all -c demoMode=true        # Docker must be running; demo mode = 1-minute days
 ```
 
 ### Send simulated readings
 
 ```bash
-uv run tools/device-sim --systems 20 --days 30
+uv run tools/device-sim fetch-cert                        # the simulator's IoT certificate
+uv run tools/device-sim --systems 5 --days 30 --speed 60
 ```
 
-This publishes 30 days of readings for 20 simulated systems to AWS IoT Core, so you can watch cases open, escalate and close in the console and in CloudWatch.
+This replays the five golden scenarios (dust, smog, fault, rain, vendor misses the deadline)
+to AWS IoT Core over MQTT, so you can watch cases open, escalate and close in DynamoDB, Step
+Functions and CloudWatch. The [runbook](docs/runbook.md) has every step, the flags, what to
+expect and where to look.
 
 ## Configuration
 

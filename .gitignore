@@ -42,3 +42,6 @@ pnpm-debug.log*
 
 # Firmware build output
 tools/firmware/.pio/
+
+# Device simulator certificate and key (device-sim fetch-cert)
+certs/

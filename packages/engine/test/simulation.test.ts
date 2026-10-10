@@ -141,6 +141,15 @@ describe("case workflow", () => {
   });
 });
 
+describe("rain", () => {
+  it("washes the panels on scripted rain days", () => {
+    const s = runTo(createSimulation({ rainDays: [0, 9] }), 9);
+    expect(s.days[8]!.soiling).toBeGreaterThan(0.05);
+    expect(s.days[9]!.soiling).toBe(0);
+    expect(s.days[9]!.rained).toBe(true);
+  });
+});
+
 describe("simulation", () => {
   it("is deterministic", () => {
     const run = () => runTo(scheduleRain(runTo(createSimulation(), 10)), 29);

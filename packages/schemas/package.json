@@ -10,11 +10,13 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./schemas/*": "./schemas/*"
+    "./schemas/*": "./schemas/*",
+    "./fixtures/*": "./fixtures/*"
   },
   "files": [
     "dist",
-    "schemas"
+    "schemas",
+    "fixtures"
   ],
   "scripts": {
     "generate": "node scripts/generate.mjs",

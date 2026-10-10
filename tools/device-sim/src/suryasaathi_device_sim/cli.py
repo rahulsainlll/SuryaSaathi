@@ -92,6 +92,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     cert = sub.add_parser("fetch-cert", help="save the simulator certificate from Secrets Manager")
     cert.add_argument("--out", type=Path, default=Path("certs"))
+    cert.add_argument(
+        "--secret-id", help="secret name or ARN (default: from the SuryaSaathi-Ingest stack)"
+    )
     return parser
 
 
@@ -108,7 +111,7 @@ def main(
     if args.command == "fetch-cert":
         from .aws import fetch_certificate, iot_endpoint
 
-        cert, key = fetch_certificate(args.out)
+        cert, key = fetch_certificate(args.out, args.secret_id)
         print(f"Saved {cert} and {key}")
         print(f"IoT endpoint: {iot_endpoint()}")
         return 0

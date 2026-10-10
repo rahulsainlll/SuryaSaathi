@@ -6,10 +6,7 @@ import * as cr from "aws-cdk-lib/custom-resources";
 import type { Construct } from "constructs";
 import type { SuryaConfig } from "../config.js";
 import { ServiceFunction } from "../constructs/service-function.js";
-import {
-  CERTIFICATE_SECRET_NAME,
-  SimulatorCertificate,
-} from "../constructs/simulator-certificate.js";
+import { SimulatorCertificate } from "../constructs/simulator-certificate.js";
 import type { DataStack } from "./data-stack.js";
 
 export const READINGS_TOPIC = "suryasaathi/readings";
@@ -146,7 +143,7 @@ export class IngestStack extends Stack {
     new CfnOutput(this, "SimulatorThingName", { value: thing.ref });
     new CfnOutput(this, "SimulatorCertificateArn", { value: certificate.certificateArn });
     new CfnOutput(this, "SimulatorCertificateSecret", {
-      value: CERTIFICATE_SECRET_NAME,
+      value: certificate.secret.secretName,
       description: "Saved locally by `uv run tools/device-sim fetch-cert`",
     });
     new CfnOutput(this, "ReadingsTopic", { value: `${READINGS_TOPIC}/<systemId>` });

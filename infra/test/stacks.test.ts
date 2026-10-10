@@ -97,13 +97,9 @@ describe("ingest", () => {
     expect(policy).toContain(":client/suryasaathi-sim*");
     t.ingest.resourceCountIs("AWS::IoT::PolicyPrincipalAttachment", 1);
     t.ingest.resourceCountIs("AWS::IoT::ThingPrincipalAttachment", 1);
-    t.ingest.hasResourceProperties("AWS::SecretsManager::Secret", {
-      Name: "suryasaathi/simulator-certificate",
-    });
+    t.ingest.resourceCountIs("AWS::SecretsManager::Secret", 1);
     t.ingest.hasOutput("IotEndpointAddress", {});
-    t.ingest.hasOutput("SimulatorCertificateSecret", {
-      Value: "suryasaathi/simulator-certificate",
-    });
+    expect(Object.keys(t.ingest.findOutputs("SimulatorCertificateSecret"))).toHaveLength(1);
   });
 });
 

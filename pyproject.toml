@@ -10,7 +10,7 @@ dependencies = ["suryasaathi-core", "suryasaathi-device-sim", "suryasaathi-agent
 [dependency-groups]
 dev = [
     "boto3-stubs[dynamodb,dynamodbstreams,iot,lambda,secretsmanager,sesv2,stepfunctions]>=1.40",
-    "moto[awslambda,dynamodb,iot,secretsmanager,ses,stepfunctions]>=5.1",
+    "moto[awslambda,cloudformation,dynamodb,iot,secretsmanager,ses,stepfunctions]>=5.1",
     "mypy>=1.18",
     "pandas-stubs>=2.2",
     "pytest>=8.4",

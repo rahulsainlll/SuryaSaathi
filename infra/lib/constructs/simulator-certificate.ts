@@ -5,9 +5,6 @@ import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 import * as cr from "aws-cdk-lib/custom-resources";
 import { Construct } from "constructs";
 
-/** Where `device-sim fetch-cert` reads the certificate from. */
-export const CERTIFICATE_SECRET_NAME = "suryasaathi/simulator-certificate";
-
 // Creates an active X.509 certificate and key pair in IoT Core and stores the PEMs in
 // Secrets Manager, so the private key never appears in CloudFormation.
 const HANDLER = `
@@ -51,8 +48,9 @@ export class SimulatorCertificate extends Construct {
 
   constructor(scope: Construct, id: string) {
     super(scope, id);
+    // No fixed name: a deleted secret's name stays reserved for 30 days, which would block
+    // redeploying after `cdk destroy`. device-sim finds it through the stack output.
     this.secret = new secretsmanager.Secret(this, "Secret", {
-      secretName: CERTIFICATE_SECRET_NAME,
       description: "SuryaSaathi device simulator: IoT certificate and private key (PEM)",
       removalPolicy: RemovalPolicy.DESTROY,
     });

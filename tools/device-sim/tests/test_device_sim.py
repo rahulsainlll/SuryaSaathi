@@ -10,7 +10,7 @@ from moto import mock_aws
 from suryasaathi_core.schemas import errors
 from suryasaathi_core.store import Store
 from suryasaathi_core.testing import create_tables
-from suryasaathi_device_sim.aws import CERT_SECRET, fetch_certificate
+from suryasaathi_device_sim.aws import certificate_secret_id, fetch_certificate
 from suryasaathi_device_sim.cli import main
 from suryasaathi_device_sim.plan import default_first_date, messages_for_day, simulated_systems
 
@@ -117,10 +117,21 @@ def test_days_beyond_the_fixtures_are_rejected() -> None:
 
 
 def test_fetch_cert_writes_the_pem_files(aws: None, tmp_path: Path) -> None:
-    boto3.client("secretsmanager").create_secret(
-        Name=CERT_SECRET,
+    arn = boto3.client("secretsmanager").create_secret(
+        Name="SimulatorCertificateSecret-abc123",
         SecretString=json.dumps({"certificatePem": "CERT", "privateKey": "KEY"}),
-    )
-    cert, key = fetch_certificate(tmp_path / "certs")
+    )["ARN"]
+    cert, key = fetch_certificate(tmp_path / "certs", arn)
     assert cert.read_text() == "CERT" and key.read_text() == "KEY"
     assert key.stat().st_mode & 0o777 == 0o600
+
+
+def test_the_secret_is_found_through_the_ingest_stack_output(aws: None) -> None:
+    template = {
+        "Resources": {"Topic": {"Type": "AWS::SNS::Topic"}},
+        "Outputs": {"SimulatorCertificateSecret": {"Value": "SimulatorCertificateSecret-abc123"}},
+    }
+    boto3.client("cloudformation").create_stack(
+        StackName="SuryaSaathi-Ingest", TemplateBody=json.dumps(template)
+    )
+    assert certificate_secret_id() == "SimulatorCertificateSecret-abc123"

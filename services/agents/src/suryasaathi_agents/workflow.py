@@ -92,7 +92,7 @@ def notify_vendor(
     )
     send_email(settings, settings.vendor_email, subject, body, case["caseId"])
     store.update_case(case["caseId"], {"vendorNotifiedAt": iso(now)})
-    return {"caseId": case["caseId"], "waitUntil": case["vendorDeadline"]}
+    return {"caseId": case["caseId"], "waitUntil": case["vendorDeadline"], "attempts": 0}
 
 
 def recheck_case(
@@ -141,7 +141,7 @@ def escalate(
     )
     send_email(settings, settings.discom_email, subject, body, case["caseId"])
     _decide(store, case, case["deadlineDate"], "escalate", escalation_reason(case["caseId"])[1])
-    return {"caseId": case["caseId"], "waitUntil": iso(discom_deadline)}
+    return {"caseId": case["caseId"], "waitUntil": iso(discom_deadline), "attempts": 0}
 
 
 def remind(
@@ -166,7 +166,7 @@ def remind(
         reminders,
     )
     send_email(settings, settings.discom_email, subject, body, case["caseId"])
-    return {"caseId": case["caseId"], "waitUntil": iso(discom_deadline)}
+    return {"caseId": case["caseId"], "waitUntil": iso(discom_deadline), "attempts": 0}
 
 
 def verify(

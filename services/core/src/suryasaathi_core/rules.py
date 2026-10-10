@@ -209,61 +209,34 @@ class CaseEngine:
             elif k.status == "filed" and d >= k.deadline_day:
                 k.status = "escalated"
                 k.escalated_day = d
-                self._log(
-                    d,
-                    "danger",
-                    f"Deadline passed. Case {k.id} escalated to the DISCOM with readings, chart and photos.",
-                )
+                self._log(d, *escalation_reason(k.id))
             elif k.status == "escalated" and d >= (k.escalated_day or 0) + DISCOM_VISIT_AFTER_DAYS:
                 self._fix(k, d, "discom")
             elif k.status == "fixed" and d > (k.fixed_day or 0):
                 if is_verified(observation):
-                    self._log(
-                        d,
-                        "success",
-                        f"Fix verified: performance back to {pct}%. Case {k.id} closed.",
-                    )
+                    self._log(d, *verified_reason(k.id, pct))
                     self._close(k, d)
                 else:
                     self._log(
                         d, "warning", f"Still {pct}% after the fix. Asking {vendor} to recheck."
                     )
             elif rain_closes(k, observation):
-                self._log(
-                    d,
-                    "success",
-                    f"Rain cleaned the panels before the visit. Case {k.id} closed, no visit needed.",
-                )
+                self._log(d, *rain_closed_reason(k.id))
                 k.resolved_by = "rain"
                 self._close(k, d)
             elif k.status == "filed":
-                left = k.deadline_day - d
-                self._log(
-                    d,
-                    "neutral",
-                    f"Waiting for {vendor}: {left} day{'' if left == 1 else 's'} left. Reading {pct}%.",
-                )
+                self._log(d, *waiting_reason(vendor, k.deadline_day - d, pct))
             elif k.status == "escalated":
-                self._log(d, "neutral", f"DISCOM has the case. Reading {pct}%.")
+                self._log(d, *discom_waiting_reason(pct))
             return DayResult(None, self._snapshot(d))
 
         diagnosis = diagnose(self.history, d)
         if diagnosis in ("fault", "dust"):
             self._open(d, diagnosis, pct)
         elif diagnosis == "smog":
-            self._log(
-                d,
-                "info",
-                f"Smog cut the sunlight: expected only {fixed1(observation.expected_kwh)} kWh. "
-                f"System healthy at {pct}%. No complaint.",
-            )
+            self._log(d, *smog_reason(observation, pct))
         else:
-            self._log(
-                d,
-                "neutral",
-                f"Reading received: {fixed1(observation.actual_kwh)} of "
-                f"{fixed1(observation.expected_kwh)} kWh ({pct}%). No action.",
-            )
+            self._log(d, *healthy_reason(observation, pct))
         return DayResult(diagnosis, self._snapshot(d))
 
     def _open(self, d: int, cause: CaseCause, pct: int) -> None:
@@ -271,13 +244,8 @@ class CaseEngine:
         self._next_case += 1
         self.active = Case(case_id, cause, "filed", d, d + self.deadline_days)
         self._log(d, *opening_reason(cause, pct))
-        work = "repair" if cause == "fault" else "cleaning"
         due = format_day(self.start_date, d + self.deadline_days)
-        self._log(
-            d,
-            "info",
-            f"Case {case_id} filed to {self.vendor_name}: free {work} under 5-year O&M. Deadline {due}.",
-        )
+        self._log(d, *filed_reason(case_id, cause, self.vendor_name, due))
 
     def _fix(self, k: Case, d: int, by: Literal["vendor", "discom"]) -> None:
         k.status = "fixed"
@@ -304,6 +272,59 @@ class CaseEngine:
 
     def _log(self, day: int, kind: LogKind, text: str) -> None:
         self.decisions.append(Decision(day, kind, text))
+
+
+# --- the demo's wording for each decision -----------------------------------------------
+
+
+def healthy_reason(o: Observation, pct: int) -> tuple[LogKind, str]:
+    return (
+        "neutral",
+        f"Reading received: {fixed1(o.actual_kwh)} of {fixed1(o.expected_kwh)} kWh ({pct}%). No action.",
+    )
+
+
+def smog_reason(o: Observation, pct: int) -> tuple[LogKind, str]:
+    return (
+        "info",
+        f"Smog cut the sunlight: expected only {fixed1(o.expected_kwh)} kWh. "
+        f"System healthy at {pct}%. No complaint.",
+    )
+
+
+def filed_reason(case_id: str, cause: CaseCause, vendor: str, due: str) -> tuple[LogKind, str]:
+    work = "repair" if cause == "fault" else "cleaning"
+    return (
+        "info",
+        f"Case {case_id} filed to {vendor}: free {work} under 5-year O&M. Deadline {due}.",
+    )
+
+
+def waiting_reason(vendor: str, days_left: int, pct: int) -> tuple[LogKind, str]:
+    s = "" if days_left == 1 else "s"
+    return ("neutral", f"Waiting for {vendor}: {days_left} day{s} left. Reading {pct}%.")
+
+
+def discom_waiting_reason(pct: int) -> tuple[LogKind, str]:
+    return ("neutral", f"DISCOM has the case. Reading {pct}%.")
+
+
+def escalation_reason(case_id: str) -> tuple[LogKind, str]:
+    return (
+        "danger",
+        f"Deadline passed. Case {case_id} escalated to the DISCOM with readings, chart and photos.",
+    )
+
+
+def verified_reason(case_id: str, pct: int) -> tuple[LogKind, str]:
+    return ("success", f"Fix verified: performance back to {pct}%. Case {case_id} closed.")
+
+
+def rain_closed_reason(case_id: str) -> tuple[LogKind, str]:
+    return (
+        "success",
+        f"Rain cleaned the panels before the visit. Case {case_id} closed, no visit needed.",
+    )
 
 
 def opening_reason(cause: CaseCause, pct: int) -> tuple[LogKind, str]:

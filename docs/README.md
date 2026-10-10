@@ -1,5 +1,6 @@
 # docs
 
+- [`runbook.md`](runbook.md) — deploy from a laptop, run a simulated scenario, watch it in AWS
 - `adr/` — architecture decision records, one file per decision (`NNNN-title.md`)
 - `assets/` — images used by the README and docs
 - `reference/` — prototypes kept as the source of truth for ports (`simulator.html` is the

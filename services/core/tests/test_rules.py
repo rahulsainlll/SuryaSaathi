@@ -79,3 +79,15 @@ def test_rounding_matches_javascript() -> None:
     assert round_half_up(96.49999) == 96
     assert fixed1(11.45) == "11.4"  # 11.45 is 11.4499999… in binary, as JS toFixed sees it
     assert fixed1(0.25) == "0.3"  # exact tie: away from zero, like JS
+
+
+def test_family_message_matches_the_demo() -> None:
+    from suryasaathi_core.rules import family_message
+
+    assert family_message("dust", "discom", 98, "SS-0142") == (
+        "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। "
+        "(Vendor देर कर रहा था, इसलिए DISCOM से करवाया।) Output वापस 98% पर है। Case SS-0142"
+    )
+    assert family_message("fault", "vendor", 97, "SS-0142") == (
+        "Inverter में खराबी थी। Vendor ने मुफ्त repair कर दिया। Output वापस 97% पर है। Case SS-0142"
+    )

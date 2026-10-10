@@ -361,3 +361,16 @@ def round_half_up(x: float) -> int:
 def fixed1(x: float) -> str:
     """JavaScript's ``toFixed(1)``: rounds the exact binary value, ties away from zero."""
     return str(Decimal(x).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
+
+
+def family_message(
+    cause: CaseCause, resolved_by: CaseResolver | None, pct: int, case_id: str
+) -> str:
+    """The one WhatsApp message the family gets, in Hindi, as the demo words it."""
+    what = (
+        "Inverter में खराबी थी। Vendor ने मुफ्त repair कर दिया।"
+        if cause == "fault"
+        else "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी।"
+    )
+    escalated = " (Vendor देर कर रहा था, इसलिए DISCOM से करवाया।)" if resolved_by == "discom" else ""
+    return f"{what}{escalated} Output वापस {pct}% पर है। Case {case_id}"

@@ -16,8 +16,11 @@ Built by **Team Mythos** for Environmental Hacks 2026
 ![UI: HeroUI v3](https://img.shields.io/badge/UI-HeroUI%20v3-111111)
 ![Status: hackathon build](https://img.shields.io/badge/status-hackathon%20build-yellow)
 
-<!-- Replace with a real screenshot or GIF of the demo -->
-<img src="docs/assets/demo.png" alt="SuryaSaathi demo: expected vs actual output, a maintenance case, and the family's WhatsApp message" width="880">
+<!--
+  Demo screenshot: hidden until docs/assets/demo.png exists. Add a real screenshot or GIF
+  of the demo at that path, then move the <img> tag below out of this comment.
+  <img src="docs/assets/demo.png" alt="SuryaSaathi demo: expected vs actual output, a maintenance case, and the family's WhatsApp message" width="880">
+-->
 
 </div>
 

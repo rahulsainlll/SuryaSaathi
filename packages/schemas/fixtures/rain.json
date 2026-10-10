@@ -1,0 +1,817 @@
+{
+  "scenario": "rain",
+  "description": "A dust case is filed on day 12; rain that night cleans the panels and the case closes the next day without a visit.",
+  "config": {
+    "days": 30,
+    "startDate": "2026-09-29",
+    "seed": 42,
+    "capacityKw": 3,
+    "peakSunHours": 4.3,
+    "tariffInr": 7,
+    "deadlineDays": 3,
+    "initialTotalKwh": 2730.4,
+    "script": {},
+    "rainDays": [
+      0
+    ],
+    "firstCaseNumber": 142,
+    "systemId": "SS-000123",
+    "deviceId": "SS-DL-000123",
+    "vendorId": "VND-DL-0042",
+    "vendorName": "[Vendor name] Solar"
+  },
+  "vendorFixesOnTime": false,
+  "actions": [
+    {
+      "afterDay": 12,
+      "action": "rain"
+    }
+  ],
+  "days": [
+    {
+      "day": 0,
+      "date": "2026-09-29",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-09-29",
+        "source": "data_logger",
+        "energyKwh": 11.42,
+        "receivedAt": "2026-09-29T13:00:00.000Z"
+      },
+      "actualKwh": 11.418385058630715,
+      "expectedKwh": 11.50566092801839,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": true,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 1,
+      "date": "2026-09-30",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-09-30",
+        "source": "data_logger",
+        "energyKwh": 11.21,
+        "receivedAt": "2026-09-30T13:00:00.000Z"
+      },
+      "actualKwh": 11.212112103100132,
+      "expectedKwh": 11.246255301117897,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 2,
+      "date": "2026-10-01",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-01",
+        "source": "data_logger",
+        "energyKwh": 11.75,
+        "receivedAt": "2026-10-01T13:00:00.000Z"
+      },
+      "actualKwh": 11.747024564615606,
+      "expectedKwh": 11.945592056494204,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 3,
+      "date": "2026-10-02",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-02",
+        "source": "data_logger",
+        "energyKwh": 11.63,
+        "receivedAt": "2026-10-02T13:00:00.000Z"
+      },
+      "actualKwh": 11.627438220108125,
+      "expectedKwh": 11.844028709851203,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 4,
+      "date": "2026-10-03",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-03",
+        "source": "data_logger",
+        "energyKwh": 10.87,
+        "receivedAt": "2026-10-03T13:00:00.000Z"
+      },
+      "actualKwh": 10.870929050056718,
+      "expectedKwh": 11.232830162946133,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 5,
+      "date": "2026-10-04",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-04",
+        "source": "data_logger",
+        "energyKwh": 11.6,
+        "receivedAt": "2026-10-04T13:00:00.000Z"
+      },
+      "actualKwh": 11.59718980980675,
+      "expectedKwh": 11.868078706277533,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 6,
+      "date": "2026-10-05",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-05",
+        "source": "data_logger",
+        "energyKwh": 10.75,
+        "receivedAt": "2026-10-05T13:00:00.000Z"
+      },
+      "actualKwh": 10.7536173398641,
+      "expectedKwh": 11.356398832937701,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 7,
+      "date": "2026-10-06",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-06",
+        "source": "data_logger",
+        "energyKwh": 11.32,
+        "receivedAt": "2026-10-06T13:00:00.000Z"
+      },
+      "actualKwh": 11.323478551186373,
+      "expectedKwh": 11.922434039236975,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 8,
+      "date": "2026-10-07",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-07",
+        "source": "data_logger",
+        "energyKwh": 10.83,
+        "receivedAt": "2026-10-07T13:00:00.000Z"
+      },
+      "actualKwh": 10.82945862145925,
+      "expectedKwh": 11.417416397508232,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 9,
+      "date": "2026-10-08",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-08",
+        "source": "data_logger",
+        "energyKwh": 11.34,
+        "receivedAt": "2026-10-08T13:00:00.000Z"
+      },
+      "actualKwh": 11.339157462927375,
+      "expectedKwh": 12.122034073574467,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 10,
+      "date": "2026-10-09",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-09",
+        "source": "data_logger",
+        "energyKwh": 10.24,
+        "receivedAt": "2026-10-09T13:00:00.000Z"
+      },
+      "actualKwh": 10.240912265205456,
+      "expectedKwh": 11.261867776460944,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 11,
+      "date": "2026-10-10",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-10",
+        "source": "data_logger",
+        "energyKwh": 10.39,
+        "receivedAt": "2026-10-10T13:00:00.000Z"
+      },
+      "actualKwh": 10.387535748017058,
+      "expectedKwh": 11.514721641764044,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 12,
+      "date": "2026-10-11",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-11",
+        "source": "data_logger",
+        "energyKwh": 10.63,
+        "receivedAt": "2026-10-11T13:00:00.000Z"
+      },
+      "actualKwh": 10.632129117440963,
+      "expectedKwh": 11.850501421568914,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "dust",
+      "case": {
+        "id": "SS-0142",
+        "cause": "dust",
+        "status": "filed"
+      }
+    },
+    {
+      "day": 13,
+      "date": "2026-10-12",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-12",
+        "source": "data_logger",
+        "energyKwh": 12.04,
+        "receivedAt": "2026-10-12T13:00:00.000Z"
+      },
+      "actualKwh": 12.043895000374745,
+      "expectedKwh": 11.93436894460581,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": true,
+      "vendorFixesOnTime": false,
+      "diagnosis": null,
+      "case": {
+        "id": "SS-0142",
+        "cause": "dust",
+        "status": "verified",
+        "resolvedBy": "rain"
+      }
+    },
+    {
+      "day": 14,
+      "date": "2026-10-13",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-13",
+        "source": "data_logger",
+        "energyKwh": 11.17,
+        "receivedAt": "2026-10-13T13:00:00.000Z"
+      },
+      "actualKwh": 11.17392991114105,
+      "expectedKwh": 11.578693654289468,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 15,
+      "date": "2026-10-14",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-14",
+        "source": "data_logger",
+        "energyKwh": 11.91,
+        "receivedAt": "2026-10-14T13:00:00.000Z"
+      },
+      "actualKwh": 11.910063052635603,
+      "expectedKwh": 11.947458598047493,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 16,
+      "date": "2026-10-15",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-15",
+        "source": "data_logger",
+        "energyKwh": 11.51,
+        "receivedAt": "2026-10-15T13:00:00.000Z"
+      },
+      "actualKwh": 11.509970790218802,
+      "expectedKwh": 11.62265240528807,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 17,
+      "date": "2026-10-16",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-16",
+        "source": "data_logger",
+        "energyKwh": 11.4,
+        "receivedAt": "2026-10-16T13:00:00.000Z"
+      },
+      "actualKwh": 11.403379289566939,
+      "expectedKwh": 11.796315478462724,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 18,
+      "date": "2026-10-17",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-17",
+        "source": "data_logger",
+        "energyKwh": 11.37,
+        "receivedAt": "2026-10-17T13:00:00.000Z"
+      },
+      "actualKwh": 11.373738416434826,
+      "expectedKwh": 12.08736273156479,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 19,
+      "date": "2026-10-18",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-18",
+        "source": "data_logger",
+        "energyKwh": 11.1,
+        "receivedAt": "2026-10-18T13:00:00.000Z"
+      },
+      "actualKwh": 11.09926175916697,
+      "expectedKwh": 11.551589027775451,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 20,
+      "date": "2026-10-19",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-19",
+        "source": "data_logger",
+        "energyKwh": 11.36,
+        "receivedAt": "2026-10-19T13:00:00.000Z"
+      },
+      "actualKwh": 11.35865134291605,
+      "expectedKwh": 11.872979736825451,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 21,
+      "date": "2026-10-20",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-20",
+        "source": "data_logger",
+        "energyKwh": 11.12,
+        "receivedAt": "2026-10-20T13:00:00.000Z"
+      },
+      "actualKwh": 11.123168216447123,
+      "expectedKwh": 11.909785175694152,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 22,
+      "date": "2026-10-21",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-21",
+        "source": "data_logger",
+        "energyKwh": 10.81,
+        "receivedAt": "2026-10-21T13:00:00.000Z"
+      },
+      "actualKwh": 10.805953430786118,
+      "expectedKwh": 11.363742743343114,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 23,
+      "date": "2026-10-22",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-22",
+        "source": "data_logger",
+        "energyKwh": 10.63,
+        "receivedAt": "2026-10-22T13:00:00.000Z"
+      },
+      "actualKwh": 10.632954168638186,
+      "expectedKwh": 11.601747829450293,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 24,
+      "date": "2026-10-23",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-23",
+        "source": "data_logger",
+        "energyKwh": 10.82,
+        "receivedAt": "2026-10-23T13:00:00.000Z"
+      },
+      "actualKwh": 10.818010626588832,
+      "expectedKwh": 11.832698393851517,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 25,
+      "date": "2026-10-24",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-24",
+        "source": "data_logger",
+        "energyKwh": 11.14,
+        "receivedAt": "2026-10-24T13:00:00.000Z"
+      },
+      "actualKwh": 11.142349181885812,
+      "expectedKwh": 12.048915142089127,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 26,
+      "date": "2026-10-25",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-25",
+        "source": "data_logger",
+        "energyKwh": 10.51,
+        "receivedAt": "2026-10-25T13:00:00.000Z"
+      },
+      "actualKwh": 10.50684178115807,
+      "expectedKwh": 11.42344646195322,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 27,
+      "date": "2026-10-26",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-26",
+        "source": "data_logger",
+        "energyKwh": 9.89,
+        "receivedAt": "2026-10-26T13:00:00.000Z"
+      },
+      "actualKwh": 9.892227546909515,
+      "expectedKwh": 11.168469222821294,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "healthy",
+      "case": null
+    },
+    {
+      "day": 28,
+      "date": "2026-10-27",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-27",
+        "source": "data_logger",
+        "energyKwh": 9.98,
+        "receivedAt": "2026-10-27T13:00:00.000Z"
+      },
+      "actualKwh": 9.979761016043941,
+      "expectedKwh": 11.15206522532366,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": "dust",
+      "case": {
+        "id": "SS-0143",
+        "cause": "dust",
+        "status": "filed"
+      }
+    },
+    {
+      "day": 29,
+      "date": "2026-10-28",
+      "reading": {
+        "systemId": "SS-000123",
+        "date": "2026-10-28",
+        "source": "data_logger",
+        "energyKwh": 9.76,
+        "receivedAt": "2026-10-28T13:00:00.000Z"
+      },
+      "actualKwh": 9.762380283720583,
+      "expectedKwh": 11.15355202354677,
+      "clearSkyKwh": 12.899999999999999,
+      "rained": false,
+      "vendorFixesOnTime": false,
+      "diagnosis": null,
+      "case": {
+        "id": "SS-0143",
+        "cause": "dust",
+        "status": "filed"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "SS-0142",
+      "systemId": "SS-000123",
+      "vendorId": "VND-DL-0042",
+      "cause": "dust",
+      "status": "verified",
+      "openedAt": "2026-10-11T13:00:00.000Z",
+      "vendorDeadline": "2026-10-14T13:00:00.000Z",
+      "verifiedAt": "2026-10-12T13:00:00.000Z",
+      "resolvedBy": "rain"
+    },
+    {
+      "caseId": "SS-0143",
+      "systemId": "SS-000123",
+      "vendorId": "VND-DL-0042",
+      "cause": "dust",
+      "status": "filed",
+      "openedAt": "2026-10-27T13:00:00.000Z",
+      "vendorDeadline": "2026-10-30T13:00:00.000Z"
+    }
+  ],
+  "decisions": [
+    {
+      "day": 0,
+      "date": "2026-09-29",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.5 kWh (99%). No action."
+    },
+    {
+      "day": 1,
+      "date": "2026-09-30",
+      "kind": "neutral",
+      "text": "Reading received: 11.2 of 11.2 kWh (100%). No action."
+    },
+    {
+      "day": 2,
+      "date": "2026-10-01",
+      "kind": "neutral",
+      "text": "Reading received: 11.7 of 11.9 kWh (98%). No action."
+    },
+    {
+      "day": 3,
+      "date": "2026-10-02",
+      "kind": "neutral",
+      "text": "Reading received: 11.6 of 11.8 kWh (98%). No action."
+    },
+    {
+      "day": 4,
+      "date": "2026-10-03",
+      "kind": "neutral",
+      "text": "Reading received: 10.9 of 11.2 kWh (97%). No action."
+    },
+    {
+      "day": 5,
+      "date": "2026-10-04",
+      "kind": "neutral",
+      "text": "Reading received: 11.6 of 11.9 kWh (98%). No action."
+    },
+    {
+      "day": 6,
+      "date": "2026-10-05",
+      "kind": "neutral",
+      "text": "Reading received: 10.8 of 11.4 kWh (95%). No action."
+    },
+    {
+      "day": 7,
+      "date": "2026-10-06",
+      "kind": "neutral",
+      "text": "Reading received: 11.3 of 11.9 kWh (95%). No action."
+    },
+    {
+      "day": 8,
+      "date": "2026-10-07",
+      "kind": "neutral",
+      "text": "Reading received: 10.8 of 11.4 kWh (95%). No action."
+    },
+    {
+      "day": 9,
+      "date": "2026-10-08",
+      "kind": "neutral",
+      "text": "Reading received: 11.3 of 12.1 kWh (94%). No action."
+    },
+    {
+      "day": 10,
+      "date": "2026-10-09",
+      "kind": "neutral",
+      "text": "Reading received: 10.2 of 11.3 kWh (91%). No action."
+    },
+    {
+      "day": 11,
+      "date": "2026-10-10",
+      "kind": "neutral",
+      "text": "Reading received: 10.4 of 11.5 kWh (90%). No action."
+    },
+    {
+      "day": 12,
+      "date": "2026-10-11",
+      "kind": "warning",
+      "text": "Gap widening every dry day, now 90%. Haze already counted. Diagnosis: dust on panels."
+    },
+    {
+      "day": 12,
+      "date": "2026-10-11",
+      "kind": "info",
+      "text": "Case SS-0142 filed to [Vendor name] Solar: free cleaning under 5-year O&M. Deadline 14 Oct."
+    },
+    {
+      "day": 12,
+      "date": "2026-10-11",
+      "kind": "info",
+      "text": "Rain forecast tonight."
+    },
+    {
+      "day": 13,
+      "date": "2026-10-12",
+      "kind": "info",
+      "text": "Rain overnight washed the panels clean."
+    },
+    {
+      "day": 13,
+      "date": "2026-10-12",
+      "kind": "success",
+      "text": "Rain cleaned the panels before the visit. Case SS-0142 closed, no visit needed."
+    },
+    {
+      "day": 14,
+      "date": "2026-10-13",
+      "kind": "neutral",
+      "text": "Reading received: 11.2 of 11.6 kWh (97%). No action."
+    },
+    {
+      "day": 15,
+      "date": "2026-10-14",
+      "kind": "neutral",
+      "text": "Reading received: 11.9 of 11.9 kWh (100%). No action."
+    },
+    {
+      "day": 16,
+      "date": "2026-10-15",
+      "kind": "neutral",
+      "text": "Reading received: 11.5 of 11.6 kWh (99%). No action."
+    },
+    {
+      "day": 17,
+      "date": "2026-10-16",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.8 kWh (97%). No action."
+    },
+    {
+      "day": 18,
+      "date": "2026-10-17",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 12.1 kWh (94%). No action."
+    },
+    {
+      "day": 19,
+      "date": "2026-10-18",
+      "kind": "neutral",
+      "text": "Reading received: 11.1 of 11.6 kWh (96%). No action."
+    },
+    {
+      "day": 20,
+      "date": "2026-10-19",
+      "kind": "neutral",
+      "text": "Reading received: 11.4 of 11.9 kWh (96%). No action."
+    },
+    {
+      "day": 21,
+      "date": "2026-10-20",
+      "kind": "neutral",
+      "text": "Reading received: 11.1 of 11.9 kWh (93%). No action."
+    },
+    {
+      "day": 22,
+      "date": "2026-10-21",
+      "kind": "neutral",
+      "text": "Reading received: 10.8 of 11.4 kWh (95%). No action."
+    },
+    {
+      "day": 23,
+      "date": "2026-10-22",
+      "kind": "neutral",
+      "text": "Reading received: 10.6 of 11.6 kWh (92%). No action."
+    },
+    {
+      "day": 24,
+      "date": "2026-10-23",
+      "kind": "neutral",
+      "text": "Reading received: 10.8 of 11.8 kWh (91%). No action."
+    },
+    {
+      "day": 25,
+      "date": "2026-10-24",
+      "kind": "neutral",
+      "text": "Reading received: 11.1 of 12.0 kWh (92%). No action."
+    },
+    {
+      "day": 26,
+      "date": "2026-10-25",
+      "kind": "neutral",
+      "text": "Reading received: 10.5 of 11.4 kWh (92%). No action."
+    },
+    {
+      "day": 27,
+      "date": "2026-10-26",
+      "kind": "neutral",
+      "text": "Reading received: 9.9 of 11.2 kWh (89%). No action."
+    },
+    {
+      "day": 28,
+      "date": "2026-10-27",
+      "kind": "warning",
+      "text": "Gap widening every dry day, now 89%. Haze already counted. Diagnosis: dust on panels."
+    },
+    {
+      "day": 28,
+      "date": "2026-10-27",
+      "kind": "info",
+      "text": "Case SS-0143 filed to [Vendor name] Solar: free cleaning under 5-year O&M. Deadline 30 Oct."
+    },
+    {
+      "day": 29,
+      "date": "2026-10-28",
+      "kind": "neutral",
+      "text": "Waiting for [Vendor name] Solar: 2 days left. Reading 88%."
+    }
+  ]
+}

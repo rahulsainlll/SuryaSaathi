@@ -4,7 +4,14 @@
  * Diagnosed cause. Smog never opens a case.
  */
 export type CaseCause = "dust" | "fault";
-export type CaseStatus = "open" | "vendor_notified" | "escalated" | "verified" | "closed";
+/**
+ * filed → fixed → verified, or filed → escalated (deadline missed) → fixed → verified. A dust case can also go straight to verified when rain cleans the panels.
+ */
+export type CaseStatus = "filed" | "escalated" | "fixed" | "verified";
+/**
+ * Who resolved the problem.
+ */
+export type CaseResolver = "vendor" | "discom" | "rain";
 
 /**
  * A free-maintenance claim filed with a vendor.
@@ -18,7 +25,9 @@ export interface Case {
   openedAt: string;
   vendorDeadline: string;
   escalatedAt?: string;
+  fixedAt?: string;
   verifiedAt?: string;
+  resolvedBy?: CaseResolver;
   /**
    * S3 URIs of evidence attached to the complaint.
    */

@@ -46,7 +46,7 @@ describe("schemas", () => {
         systemId: "ss_demo_0001",
         vendorId: "vendor_demo",
         cause: "dust",
-        status: "open",
+        status: "filed",
         openedAt: "2026-10-10T02:00:00Z",
         vendorDeadline: "2026-10-13T02:00:00Z",
       }),

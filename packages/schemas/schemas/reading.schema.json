@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://suryasaathi.dev/schemas/reading.schema.json",
+  "title": "Reading",
+  "description": "One day's generation for one system.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["systemId", "date", "source", "energyKwh", "receivedAt"],
+  "properties": {
+    "systemId": { "type": "string", "minLength": 1 },
+    "date": { "description": "Local date the energy was generated.", "type": "string", "format": "date" },
+    "source": { "$ref": "#/$defs/dataSource" },
+    "energyKwh": { "description": "Energy generated that day.", "type": "number", "minimum": 0 },
+    "faultCode": { "description": "Fault code reported by the inverter, if any.", "type": "string" },
+    "receivedAt": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "dataSource": {
+      "title": "DataSource",
+      "description": "Where a reading came from.",
+      "type": "string",
+      "enum": ["data_logger", "inverter_cloud", "camera_clip", "whatsapp_photo"]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://suryasaathi.dev/schemas/system.schema.json",
+  "title": "System",
+  "description": "A rooftop solar system SuryaSaathi monitors.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["systemId", "capacityKw", "location", "vendorId", "discomId", "dataSource", "consent"],
+  "properties": {
+    "systemId": {
+      "description": "Opaque ID printed on the system's QR sticker. Never contains personal data.",
+      "type": "string",
+      "minLength": 1
+    },
+    "dsain": {
+      "description": "Digital Solar Asset Identification Number issued under the Delhi Solar Energy Policy.",
+      "type": "string"
+    },
+    "capacityKw": {
+      "description": "Installed DC capacity in kW.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lat", "lon", "zone"],
+      "properties": {
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+        "zone": { "description": "DISCOM zone the system belongs to.", "type": "string" }
+      }
+    },
+    "vendorId": { "description": "Installer responsible for free maintenance.", "type": "string" },
+    "discomId": { "description": "DISCOM the system is connected to.", "type": "string" },
+    "inverter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "make": { "type": "string" },
+        "model": { "type": "string" }
+      }
+    },
+    "dataSource": { "$ref": "reading.schema.json#/$defs/dataSource" },
+    "installedOn": { "type": "string", "format": "date" },
+    "consent": {
+      "description": "The household's one-time consent, recorded at installation.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["granted", "recordedAt"],
+      "properties": {
+        "granted": { "type": "boolean" },
+        "recordedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

@@ -25,6 +25,9 @@ class Settings:
     agent_effort: str = "low"
     #: False runs the rules without the LLM (reasons come from the templates).
     agent_enabled: bool = True
+    #: "actions": ask the LLM only when something happens (smog, dust, fault, a case opened
+    #: or closed); routine days use the rule wording. "all": every reading.
+    agent_scope: str = "actions"
     #: Seconds in a "day" for case deadlines: 86400 normally, 60 in demo mode.
     day_length_seconds: int = 86400
     deadline_days: int = 3
@@ -47,6 +50,7 @@ class Settings:
             bedrock_region=_env("BEDROCK_REGION", _env("AWS_REGION")),
             agent_effort=_env("AGENT_EFFORT", d.agent_effort) or d.agent_effort,
             agent_enabled=(_env("AGENT_ENABLED", "true") or "true").lower() == "true",
+            agent_scope=_env("AGENT_SCOPE", d.agent_scope) or d.agent_scope,
             day_length_seconds=int(_env("DAY_LENGTH_SECONDS", "86400") or 86400),
             deadline_days=int(_env("VENDOR_DEADLINE_DAYS", "3") or 3),
             sender_email=_env("SENDER_EMAIL"),

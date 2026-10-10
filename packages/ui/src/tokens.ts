@@ -15,3 +15,16 @@ export const diagnosisColor: Record<Diagnosis, string> = {
   dust: "var(--color-dust)",
   fault: "var(--color-fault)",
 };
+
+/**
+ * Chart series colours, checked with the dataviz palette validator on the light surface
+ * (colour-blind separation ΔE ≥ 28, both ≥ 3:1 contrast). Liveline needs literal colours.
+ */
+export const chartColor = {
+  /** Expected output (sunlight + haze). */
+  expected: "#2f6fdb",
+  /** Actual reading. */
+  actual: "#c96a06",
+  /** Rain bands behind the chart. */
+  rain: "#8fb8f0",
+} as const;

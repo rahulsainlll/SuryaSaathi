@@ -24,15 +24,24 @@
   --focus: var(--accent);
 
   --radius: 0.625rem;
+
+  /* Informational notices (forecasts, filings), distinct from the saffron accent */
+  --info: oklch(0.55 0.17 258);
+  --info-foreground: oklch(0.99 0 0);
 }
 
 .dark,
 [data-theme="dark"] {
   --accent: oklch(0.76 0.16 60);
   --accent-foreground: oklch(0.21 0.006 286);
+  --info: oklch(0.68 0.14 255);
+  --info-foreground: oklch(0.15 0 0);
 }
 
 @theme inline {
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
   /* Diagnosis colours, available as bg-smog, text-dust, border-fault, … */
   --color-healthy: var(--success);
   --color-smog: oklch(0.65 0.02 260);

@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SuryaSaathi · Device and agent simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#FAFAFA; --surface:#FFFFFF; --muted-surface:#F4F4F5; --line:#E4E4E7;
+  --text:#11181C; --text-2:#52525B; --text-3:#71717A;
+  --primary:#006FEE; --primary-soft:#E6F1FE; --primary-ink:#004493;
+  --sun:#F5A524; --sun-soft:#FDEDD3; --sun-ink:#7A4E0E;
+  --ok:#17C964; --ok-soft:#E8FAF0; --ok-ink:#0B6532;
+  --bad:#F31260; --bad-soft:#FEE7EF; --bad-ink:#8F0B3A;
+  --shadow:0 0 5px rgba(0,0,0,.02),0 2px 10px rgba(0,0,0,.06),0 0 1px rgba(0,0,0,.3);
+  --font:Inter,'Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E0F11; --surface:#18181B; --muted-surface:#232327; --line:#2E2E33;
+    --text:#ECEDEE; --text-2:#B4B4BB; --text-3:#9A9AA3;
+    --primary:#3B8BFF; --primary-soft:#0F2A4D; --primary-ink:#9CC5FF;
+    --sun:#F5A524; --sun-soft:#3A2A0C; --sun-ink:#F8C873;
+    --ok:#17C964; --ok-soft:#0D2E1C; --ok-ink:#7EE2A8;
+    --bad:#F31260; --bad-soft:#3A0D1E; --bad-ink:#FF8FB4;
+    --shadow:0 0 0 1px #2E2E33;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E0F11; --surface:#18181B; --muted-surface:#232327; --line:#2E2E33;
+  --text:#ECEDEE; --text-2:#B4B4BB; --text-3:#9A9AA3;
+  --primary:#3B8BFF; --primary-soft:#0F2A4D; --primary-ink:#9CC5FF;
+  --sun:#F5A524; --sun-soft:#3A2A0C; --sun-ink:#F8C873;
+  --ok:#17C964; --ok-soft:#0D2E1C; --ok-ink:#7EE2A8;
+  --bad:#F31260; --bad-soft:#3A0D1E; --bad-ink:#FF8FB4;
+  --shadow:0 0 0 1px #2E2E33;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:24px 20px 48px}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:8px}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--sun);display:grid;place-items:center}
+h1{margin:0;font-size:clamp(24px,3.2vw,34px);letter-spacing:-.6px;line-height:1.15}
+.sub{margin:4px 0 0;color:var(--text-2);max-width:62ch}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{height:44px;padding:0 16px;border-radius:12px;border:0;background:var(--muted-surface);font-weight:500;cursor:pointer}
+.btn:hover{filter:brightness(.97)}
+.btn.primary{background:var(--primary);color:#fff}
+.seg{display:flex;background:var(--muted-surface);border-radius:12px;padding:4px;gap:2px}
+.seg button{height:36px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--text-3);cursor:pointer;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--text);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.daybadge{font-variant-numeric:tabular-nums;font-weight:600;padding:0 14px;height:44px;display:flex;align-items:center;border-radius:12px;background:var(--surface);box-shadow:var(--shadow)}
+
+/* pipeline */
+.pipe{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
+.pipe-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.pipe-head h2{margin:0;font-size:17px}
+.nodes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;position:relative}
+.node{position:relative;border:2px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;min-height:118px;transition:border-color .2s,background .2s}
+.node .ic{width:34px;height:34px;border-radius:10px;background:var(--muted-surface);display:grid;place-items:center;color:var(--text-2)}
+.node b{font-size:14px;line-height:1.25}
+.node span{font-size:12.5px;color:var(--text-3);line-height:1.35}
+.node.on{border-color:var(--primary);background:var(--primary-soft)}
+.node.on .ic{background:var(--primary);color:#fff}
+.node::after{content:"";position:absolute;right:-9px;top:50%;width:8px;height:2px;background:var(--line)}
+.node:last-child::after{display:none}
+.node.on::after{background:var(--primary)}
+@media (max-width:900px){.nodes{grid-template-columns:repeat(3,minmax(0,1fr))}.node::after{display:none}}
+@media (max-width:520px){.nodes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* main grid */
+.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+@media (max-width:960px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);padding:18px;min-width:0}
+.card h2{margin:0 0 12px;font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media (max-width:620px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--muted-surface);border-radius:12px;padding:10px 12px}
+.stat small{display:block;color:var(--text-3);font-size:12.5px}
+.stat strong{font-size:22px;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+.chartbox{overflow-x:auto}
+svg.chart{display:block;width:100%;min-width:520px;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--text-2);margin-top:6px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+/* events */
+.events{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ev{height:44px;padding:0 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);cursor:pointer;font-size:14px;font-weight:500}
+.ev:hover{border-color:var(--text-3)}
+.toggle{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-2);margin-left:auto;cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--primary)}
+
+/* payload + log */
+pre.payload{margin:0;background:var(--muted-surface);border-radius:12px;padding:12px;font-family:var(--mono);font-size:12.5px;line-height:1.55;overflow-x:auto;white-space:pre;color:var(--text)}
+.topic{font-family:var(--mono);font-size:12px;color:var(--text-3);margin:0 0 8px;word-break:break-all}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto}
+.log li{display:grid;grid-template-columns:62px 10px 1fr;gap:8px;align-items:start;font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--line)}
+.log li:last-child{border-bottom:0}
+.log .d{color:var(--text-3);font-variant-numeric:tabular-nums;font-size:12.5px;padding-top:1px}
+.log .dot{width:8px;height:8px;border-radius:50%;margin-top:7px;background:var(--text-3)}
+.dot.ok{background:var(--ok)}.dot.sun{background:var(--sun)}.dot.bad{background:var(--bad)}.dot.pri{background:var(--primary)}
+
+/* case */
+.case{display:flex;flex-direction:column;gap:10px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding-bottom:10px;position:relative;font-size:14px}
+.steps li .b{width:22px;height:22px;border-radius:50%;border:2px dashed var(--line);flex-shrink:0;display:grid;place-items:center}
+.steps li.done .b{background:var(--ok);border:0}
+.steps li.now .b{background:var(--primary);border:4px solid var(--primary-soft)}
+.steps li.warn .b{background:var(--bad);border:0}
+.steps li span{color:var(--text-2)}
+.steps li.done span,.steps li.now span,.steps li.warn span{color:var(--text)}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+.chip.idle{background:var(--muted-surface);color:var(--text-2)}
+.chip.open{background:var(--primary-soft);color:var(--primary-ink)}
+.chip.esc{background:var(--bad-soft);color:var(--bad-ink)}
+.chip.ok{background:var(--ok-soft);color:var(--ok-ink)}
+.wa{background:var(--muted-surface);border-radius:14px;padding:12px}
+.wa .bubble{background:var(--surface);border-radius:14px 14px 14px 4px;padding:10px 12px;font-size:14px;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.wa .who{font-size:12px;color:var(--text-3);margin-bottom:6px}
+.empty{color:var(--text-3);font-size:14px}
+.note{font-size:12.5px;color:var(--text-3);margin-top:16px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div>
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#11181C" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+      <strong>SuryaSaathi</strong>
+    </div>
+    <h1>Device and agent simulator</h1>
+    <p class="sub">One Delhi rooftop, 30 days, simulated readings. Watch each reading travel from the roof to the agents, and see what the agents do about it. The family does nothing.</p>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Data source">
+      <button data-src="logger" aria-pressed="true">Data logger</button>
+      <button data-src="cloud" aria-pressed="false">Inverter cloud</button>
+      <button data-src="camera" aria-pressed="false">Camera clip</button>
+    </div>
+    <div class="daybadge" id="dayBadge" aria-live="polite">Day 0</div>
+    <button class="btn primary" id="playBtn">Play</button>
+    <button class="btn" id="stepBtn">Next day</button>
+    <button class="btn" id="resetBtn">Reset</button>
+  </div>
+</header>
+
+<section class="pipe" aria-labelledby="pipeH">
+  <div class="pipe-head">
+    <h2 id="pipeH">How one reading travels</h2>
+    <div class="seg" role="group" aria-label="Speed">
+      <button data-speed="1800" aria-pressed="true">Normal</button>
+      <button data-speed="700" aria-pressed="false">Fast</button>
+    </div>
+  </div>
+  <div class="nodes" id="nodes">
+    <div class="node" data-n="0"><div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 18l3-12h12l3 12z"/><path d="M4.5 12h15M12 6v12"/></svg></div><b>Rooftop panels</b><span id="n0">3 kW · dust 0%</span></div>
+    <div class="node" data-n="1"><div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="5" rx="1"/></svg></div><b>Inverter</b><span id="n1">waiting for sunrise</span></div>
+    <div class="node" data-n="2"><div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></div><b id="n2t">Data logger</b><span id="n2">reads the inverter every 15 min</span></div>
+    <div class="node" data-n="3"><div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg></div><b id="n3t">AWS IoT Core</b><span id="n3">MQTT over TLS, IoT rule to Lambda</span></div>
+    <div class="node" data-n="4"><div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div><b>Agents</b><span id="n4">Strands + Bedrock compare with expected</span></div>
+    <div class="node" data-n="5"><div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></div><b>Action</b><span id="n5">nothing needed yet</span></div>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="card" aria-labelledby="chartH">
+    <h2 id="chartH">Expected vs actual, kWh per day</h2>
+    <div class="stats">
+      <div class="stat"><small>Made today</small><strong id="sAct">–</strong></div>
+      <div class="stat"><small>Should have made</small><strong id="sExp">–</strong></div>
+      <div class="stat"><small>Performance</small><strong id="sPr">–</strong></div>
+      <div class="stat"><small>Lost so far</small><strong id="sLoss">₹0</strong></div>
+    </div>
+    <div class="chartbox"><svg class="chart" id="chart" viewBox="0 0 720 260" role="img" aria-label="Chart of expected and actual daily solar output"></svg></div>
+    <div class="legend"><span><i style="background:var(--primary)"></i>Expected (sunlight + haze)</span><span><i style="background:var(--sun)"></i>Actual reading</span><span><i style="background:#8FB8F0;height:10px;width:10px;border-radius:2px"></i>Rain</span></div>
+    <div class="events" role="group" aria-label="Make something happen">
+      <button class="ev" data-ev="rain">Rain tonight</button>
+      <button class="ev" data-ev="smog">Smog tomorrow</button>
+      <button class="ev" data-ev="fault">Break the inverter</button>
+      <label class="toggle"><input type="checkbox" id="vendorOk"> Vendor fixes on time</label>
+    </div>
+  </section>
+
+  <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+    <section class="card case" aria-labelledby="caseH">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <h2 id="caseH" style="margin:0">Maintenance case</h2>
+        <span class="chip idle" id="caseChip">Monitoring</span>
+      </div>
+      <ol class="steps" id="steps">
+        <li data-s="detect"><span class="b"></span><span>Agent detects a problem</span></li>
+        <li data-s="filed"><span class="b"></span><span>Complaint filed to vendor with evidence</span></li>
+        <li data-s="vendor"><span class="b"></span><span>Vendor fixes within 3 days</span></li>
+        <li data-s="esc"><span class="b"></span><span>If missed: escalated to DISCOM</span></li>
+        <li data-s="verify"><span class="b"></span><span>Fix verified from new readings</span></li>
+      </ol>
+      <div class="wa" aria-live="polite">
+        <div class="who">The only message the family gets</div>
+        <div id="waBox" class="empty">Nothing yet. The family isn't bothered unless there's good news.</div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="payH">
+      <h2 id="payH">Latest message from the device</h2>
+      <p class="topic" id="topic">suryasaathi/dl/SS-DL-000123/telemetry</p>
+      <pre class="payload" id="payload">Press Play or Next day to send the first reading.</pre>
+    </section>
+  </div>
+</div>
+
+<section class="card" style="margin-top:16px" aria-labelledby="logH">
+  <h2 id="logH">What the agents decided</h2>
+  <ol class="log" id="log" aria-live="polite"></ol>
+</section>
+
+<p class="note">All readings are simulated for a 3 kW system in Dwarka, Delhi, starting 29 Sep 2026. Rupee loss uses ₹7 per unit for illustration. In production, readings come from the DISCOM data logger, the inverter maker's cloud, or a camera clip, with the family's consent.</p>
+</div>
+
+<script>
+(function(){
+  const DAYS=30, KW=3, PSH=4.3, TARIFF=7, VENDOR='[Vendor name] Solar';
+  const start=new Date(2026,8,29);
+  const $=id=>document.getElementById(id);
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const SRC={
+    logger:{n2t:'Data logger',n2:'reads the inverter every 15 min',n3t:'AWS IoT Core',n3:'MQTT over TLS, IoT rule to Lambda',topic:'suryasaathi/dl/SS-DL-000123/telemetry'},
+    cloud:{n2t:'Inverter cloud',n2:'maker\u2019s cloud stores the readings',n3t:'EventBridge + Lambda',n3:'pulls the maker\u2019s API once a day',topic:'pull: inverter-cloud API \u2192 Lambda ingest'},
+    camera:{n2t:'Camera clip',n2:'ESP32-CAM on FreeRTOS photographs the screen',n3t:'AWS IoT Core + S3',n3:'photo to S3, Bedrock reads the numbers',topic:'suryasaathi/cam/SS-DL-000123/snapshot'}
+  };
+
+  let s, timer=null, speed=1800, src='logger';
+
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+  function fresh(){
+    return {day:-1,rand:rng(42),soil:0,fault:false,rainTonight:false,smogNext:false,
+      script:{6:'smog',22:'fault'},rainDays:[0],
+      exp:[],act:[],total:2730.4,lossKwh:0,
+      kase:null,closed:[],log:[]};
+  }
+
+  function dateOf(d){const x=new Date(start);x.setDate(x.getDate()+d);return x}
+  function fmt(d){return dateOf(d).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
+
+  function addLog(text,kind){s.log.unshift({d:s.day,text,kind});if(s.log.length>60)s.log.pop();renderLog()}
+
+  function step(){
+    if(s.day>=DAYS-1){stop();return}
+    s.day++;
+    const d=s.day;
+    // world
+    if(d===0){s.soil=0}
+    if(s.rainTonight){s.soil=0;s.rainDays.push(d);s.rainTonight=false;addLog('Rain overnight washed the panels clean.','pri')}
+    let smog=false;
+    if(s.smogNext||s.script[d]==='smog'){smog=true;s.smogNext=false}
+    if(s.script[d]==='fault'&&!s.fault){s.fault=true}
+    const haze=smog?0.38:0.06+s.rand()*0.08;
+    const expected=KW*PSH*(1-haze);
+    const noise=0.97+s.rand()*0.05;
+    const actual=Math.max(0,expected*(1-s.soil)*(s.fault?0.32:1)*Math.min(noise,1.01));
+    s.exp.push(expected);s.act.push(actual);s.total+=actual;s.lossKwh+=Math.max(0,expected-actual);
+    s.soil=Math.min(0.4,s.soil+0.0065);
+
+    diagnose(d,expected,actual,smog);
+    animate();
+    render();
+  }
+
+  function ratio(i){return s.act[i]/s.exp[i]}
+
+  function diagnose(d,expected,actual,smog){
+    const r=actual/expected; const k=s.kase;
+    // case progression first
+    if(k){
+      if(k.status==='filed'&&$('vendorOk').checked&&d>=k.open+2){fix(d,'vendor')}
+      else if(k.status==='filed'&&d>=k.deadline){k.status='escalated';k.esc=d;addLog(`Deadline passed. Case ${k.id} escalated to the DISCOM with readings, chart and photos.`,'bad')}
+      else if(k.status==='escalated'&&d>=k.esc+2){fix(d,'discom')}
+      else if(k.status==='fixed'&&d>k.fixedOn){
+        if(r>0.93){k.status='verified';addLog(`Fix verified: performance back to ${Math.round(r*100)}%. Case ${k.id} closed.`,'ok');sendFamily(k,r);s.closed.push(k);s.kase=null}
+        else addLog(`Still ${Math.round(r*100)}% after the fix. Asking ${VENDOR} to recheck.`,'sun');
+      }
+      else if(k.type==='dust'&&k.status!=='fixed'&&s.rainDays.includes(d)&&r>0.93){addLog(`Rain cleaned the panels before the visit. Case ${k.id} closed, no visit needed.`,'ok');k.status='verified';k.by='rain';s.closed.push(k);s.kase=null}
+      else if(k.status==='filed'){const left=k.deadline-d;addLog(`Waiting for ${VENDOR}: ${left} day${left===1?'':'s'} left. Reading ${Math.round(r*100)}%.`,'')}
+      else if(k.status==='escalated'){addLog(`DISCOM has the case. Reading ${Math.round(r*100)}%.`,'')}
+      return;
+    }
+    // detection
+    if(d>=1&&r<0.6&&ratio(d-1)>0.8){openCase(d,'fault',r);return}
+    if(d>=6){
+      const avg3=(ratio(d)+ratio(d-1)+ratio(d-2))/3;
+      if(avg3<0.91&&ratio(d)-ratio(d-5)<-0.02){openCase(d,'dust',r);return}
+    }
+    if(smog){addLog(`Smog cut the sunlight: expected only ${expected.toFixed(1)} kWh. System healthy at ${Math.round(r*100)}%. No complaint.`,'pri');return}
+    addLog(`Reading received: ${actual.toFixed(1)} of ${expected.toFixed(1)} kWh (${Math.round(r*100)}%). No action.`,'');
+  }
+
+  let caseNo=141;
+  function openCase(d,type,r){
+    caseNo++;const id='SS-0'+caseNo;
+    s.kase={id,type,open:d,deadline:d+3,status:'filed'};
+    if(type==='fault'){
+      addLog(`Output collapsed overnight to ${Math.round(r*100)}% while sunlight was normal. Diagnosis: inverter or wiring fault.`,'bad');
+    }else{
+      addLog(`Gap widening every dry day, now ${Math.round(r*100)}%. Haze already counted. Diagnosis: dust on panels.`,'sun');
+    }
+    addLog(`Case ${id} filed to ${VENDOR}: free ${type==='fault'?'repair':'cleaning'} under 5-year O&M. Deadline ${fmt(d+3)}.`,'pri');
+  }
+
+  function fix(d,who){
+    const k=s.kase; k.status='fixed'; k.fixedOn=d; k.by=who;
+    if(k.type==='fault')s.fault=false; else s.soil=0;
+    addLog(who==='vendor'?`${VENDOR} ${k.type==='fault'?'repaired the inverter':'cleaned the panels'} on time.`:`After DISCOM escalation, ${VENDOR} ${k.type==='fault'?'repaired the inverter':'cleaned the panels'}.`,'ok');
+  }
+
+  function sendFamily(k,r){
+    const p=Math.round(r*100);
+    const what=k.type==='fault'?'Inverter में खराबी थी। Vendor ने मुफ्त repair कर दिया।':'आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी।';
+    const esc=k.by==='discom'?' (Vendor देर कर रहा था, इसलिए DISCOM से करवाया।)':'';
+    $('waBox').className='bubble';
+    $('waBox').textContent=`${what}${esc} Output वापस ${p}% पर है। Case ${k.id}`;
+  }
+
+  // ---------- render ----------
+  function render(){
+    const d=s.day;
+    $('dayBadge').textContent=d<0?'Day 0':`Day ${d+1} · ${fmt(d)}`;
+    if(d>=0){
+      $('sAct').textContent=s.act[d].toFixed(1)+' kWh';
+      $('sExp').textContent=s.exp[d].toFixed(1)+' kWh';
+      $('sPr').textContent=Math.round(ratio(d)*100)+'%';
+      $('sLoss').textContent='₹'+Math.round(s.lossKwh*TARIFF).toLocaleString('en-IN');
+      $('n0').textContent=`3 kW · dust ${Math.round(s.soil*100)}%`;
+      $('n1').textContent=s.fault?'fault: output collapsed':`${s.act[d].toFixed(1)} kWh today`;
+      payload(d);
+    }else{
+      ['sAct','sExp','sPr'].forEach(i=>$(i).textContent='–');$('sLoss').textContent='₹0';
+      $('n0').textContent='3 kW · dust 0%';$('n1').textContent='waiting for sunrise';
+      $('payload').textContent='Press Play or Next day to send the first reading.';
+    }
+    const k=s.kase;
+    $('n5').textContent=!k?'nothing needed':k.status==='filed'?'complaint sent to vendor':k.status==='escalated'?'escalated to DISCOM':k.status==='fixed'?'checking the fix':'family told';
+    renderCase();drawChart();
+  }
+
+  function payload(d){
+    const t=dateOf(d);t.setHours(18,30,0,0);
+    const ts=t.toISOString();
+    const base={deviceId:'SS-DL-000123',vendorId:'VND-DL-0042',ts};
+    let obj;
+    if(src==='logger')obj={...base,source:'data_logger',energy_today_kwh:+s.act[d].toFixed(2),energy_total_kwh:+s.total.toFixed(1),peak_power_kw:+(s.act[d]/4.6).toFixed(2),status:s.fault?'FAULT':'NORMAL',fault_code:s.fault?'E-07':null,fw:'1.0.3'};
+    else if(src==='cloud')obj={...base,source:'inverter_cloud',api:'[maker] cloud v2',daily_yield_kwh:+s.act[d].toFixed(2),lifetime_kwh:+s.total.toFixed(1),inverter_state:s.fault?'Fault':'Generating',alarm:s.fault?'Grid relay fault':null};
+    else obj={...base,source:'camera_clip',image:`s3://suryasaathi-snaps/SS-DL-000123/${ts.slice(0,10)}.jpg`,read_by:'bedrock-vision',reading:{e_today:+s.act[d].toFixed(1),e_total:Math.round(s.total),status:s.fault?'FAULT E-07':'NORMAL'},confidence:0.97};
+    $('payload').textContent=JSON.stringify(obj,null,2);
+  }
+
+  function renderCase(){
+    const k=s.kase||(s.closed.length&&s.day===s.closed[s.closed.length-1].verifiedDay?null:null);
+    const chip=$('caseChip');
+    const set=(map)=>document.querySelectorAll('#steps li').forEach(li=>{li.className=map[li.dataset.s]||''});
+    if(!k){
+      const last=s.closed[s.closed.length-1];
+      if(last&&last.status==='verified'){chip.className='chip ok';chip.textContent=`${last.id} resolved`;set({detect:'done',filed:'done',vendor:last.by==='vendor'?'done':'',esc:last.by==='discom'?'done':'',verify:'done'})}
+      else{chip.className='chip idle';chip.textContent='Monitoring';set({})}
+      return;
+    }
+    if(k.status==='filed'){chip.className='chip open';chip.textContent=`${k.id} · due ${fmt(k.deadline)}`;set({detect:'done',filed:'done',vendor:'now'})}
+    else if(k.status==='escalated'){chip.className='chip esc';chip.textContent=`${k.id} escalated`;set({detect:'done',filed:'done',vendor:'warn',esc:'now'})}
+    else if(k.status==='fixed'){chip.className='chip open';chip.textContent=`${k.id} · checking fix`;set({detect:'done',filed:'done',vendor:k.by==='vendor'?'done':'warn',esc:k.by==='discom'?'done':'',verify:'now'})}
+  }
+
+  function renderLog(){
+    const ol=$('log');ol.innerHTML='';
+    if(!s.log.length){const li=document.createElement('li');li.innerHTML='<span class="d"></span><span></span><span class="empty">No readings yet.</span>';ol.appendChild(li);return}
+    s.log.forEach(e=>{
+      const li=document.createElement('li');
+      const a=document.createElement('span');a.className='d';a.textContent=fmt(e.d);
+      const b=document.createElement('span');b.className='dot '+(e.kind||'');
+      const c=document.createElement('span');c.textContent=e.text;
+      li.append(a,b,c);ol.appendChild(li);
+    });
+  }
+
+  function drawChart(){
+    const svg=$('chart'),W=720,H=260,L=40,R=12,T=14,B=30,max=14;
+    const x=i=>L+(W-L-R)*(i/(DAYS-1)), y=v=>T+(H-T-B)*(1-v/max);
+    const cs=getComputedStyle(document.documentElement);
+    const c=n=>cs.getPropertyValue(n).trim();
+    let h='';
+    for(let v=0;v<=12;v+=4){h+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${c('--line')}" stroke-width="1"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="${c('--text-3')}">${v}</text>`}
+    s.rainDays.forEach(i=>{if(i<=s.day)h+=`<rect x="${x(i)-6}" y="${T}" width="12" height="${H-T-B}" rx="3" fill="#8FB8F0" opacity=".28"/>`});
+    [0,7,14,21,29].forEach(i=>{h+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="${c('--text-3')}">${fmt(i)}</text>`});
+    const all=[...s.closed,...(s.kase?[s.kase]:[])];
+    all.forEach(k=>{h+=`<line x1="${x(k.open)}" x2="${x(k.open)}" y1="${T}" y2="${H-B}" stroke="${c('--text-3')}" stroke-dasharray="3 4"/><text x="${x(k.open)+4}" y="${T+10}" font-size="11" fill="${c('--text-2')}">${k.id}</text>`});
+    const path=(arr)=>arr.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join(' ');
+    if(s.exp.length){
+      h+=`<path d="${path(s.exp)}" fill="none" stroke="${c('--primary')}" stroke-width="2.5" stroke-dasharray="7 5" stroke-linecap="round"/>`;
+      h+=`<path d="${path(s.act)}" fill="none" stroke="${c('--sun')}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+      const i=s.day;h+=`<circle cx="${x(i)}" cy="${y(s.act[i])}" r="5" fill="${c('--sun')}"/>`;
+    }
+    svg.innerHTML=h;
+  }
+
+  function animate(){
+    const nodes=[...document.querySelectorAll('.node')];
+    nodes.forEach(n=>n.classList.remove('on'));
+    if(reduce){nodes.forEach(n=>n.classList.add('on'));setTimeout(()=>nodes.forEach(n=>n.classList.remove('on')),400);return}
+    const per=Math.max(70,Math.min(180,speed/12));
+    nodes.forEach((n,i)=>{setTimeout(()=>n.classList.add('on'),i*per);setTimeout(()=>n.classList.remove('on'),i*per+per*3)});
+  }
+
+  // ---------- controls ----------
+  function play(){if(timer)return;$('playBtn').textContent='Pause';step();timer=setInterval(step,speed)}
+  function stop(){clearInterval(timer);timer=null;$('playBtn').textContent=s.day>=DAYS-1?'Replay':'Play'}
+  $('playBtn').onclick=()=>{if(s.day>=DAYS-1){reset();play();return}timer?stop():play()};
+  $('stepBtn').onclick=()=>{stop();step()};
+  $('resetBtn').onclick=()=>{stop();reset()};
+  function reset(){s=fresh();caseNo=141;$('waBox').className='empty';$('waBox').textContent='Nothing yet. The family isn\u2019t bothered unless there\u2019s good news.';renderLog();render();$('playBtn').textContent='Play'}
+
+  document.querySelectorAll('[data-src]').forEach(b=>b.onclick=()=>{
+    src=b.dataset.src;document.querySelectorAll('[data-src]').forEach(o=>o.setAttribute('aria-pressed',o===b));
+    const m=SRC[src];$('n2t').textContent=m.n2t;$('n2').textContent=m.n2;$('n3t').textContent=m.n3t;$('n3').textContent=m.n3;$('topic').textContent=m.topic;
+    if(s.day>=0)payload(s.day);
+  });
+  document.querySelectorAll('[data-speed]').forEach(b=>b.onclick=()=>{
+    speed=+b.dataset.speed;document.querySelectorAll('[data-speed]').forEach(o=>o.setAttribute('aria-pressed',o===b));
+    if(timer){clearInterval(timer);timer=setInterval(step,speed)}
+  });
+  document.querySelectorAll('[data-ev]').forEach(b=>b.onclick=()=>{
+    const e=b.dataset.ev;
+    if(e==='rain'){s.rainTonight=true;addLog('Rain forecast tonight.','pri')}
+    if(e==='smog'){s.smogNext=true;addLog('Heavy smog expected tomorrow.','pri')}
+    if(e==='fault'){s.script[s.day+1]='fault';addLog('A fault will hit the inverter tomorrow.','bad')}
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawChart);
+
+  reset();
+})();
+</script>
+</body>
+</html>

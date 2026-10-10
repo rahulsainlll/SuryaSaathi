@@ -34,31 +34,80 @@
       "additionalProperties": false,
       "required": ["lat", "lon", "zone"],
       "properties": {
-        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
-        "lon": { "type": "number", "minimum": -180, "maximum": 180 },
-        "zone": { "description": "DISCOM zone the system belongs to.", "type": "string" }
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "lon": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "zone": {
+          "description": "DISCOM zone the system belongs to.",
+          "type": "string"
+        }
       }
     },
-    "vendorId": { "description": "Installer responsible for free maintenance.", "type": "string" },
-    "discomId": { "description": "DISCOM the system is connected to.", "type": "string" },
+    "vendorId": {
+      "description": "Installer responsible for free maintenance.",
+      "type": "string"
+    },
+    "discomId": {
+      "description": "DISCOM the system is connected to.",
+      "type": "string"
+    },
     "inverter": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "make": { "type": "string" },
-        "model": { "type": "string" }
+        "make": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        }
       }
     },
-    "dataSource": { "$ref": "reading.schema.json#/$defs/dataSource" },
-    "installedOn": { "type": "string", "format": "date" },
+    "dataSource": {
+      "$ref": "reading.schema.json#/$defs/dataSource"
+    },
+    "installedOn": {
+      "type": "string",
+      "format": "date"
+    },
     "consent": {
       "description": "The household's one-time consent, recorded at installation.",
       "type": "object",
       "additionalProperties": false,
       "required": ["granted", "recordedAt"],
       "properties": {
-        "granted": { "type": "boolean" },
-        "recordedAt": { "type": "string", "format": "date-time" }
+        "granted": {
+          "type": "boolean"
+        },
+        "recordedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "simulation": {
+      "description": "Set only for simulated systems: the golden fixture they replay. Expected output and rain then come from the fixture instead of live sunlight and weather data, so the agent sees the same world as the demo.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario", "firstDate"],
+      "properties": {
+        "scenario": {
+          "description": "Fixture name in packages/schemas/fixtures, e.g. \"dust\".",
+          "type": "string",
+          "minLength": 1
+        },
+        "firstDate": {
+          "description": "Date the simulator sent fixture day 0 as.",
+          "type": "string",
+          "format": "date"
+        }
       }
     }
   }

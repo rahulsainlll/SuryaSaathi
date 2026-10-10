@@ -50,4 +50,17 @@ export interface System {
     granted: boolean;
     recordedAt: string;
   };
+  /**
+   * Set only for simulated systems: the golden fixture they replay. Expected output and rain then come from the fixture instead of live sunlight and weather data, so the agent sees the same world as the demo.
+   */
+  simulation?: {
+    /**
+     * Fixture name in packages/schemas/fixtures, e.g. "dust".
+     */
+    scenario: string;
+    /**
+     * Date the simulator sent fixture day 0 as.
+     */
+    firstDate: string;
+  };
 }

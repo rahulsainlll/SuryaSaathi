@@ -12,6 +12,7 @@ dev = [
     "boto3-stubs[dynamodb,dynamodbstreams,iot,lambda,secretsmanager,sesv2,stepfunctions]>=1.40",
     "moto[dynamodb,iot,lambda,secretsmanager,ses,sesv2,stepfunctions]>=5.1",
     "mypy>=1.18",
+    "pandas-stubs>=2.2",
     "pytest>=8.4",
     "ruff>=0.14",
     "types-jsonschema>=4.25",
@@ -47,6 +48,11 @@ strict = true
 files = ["services", "tools/device-sim"]
 explicit_package_bases = true
 mypy_path = "tools/device-sim/src:services/core/src:services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src"
+
+[[tool.mypy.overrides]]
+# pvlib ships no type information.
+module = ["pvlib", "pvlib.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["services", "tools"]

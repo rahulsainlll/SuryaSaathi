@@ -1,0 +1,17 @@
+// Cedar schema for SuryaSaathi. Entity types only for now; attributes and
+// actions grow with the consent and access rules.
+namespace SuryaSaathi {
+  entity Zone;
+  entity Vendor;
+  entity Family;
+  entity DiscomAdmin in [Zone];
+  entity System in [Zone] {
+    vendor: Vendor,
+    family: Family,
+  };
+
+  action ReadSystem appliesTo {
+    principal: [Family, Vendor, DiscomAdmin],
+    resource: System,
+  };
+}

@@ -116,6 +116,24 @@ importers:
         specifier: ~5.9.3
         version: 5.9.3
 
+  packages/policies:
+    devDependencies:
+      '@cedar-policy/cedar-wasm':
+        specifier: ^4.10.0
+        version: 4.13.0
+      '@types/node':
+        specifier: ^22.20.5
+        version: 22.20.5
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5(jiti@2.7.0)
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^5.0.3
+        version: 5.0.3(@types/node@22.20.5)(vite@8.3.4(@types/node@22.20.5)(jiti@2.7.0))
+
   packages/schemas:
     devDependencies:
       '@types/node':
@@ -269,6 +287,9 @@ packages:
   '@babel/types@7.29.8':
     resolution: {integrity: sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg==}
     engines: {node: '>=6.9.0'}
+
+  '@cedar-policy/cedar-wasm@4.13.0':
+    resolution: {integrity: sha512-1omEd/J0c7RjcfSUWiXZc6zk6XUs1IuY7Yk9TVysoKV/LpFWIk45RpjvRFVioPUR3RQmgA/DaqKhK3pucbBx1A==}
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -2908,6 +2929,8 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
+
+  '@cedar-policy/cedar-wasm@4.13.0': {}
 
   '@emnapi/core@1.10.0':
     dependencies:

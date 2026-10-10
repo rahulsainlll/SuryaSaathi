@@ -1,0 +1,24 @@
+{
+  "name": "@suryasaathi/policies",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Cedar policies for consent and access, with tests",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./*": "./policies/*"
+  },
+  "files": ["policies"],
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@cedar-policy/cedar-wasm": "^4.10.0",
+    "@types/node": "^22.20.5",
+    "eslint": "^9.39.5",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.3"
+  }
+}

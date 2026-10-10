@@ -5,7 +5,7 @@ name = "suryasaathi"
 version = "0.0.0"
 description = "SuryaSaathi Python workspace"
 requires-python = ">=3.12"
-dependencies = ["suryasaathi-core", "suryasaathi-agents", "suryasaathi-ingest", "suryasaathi-expected-output", "suryasaathi-whatsapp", "suryasaathi-rollups"]
+dependencies = ["suryasaathi-core", "suryasaathi-device-sim", "suryasaathi-agents", "suryasaathi-ingest", "suryasaathi-expected-output", "suryasaathi-whatsapp", "suryasaathi-rollups"]
 
 [dependency-groups]
 dev = [
@@ -21,10 +21,11 @@ dev = [
 package = false
 
 [tool.uv.workspace]
-members = ["services/*"]
+members = ["services/*", "tools/device-sim"]
 
 [tool.uv.sources]
 suryasaathi-core = { workspace = true }
+suryasaathi-device-sim = { workspace = true }
 suryasaathi-agents = { workspace = true }
 suryasaathi-ingest = { workspace = true }
 suryasaathi-expected-output = { workspace = true }
@@ -45,8 +46,8 @@ python_version = "3.12"
 strict = true
 files = ["services", "tools/device-sim"]
 explicit_package_bases = true
-mypy_path = "services/core/src:services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src"
+mypy_path = "tools/device-sim/src:services/core/src:services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src"
 
 [tool.pytest.ini_options]
-testpaths = ["services"]
+testpaths = ["services", "tools"]
 addopts = "--import-mode=importlib"

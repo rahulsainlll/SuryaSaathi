@@ -1,0 +1,21 @@
+[project]
+name = "suryasaathi-device-sim"
+version = "0.0.0"
+description = "Virtual devices that replay the golden scenarios to AWS IoT Core over MQTT"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.40",
+    "paho-mqtt>=2.1",
+    "suryasaathi-core",
+]
+
+[project.scripts]
+device-sim = "suryasaathi_device_sim.cli:main"
+
+[tool.uv.sources]
+suryasaathi-core = { workspace = true }
+
+[build-system]
+requires = ["uv_build>=0.9,<0.12"]
+build-backend = "uv_build"

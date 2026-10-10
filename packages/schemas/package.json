@@ -1,0 +1,35 @@
+{
+  "name": "@suryasaathi/schemas",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared JSON schemas (reading, system, case) and generated TypeScript types",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./schemas/*": "./schemas/*"
+  },
+  "files": [
+    "dist",
+    "schemas"
+  ],
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "pnpm generate && tsc -p tsconfig.build.json",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^9.39.5",
+    "json-schema-to-typescript": "^16.0.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.3"
+  }
+}

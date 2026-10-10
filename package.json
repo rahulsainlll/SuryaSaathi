@@ -1,0 +1,28 @@
+{
+  "name": "suryasaathi",
+  "private": true,
+  "description": "AI agent that keeps India's rooftop solar working.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^16.5.0",
+    "prettier": "^3.9.10",
+    "turbo": "^2.11.7",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.71.1"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://suryasaathi.dev/schemas/case.schema.json",
+  "title": "Case",
+  "description": "A free-maintenance claim filed with a vendor.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["caseId", "systemId", "vendorId", "cause", "status", "openedAt", "vendorDeadline"],
+  "properties": {
+    "caseId": { "type": "string", "minLength": 1 },
+    "systemId": { "type": "string", "minLength": 1 },
+    "vendorId": { "type": "string" },
+    "cause": {
+      "title": "CaseCause",
+      "description": "Diagnosed cause. Smog never opens a case.",
+      "type": "string",
+      "enum": ["dust", "fault"]
+    },
+    "status": {
+      "title": "CaseStatus",
+      "type": "string",
+      "enum": ["open", "vendor_notified", "escalated", "verified", "closed"]
+    },
+    "openedAt": { "type": "string", "format": "date-time" },
+    "vendorDeadline": { "type": "string", "format": "date-time" },
+    "escalatedAt": { "type": "string", "format": "date-time" },
+    "verifiedAt": { "type": "string", "format": "date-time" },
+    "evidence": {
+      "description": "S3 URIs of evidence attached to the complaint.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "reason": { "description": "Why the agent opened the case.", "type": "string" }
+  }
+}

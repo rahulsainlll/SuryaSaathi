@@ -1,0 +1,17 @@
+name: Feature request
+description: Suggest an idea or change
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Who is this for (family, vendor, DISCOM admin, developer) and what do they need?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+    validations:
+      required: true

@@ -1,0 +1,41 @@
+/*
+ * SuryaSaathi theme for HeroUI v3.
+ *
+ * Apps import this file once from their global stylesheet:
+ *   @import "@suryasaathi/ui/theme.css";
+ *
+ * It pulls in Tailwind CSS v4 and HeroUI's styles, then overrides HeroUI's theme
+ * variables. Light is the default; dark applies with `.dark` or `data-theme="dark"`
+ * on <html>, matching HeroUI's own selectors. Tailwind must be imported before
+ * @heroui/styles (https://heroui.com/docs/react/getting-started/quick-start).
+ */
+@import "tailwindcss";
+@import "@heroui/styles";
+
+/* Let Tailwind see utility classes used by the shared components. */
+@source "./";
+
+/* Theme overrides, as in HeroUI's "Customizing Colors" docs. */
+:root,
+[data-theme="light"] {
+  /* Solar saffron accent */
+  --accent: oklch(0.7 0.18 55);
+  --accent-foreground: oklch(0.21 0.006 286);
+  --focus: var(--accent);
+
+  --radius: 0.625rem;
+}
+
+.dark,
+[data-theme="dark"] {
+  --accent: oklch(0.76 0.16 60);
+  --accent-foreground: oklch(0.21 0.006 286);
+}
+
+@theme inline {
+  /* Diagnosis colours, available as bg-smog, text-dust, border-fault, … */
+  --color-healthy: var(--success);
+  --color-smog: oklch(0.65 0.02 260);
+  --color-dust: oklch(0.68 0.12 75);
+  --color-fault: var(--danger);
+}

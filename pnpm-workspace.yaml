@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "infra"
+
+# Dependencies allowed to run install scripts (pnpm 10 blocks them by default).
+onlyBuiltDependencies:
+  - esbuild
+ignoredBuiltDependencies:
+  - unrs-resolver

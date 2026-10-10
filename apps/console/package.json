@@ -1,0 +1,33 @@
+{
+  "name": "console",
+  "version": "0.0.0",
+  "private": true,
+  "description": "DISCOM admin console for SuryaSaathi",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit"
+  },
+  "dependencies": {
+    "@heroui/react": "^3.2.6",
+    "@heroui/styles": "^3.2.6",
+    "@suryasaathi/ui": "workspace:*",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3"
+  }
+}

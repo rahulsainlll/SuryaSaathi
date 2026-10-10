@@ -2,7 +2,8 @@ import { readFileSync } from "node:fs";
 import * as cedar from "@cedar-policy/cedar-wasm/nodejs";
 import { describe, expect, it } from "vitest";
 
-const read = (file: string) => readFileSync(new URL(`../policies/${file}`, import.meta.url), "utf8");
+const read = (file: string) =>
+  readFileSync(new URL(`../policies/${file}`, import.meta.url), "utf8");
 
 const schema = read("schema.cedarschema");
 const policies = { staticPolicies: read("access.cedar") };

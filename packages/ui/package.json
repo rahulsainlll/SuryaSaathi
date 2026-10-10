@@ -5,7 +5,9 @@
   "description": "Shared HeroUI v3 theme, tokens and components for the SuryaSaathi apps",
   "license": "MIT",
   "type": "module",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./tokens": "./src/tokens.ts",

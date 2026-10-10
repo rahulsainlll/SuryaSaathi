@@ -5,7 +5,15 @@
   "description": "A rooftop solar system SuryaSaathi monitors.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["systemId", "capacityKw", "location", "vendorId", "discomId", "dataSource", "consent"],
+  "required": [
+    "systemId",
+    "capacityKw",
+    "location",
+    "vendorId",
+    "discomId",
+    "dataSource",
+    "consent"
+  ],
   "properties": {
     "systemId": {
       "description": "Opaque ID printed on the system's QR sticker. Never contains personal data.",

@@ -8,10 +8,17 @@
   "required": ["systemId", "date", "source", "energyKwh", "receivedAt"],
   "properties": {
     "systemId": { "type": "string", "minLength": 1 },
-    "date": { "description": "Local date the energy was generated.", "type": "string", "format": "date" },
+    "date": {
+      "description": "Local date the energy was generated.",
+      "type": "string",
+      "format": "date"
+    },
     "source": { "$ref": "#/$defs/dataSource" },
     "energyKwh": { "description": "Energy generated that day.", "type": "number", "minimum": 0 },
-    "faultCode": { "description": "Fault code reported by the inverter, if any.", "type": "string" },
+    "faultCode": {
+      "description": "Fault code reported by the inverter, if any.",
+      "type": "string"
+    },
     "receivedAt": { "type": "string", "format": "date-time" }
   },
   "$defs": {

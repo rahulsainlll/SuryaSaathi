@@ -6,7 +6,13 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["**/dist/**", "**/.next/**", "**/cdk.out/**", "**/node_modules/**", "**/next-env.d.ts"],
+    ignores: [
+      "**/dist/**",
+      "**/.next/**",
+      "**/cdk.out/**",
+      "**/node_modules/**",
+      "**/next-env.d.ts",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

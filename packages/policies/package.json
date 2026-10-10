@@ -8,7 +8,9 @@
   "exports": {
     "./*": "./policies/*"
   },
-  "files": ["policies"],
+  "files": [
+    "policies"
+  ],
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

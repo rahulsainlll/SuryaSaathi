@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+uv.lock
+**/dist
+**/.next
+**/cdk.out
+**/generated
+README.md

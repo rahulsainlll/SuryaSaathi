@@ -135,7 +135,7 @@ export class ConsoleStack extends Stack {
       methods: [apigwv2.HttpMethod.GET],
       integration: new HttpLambdaIntegration("ConsoleApi", consoleApi.fn),
     });
-    api.addRoutes({
+    const liveRoutes = api.addRoutes({
       path: LIVE_PATH,
       methods: [apigwv2.HttpMethod.GET],
       integration: new HttpLambdaIntegration("LiveApi", liveApi.fn),
@@ -154,6 +154,10 @@ export class ConsoleStack extends Stack {
     (stage.node.defaultChild as apigwv2.CfnStage).routeSettings = {
       [`GET ${LIVE_PATH}`]: { ThrottlingRateLimit: 5, ThrottlingBurstLimit: 10 },
     };
+    // Settings for a route API Gateway cannot see yet are a 404, and nothing in the
+    // template says the stage needs the route, so CloudFormation is free to update the
+    // stage first — and did. Order it explicitly.
+    for (const route of liveRoutes) stage.node.addDependency(route);
     this.apiUrl = stage.url;
     this.liveUrl = `${stage.url.replace(/\/+$/, "")}${LIVE_PATH}`;
 

@@ -340,6 +340,16 @@ describe("console", () => {
         "GET /public/live": { ThrottlingRateLimit: 5, ThrottlingBurstLimit: 10 },
       },
     });
+    // The stage carries settings for a route key, which API Gateway rejects with a 404
+    // if the route does not exist yet. Without this dependency CloudFormation updates
+    // the stage first and the deploy fails — and then the rollback fails too.
+    const stage = Object.entries(t.console.findResources("AWS::ApiGatewayV2::Stage"))[0]!;
+    const routes = Object.keys(t.console.findResources("AWS::ApiGatewayV2::Route"));
+    const dependsOn = (stage[1] as { DependsOn?: string | string[] }).DependsOn ?? [];
+    const liveRoute = routes.find((id) => id.startsWith("ApiGETpubliclive"));
+    expect(liveRoute, "the live route should exist").toBeDefined();
+    expect([dependsOn].flat()).toContain(liveRoute);
+
     // Exactly one function is capped, and it is the public one.
     const capped = Object.keys(
       t.console.findResources("AWS::Lambda::Function", {

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { REPO, SOURCES } from "../_site/content";
 import { CtaMini } from "../_site/cta-mini";
 import { Film } from "../_site/film";
-import { FilmPoster } from "../_site/film-poster";
-import { Layers } from "../_site/layers";
+import { filmSource, FilmPoster } from "../_site/film-poster";
+import { AwsFlow } from "../_site/aws-flow";
 import { ScrollToFilm } from "../_site/scroll-to-film";
 import { delay, RevealHeading, words } from "../_site/words";
 
@@ -47,13 +47,6 @@ const STEPS = [
     title: "Act and verify",
     text: "Claim filed with evidence, deadline chased, DISCOM steps in if missed, fix checked from new readings.",
   },
-];
-
-const LAYERS = [
-  { name: "Ingest", services: ["AWS IoT Core", "EventBridge", "End User Messaging"] },
-  { name: "Agents", services: ["Strands Agents", "Amazon Bedrock", "AWS Lambda"] },
-  { name: "Memory & rules", services: ["DynamoDB", "Amazon S3", "Cedar"] },
-  { name: "Act & report", services: ["Step Functions", "SES + SNS", "Amplify"] },
 ];
 
 export default function Home() {
@@ -100,7 +93,7 @@ export default function Home() {
       </section>
 
       <section id="film" className="film-section">
-        <Film poster={<FilmPoster />} />
+        <Film poster={<FilmPoster />} src={filmSource()} />
       </section>
 
       <section style={{ padding: "0 0 104px" }}>
@@ -294,19 +287,21 @@ export default function Home() {
       </section>
 
       <section className="s">
-        <div className="wrap grid c2" style={{ gap: 48, alignItems: "center" }}>
-          <div className="stack g16">
-            <span className="eyebrow">Built on AWS</span>
-            <RevealHeading>Serverless, end to end</RevealHeading>
-            <p className="lead fade">
-              Agents built with Strands on Amazon Bedrock, every case run by Step Functions, consent
-              enforced by Cedar, and the whole stack defined in AWS CDK.
-            </p>
-            <Link href="/technology" className="btn btn-g fade self-start">
+        <div className="wrap stack g40">
+          <div className="aws-head">
+            <div className="stack g16">
+              <span className="eyebrow">Built on AWS</span>
+              <RevealHeading>Serverless, end to end</RevealHeading>
+              <p className="lead fade">
+                Follow one reading: in through IoT Core, checked by Lambda, explained by an agent on
+                Amazon Bedrock, chased by Step Functions, and sent home. All defined in AWS CDK.
+              </p>
+            </div>
+            <Link href="/technology" className="btn btn-g fade">
               Explore the technology →
             </Link>
           </div>
-          <Layers layers={LAYERS} />
+          <AwsFlow />
         </div>
       </section>
 

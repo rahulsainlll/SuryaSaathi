@@ -1,15 +1,15 @@
 "use client";
 
 import { useMotionValueEvent, useReducedMotion, useSpring } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-/** Idle after this long without a pointer, the sun drifts on its own. */
-const IDLE_MS = 2500;
+/** One sunrise-to-sunset pass of the drift, ms. */
+const DAY_MS = 14000;
 
 /**
- * The footer's sky: the sun follows the pointer on a spring along its arc, and the readout
- * shows what a 3 kW roof would make at that time of day. Decorative; it only animates
- * while visible, and with reduced motion it jumps straight to the pointer.
+ * The footer's sky: the sun drifts along its arc on its own, on a spring, and the readout
+ * shows what a 3 kW roof would make at that time of day. Decorative; it only animates while
+ * visible, and with reduced motion it stays at noon.
  */
 export function Sky() {
   const sky = useRef<HTMLDivElement>(null);
@@ -20,8 +20,6 @@ export function Sky() {
   const reduce = useReducedMotion();
   // Matches the prototype's per-frame spring (vel += Δ·0.06; vel *= 0.8 at 60 fps).
   const pos = useSpring(0.5, { stiffness: 216, damping: 14, mass: 1 });
-  const lastMove = useRef(-Infinity);
-  const [touch, setTouch] = useState(false);
 
   const render = (t: number) => {
     const el = sky.current;
@@ -49,8 +47,6 @@ export function Sky() {
   useMotionValueEvent(pos, "change", render);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reads the device once
-    setTouch(matchMedia("(hover: none)").matches);
     render(pos.get());
     const onResize = () => render(pos.get());
     window.addEventListener("resize", onResize);
@@ -58,14 +54,14 @@ export function Sky() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- render reads refs only
   }, []);
 
-  // Idle drift, only while the sky is on screen.
+  // The drift, only while the sky is on screen: sunrise to sunset and back, eased at the ends.
   useEffect(() => {
     if (reduce) return;
     const el = sky.current;
     if (!el) return;
     let frame = 0;
     const loop = (now: number) => {
-      if (now - lastMove.current > IDLE_MS) pos.set(0.5 + 0.4 * Math.sin(now / 3400));
+      pos.set(0.5 - 0.44 * Math.cos((2 * Math.PI * now) / DAY_MS));
       frame = requestAnimationFrame(loop);
     };
     const io = new IntersectionObserver(([e]) => {
@@ -79,24 +75,12 @@ export function Sky() {
     };
   }, [reduce, pos]);
 
-  const follow = (clientX: number) => {
-    const el = sky.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const t = Math.max(0.03, Math.min(0.97, (clientX - r.left) / r.width));
-    lastMove.current = performance.now();
-    if (reduce) pos.jump(t);
-    else pos.set(t);
-  };
-
   return (
     <div
       className="sky"
       ref={sky}
-      role="group"
-      aria-label="Interactive: move across the sky to move the sun and see this roof's output"
-      onPointerMove={(e) => follow(e.clientX)}
-      onPointerDown={(e) => follow(e.clientX)}
+      role="img"
+      aria-label="The sun crossing the sky over three rooftops, with one roof's output through the day"
     >
       <svg className="arc" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
         <path
@@ -133,8 +117,8 @@ export function Sky() {
           <i ref={meter} />
         </div>
         <p>
-          {touch ? "Drag" : "Move"} across the sky. SuryaSaathi does this maths for every roof,
-          every day: what the sun allowed, against what the roof made.
+          SuryaSaathi does this maths for every roof, every day: what the sun allowed, against what
+          the roof made.
         </p>
       </div>
     </div>

@@ -66,7 +66,9 @@ export function SiteFooter() {
             Environmental Hacks · Waste and Energy track · Bharat Builds Tour by WeMakeDevs × AWS,
             October 2026
           </span>
-          <span>All systems shown are simulated.</span>
+          <span>
+            All systems shown are simulated. AWS service icons from the AWS Architecture Icons.
+          </span>
         </div>
       </div>
     </footer>

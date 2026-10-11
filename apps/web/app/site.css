@@ -1677,3 +1677,218 @@ html[data-theme="dark"]:has(.site) {
     opacity: 0.85;
   }
 }
+
+/* --- Live from AWS (/live) ---------------------------------------------------------- */
+
+.site {
+  & .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 7px;
+    border-radius: 999px;
+    background: var(--faint);
+    vertical-align: middle;
+  }
+  & .live-dot.on {
+    background: var(--ok);
+    animation: live-pulse 2s var(--ease-in-out) infinite;
+  }
+  & .live-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  & .faintish {
+    color: var(--faint);
+  }
+
+  /* The path a reading takes, with the counters on it. */
+  & .live-pipe {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  & .live-pipe-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 180px;
+  }
+  & .live-pipe-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    height: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--panel);
+  }
+  & .live-pipe-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  & .live-pipe-figure {
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  & .live-pipe-arrow {
+    color: var(--faint);
+    flex: 0 0 auto;
+  }
+
+  /* One rooftop. */
+  & .live-roof-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  & .live-figures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  & .live-figures > div {
+    display: flex;
+    flex-direction: column;
+  }
+  & .live-figure {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  & .live-figure-sm {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  & .live-chart {
+    height: 164px;
+  }
+
+  /* The decision feed. */
+  & .live-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  & .live-feed-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--panel);
+  }
+  & .live-feed-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  & .live-written {
+    margin-left: auto;
+  }
+  & .live-reason {
+    margin: 0;
+    max-width: 78ch;
+  }
+
+  /* The cases table. Wide content scrolls inside itself, never the page. */
+  & .live-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--panel);
+  }
+  & .live-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 760px;
+  }
+  & .live-table th,
+  & .live-table td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    font-weight: 400;
+  }
+  & .live-table thead th {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  & .live-table tbody tr:last-child th,
+  & .live-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  & .live-mono {
+    font-family: var(--mono);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  & .live-msg {
+    min-width: 260px;
+    color: var(--muted);
+  }
+
+  /* Loading. */
+  & .live-skel {
+    border-radius: 18px;
+    background: var(--soft);
+    animation: live-fade 1.4s var(--ease-in-out) infinite;
+  }
+  & .live-skel-strip {
+    height: 86px;
+  }
+  & .live-skel-card {
+    height: 300px;
+  }
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--ok-soft);
+  }
+  50% {
+    opacity: 0.75;
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+
+@keyframes live-fade {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site .live-dot.on,
+  .site .live-skel {
+    animation: none;
+  }
+}

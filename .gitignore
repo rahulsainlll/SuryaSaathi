@@ -27,6 +27,11 @@ __pycache__/
 .env
 .env.*
 !.env.example
+.envrc
+.direnv/
+
+# Local Claude Code settings (holds the AWS profile for this machine)
+.claude/settings.local.json
 
 # Logs
 *.log

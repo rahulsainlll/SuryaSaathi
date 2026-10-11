@@ -4,7 +4,7 @@ from typing import Any
 import boto3
 import pytest
 from boto3.dynamodb.types import TypeSerializer
-from suryasaathi_agents.agent import SYSTEM_PROMPT, bedrock_model, build_agent
+from suryasaathi_agents.agent import SYSTEM_PROMPT, bedrock_model, build_agent, build_model
 from suryasaathi_agents.cases import case_id, schema_view
 from suryasaathi_agents.handler import handler, process_reading, uses_agent
 from suryasaathi_agents.toolkit import Toolkit
@@ -156,17 +156,66 @@ def test_the_strands_agent_is_wired_to_bedrock_and_the_tools(store: Store) -> No
     fixture = load_fixture("fault")
     register(store, fixture)
     store.put_reading(reading_for(fixture, 0))
-    settings = Settings(bedrock_model_id="anthropic.claude-opus-5-5", bedrock_region="ap-south-1")
+    settings = Settings(
+        bedrock_model_id="us.anthropic.claude-haiku-4-5-20251001-v1:0",
+        bedrock_region="ap-south-1",
+    )
     kit = Toolkit(store, settings, fixture_lookup(fixture), "SS-SIM-0001", "2026-10-01")
     model = bedrock_model(settings)
-    assert type(model.client).__name__ == "AsyncAnthropicBedrockMantle"
-    assert model.config["model_id"] == "anthropic.claude-opus-5-5"
+    assert model.config["model_id"] == "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     agent = build_agent(kit, settings, model)
     assert sorted(agent.tool_names) == [
         "check_diagnosis_rules", "close_case_after_rain", "get_expected_output", "get_readings", "open_case",
     ]  # fmt: skip
     assert "check_diagnosis_rules" in SYSTEM_PROMPT
     assert agent.tool.check_diagnosis_rules()["status"] == "success"
+
+
+def test_the_anthropic_provider_reads_its_key_from_secrets_manager(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """MODEL_PROVIDER=anthropic takes the key from the secret, never from the environment."""
+    import suryasaathi_agents.agent as agent_module
+
+    agent_module._anthropic_api_key.cache_clear()
+    asked: list[str] = []
+
+    class FakeSecrets:
+        def get_secret_value(self, SecretId: str) -> dict[str, str]:  # noqa: N803
+            asked.append(SecretId)
+            return {"SecretString": json.dumps({"apiKey": "sk-ant-test"})}
+
+    monkeypatch.setattr("boto3.client", lambda *a, **k: FakeSecrets())
+    settings = Settings(
+        model_provider="anthropic",
+        anthropic_model_id="claude-haiku-4-5",
+        anthropic_secret_name="suryasaathi/anthropic-api-key",
+    )
+    model = build_model(settings)
+    assert model.config["model_id"] == "claude-haiku-4-5"
+    assert asked == ["suryasaathi/anthropic-api-key"]
+    assert model.client.api_key == "sk-ant-test"
+    agent_module._anthropic_api_key.cache_clear()
+
+
+def test_a_bare_secret_string_is_accepted_as_the_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    import suryasaathi_agents.agent as agent_module
+
+    agent_module._anthropic_api_key.cache_clear()
+
+    class FakeSecrets:
+        def get_secret_value(self, SecretId: str) -> dict[str, str]:  # noqa: N803
+            return {"SecretString": "  sk-ant-plain  "}
+
+    monkeypatch.setattr("boto3.client", lambda *a, **k: FakeSecrets())
+    key = agent_module._anthropic_api_key("some/secret", "us-east-1")
+    assert key == "sk-ant-plain"
+    agent_module._anthropic_api_key.cache_clear()
+
+
+def test_the_default_provider_is_still_bedrock() -> None:
+    assert Settings().model_provider == "bedrock"
+    assert type(build_model(Settings(bedrock_region="us-east-1"))).__name__ == "BedrockModel"
 
 
 def test_new_cases_start_their_workflow(store: Store, monkeypatch: pytest.MonkeyPatch) -> None:

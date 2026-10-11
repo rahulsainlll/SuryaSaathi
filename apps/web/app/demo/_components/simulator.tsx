@@ -185,6 +185,17 @@ export function Simulator() {
       <p className="sr-only" aria-live="polite">
         {latestDecision}
       </p>
+      <p className="mt-5">
+        <Link
+          href="/live"
+          className="font-medium text-foreground underline underline-offset-4 hover:no-underline"
+        >
+          See it running on AWS →
+        </Link>
+        <span className="ml-2 text-xs text-muted">
+          The same agent, deployed: live readings, decisions and cases from the backend.
+        </span>
+      </p>
       <p className="mt-4 text-xs text-muted">
         All readings are simulated for a 3 kW system in Dwarka, Delhi, starting 29 Sep 2026. Rupee
         loss uses ₹7 per unit for illustration. In production, readings come from the DISCOM data

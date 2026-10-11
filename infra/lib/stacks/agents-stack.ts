@@ -1,4 +1,4 @@
-import { CfnOutput, Duration, RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
+import { ArnFormat, CfnOutput, Duration, RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { DynamoEventSource } from "aws-cdk-lib/aws-lambda-event-sources";
@@ -57,7 +57,7 @@ export class AgentsStack extends Stack {
       new iam.PolicyStatement({ actions: ["ses:SendEmail"], resources: ["*"] }),
     );
 
-    this.stateMachine = caseWorkflow(this, workflow.fn);
+    this.stateMachine = caseWorkflow(this, workflow.fn, config);
 
     // --- diagnosis agent ---------------------------------------------------------------------
     const agent = new ServiceFunction(this, "DiagnosisAgent", {
@@ -69,8 +69,13 @@ export class AgentsStack extends Stack {
       environment: {
         ...shared,
         CASE_WORKFLOW_ARN: this.stateMachine.stateMachineArn,
+        MODEL_PROVIDER: config.modelProvider,
         BEDROCK_MODEL_ID: config.bedrockModelId,
         BEDROCK_REGION: config.bedrockRegion ?? this.region,
+        ANTHROPIC_MODEL_ID: config.anthropicModelId,
+        // The name only. The key itself is read from Secrets Manager at runtime, so it
+        // never reaches the template, the Lambda console or anyone with describe rights.
+        ANTHROPIC_SECRET_NAME: config.anthropicSecretName,
         AGENT_ENABLED: String(config.agentEnabled),
         AGENT_SCOPE: config.agentScope,
         AGENT_EFFORT: config.agentEffort,
@@ -84,16 +89,35 @@ export class AgentsStack extends Stack {
     this.stateMachine.grantStartExecution(agent.fn);
     agent.fn.addToRolePolicy(
       new iam.PolicyStatement({
-        // Claude on Bedrock through the Anthropic SDK's Bedrock (Mantle) endpoint, which
-        // signs requests for the bedrock-mantle service, plus the classic runtime actions.
+        // Claude on Bedrock through the Converse API. The model ID is a cross-region
+        // inference profile, so this has to cover both the profile and the foundation
+        // models it routes to, in every region the profile spans — hence "*".
         actions: [
-          "bedrock-mantle:*",
           "bedrock:InvokeModel",
           "bedrock:InvokeModelWithResponseStream",
+          "bedrock:Converse",
+          "bedrock:ConverseStream",
         ],
         resources: ["*"],
       }),
     );
+    if (config.modelProvider === "anthropic") {
+      // Read-only, and only this one secret. The secret is created outside CDK (see the
+      // runbook) so the key never passes through context, the template or the repository.
+      agent.fn.addToRolePolicy(
+        new iam.PolicyStatement({
+          actions: ["secretsmanager:GetSecretValue"],
+          resources: [
+            Stack.of(this).formatArn({
+              service: "secretsmanager",
+              resource: "secret",
+              resourceName: `${config.anthropicSecretName}-??????`,
+              arnFormat: ArnFormat.COLON_RESOURCE_NAME,
+            }),
+          ],
+        }),
+      );
+    }
     agent.fn.addEventSource(
       new DynamoEventSource(data.readings, {
         startingPosition: lambda.StartingPosition.LATEST,
@@ -145,7 +169,11 @@ export class AgentsStack extends Stack {
 }
 
 /** NotifyVendor → wait → Recheck → Verify, or Escalate / Remind and wait again. */
-function caseWorkflow(scope: Construct, fn: lambda.IFunction): sfn.StateMachine {
+function caseWorkflow(
+  scope: Construct,
+  fn: lambda.IFunction,
+  config: SuryaConfig,
+): sfn.StateMachine {
   const step = (id: string, name: string, extra: Record<string, unknown> = {}) =>
     new tasks.LambdaInvoke(scope, id, {
       lambdaFunction: fn,
@@ -192,7 +220,7 @@ function caseWorkflow(scope: Construct, fn: lambda.IFunction): sfn.StateMachine 
   );
 
   const logGroup = new logs.LogGroup(scope, "CaseWorkflowExecutions", {
-    retention: logs.RetentionDays.ONE_MONTH,
+    retention: config.logRetentionDays as logs.RetentionDays,
     removalPolicy: RemovalPolicy.DESTROY,
   });
   return new sfn.StateMachine(scope, "CaseStateMachine", {

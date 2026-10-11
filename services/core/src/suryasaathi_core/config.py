@@ -24,9 +24,15 @@ class Settings:
     expected_function: str | None = None
     #: Step Functions state machine started for every new case.
     case_workflow_arn: str | None = None
+    #: "bedrock" calls Claude on Amazon Bedrock; "anthropic" calls the Anthropic API
+    #: directly, with the key read at runtime from the Secrets Manager secret below.
+    model_provider: str = "bedrock"
     #: Amazon Bedrock model and region for the diagnosis agent.
-    bedrock_model_id: str = "anthropic.claude-opus-5-5"
+    bedrock_model_id: str = "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     bedrock_region: str | None = None
+    #: Model ID and secret used when model_provider is "anthropic".
+    anthropic_model_id: str = "claude-haiku-4-5"
+    anthropic_secret_name: str | None = None
     agent_effort: str = "low"
     #: False runs the rules without the LLM (reasons come from the templates).
     agent_enabled: bool = True
@@ -54,8 +60,12 @@ class Settings:
             window_days=int(_env("WINDOW_DAYS", "30") or 30),
             expected_function=_env("EXPECTED_FUNCTION"),
             case_workflow_arn=_env("CASE_WORKFLOW_ARN"),
+            model_provider=(_env("MODEL_PROVIDER", d.model_provider) or d.model_provider).lower(),
             bedrock_model_id=_env("BEDROCK_MODEL_ID", d.bedrock_model_id) or d.bedrock_model_id,
             bedrock_region=_env("BEDROCK_REGION", _env("AWS_REGION")),
+            anthropic_model_id=_env("ANTHROPIC_MODEL_ID", d.anthropic_model_id)
+            or d.anthropic_model_id,
+            anthropic_secret_name=_env("ANTHROPIC_SECRET_NAME"),
             agent_effort=_env("AGENT_EFFORT", d.agent_effort) or d.agent_effort,
             agent_enabled=(_env("AGENT_ENABLED", "true") or "true").lower() == "true",
             agent_scope=_env("AGENT_SCOPE", d.agent_scope) or d.agent_scope,

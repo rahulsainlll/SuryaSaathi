@@ -53,6 +53,63 @@ describe("stacks", () => {
       template.resourceCountIs("AWS::EC2::NatGateway", 0);
     }
   });
+
+  // Everything here is billed per request. Anything that bills by the hour, or that keeps
+  // capacity warm, costs money on an idle demo account and must stay out of the app.
+  it("creates nothing that costs money while idle", () => {
+    const idleCharges = [
+      "AWS::EC2::VPC",
+      "AWS::EC2::NatGateway",
+      "AWS::EC2::VPCEndpoint",
+      "AWS::EC2::Instance",
+      "AWS::ECS::Cluster",
+      "AWS::ECS::Service",
+      "AWS::OpenSearchService::Domain",
+      "AWS::OpenSearchServerless::Collection",
+      "AWS::Elasticsearch::Domain",
+      "AWS::RDS::DBInstance",
+      "AWS::RDS::DBCluster",
+      "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "AWS::KMS::Key",
+      "AWS::MSK::Cluster",
+      "AWS::ElastiCache::CacheCluster",
+      "AWS::DocDB::DBCluster",
+      "AWS::Kinesis::Stream",
+    ];
+    for (const stack of Object.values(t.stacks)) {
+      const template = Template.fromStack(stack);
+      for (const type of idleCharges) template.resourceCountIs(type, 0);
+    }
+  });
+
+  it("keeps every table on-demand and every log group short-lived", () => {
+    for (const table of Object.values(t.data.findResources("AWS::DynamoDB::Table")) as {
+      Properties: Record<string, unknown>;
+    }[]) {
+      expect(table.Properties.BillingMode).toBe("PAY_PER_REQUEST");
+      expect(table.Properties.ProvisionedThroughput).toBeUndefined();
+    }
+    for (const stack of Object.values(t.stacks)) {
+      const groups = Object.values(
+        Template.fromStack(stack).findResources("AWS::Logs::LogGroup"),
+      ) as { Properties: { RetentionInDays?: number } }[];
+      for (const g of groups) expect(g.Properties.RetentionInDays).toBe(3);
+    }
+  });
+
+  // Provisioned concurrency keeps execution environments warm and bills for them by the
+  // hour. Reserved concurrency is free and only caps scaling, so the public Live function
+  // uses it deliberately — the two are a letter apart and nothing alike on the invoice.
+  it("keeps no Lambda capacity warm", () => {
+    for (const stack of Object.values(t.stacks)) {
+      const template = Template.fromStack(stack);
+      template.resourceCountIs("AWS::Lambda::Alias", 0);
+      template.resourceCountIs("AWS::Lambda::Version", 0);
+      const json = JSON.stringify(template.toJSON());
+      expect(json).not.toContain("ProvisionedConcurrencyConfig");
+      expect(json).not.toContain("ProvisionedConcurrentExecutions");
+    }
+  });
 });
 
 describe("data", () => {
@@ -138,9 +195,9 @@ describe("agents", () => {
     });
   });
 
-  it("configures Bedrock from context, defaulting to Claude Opus 5.5 in the stack region", () => {
+  it("configures Bedrock from context, defaulting to Claude Haiku 4.5 in the stack region", () => {
     expect(env(t.agents, "DiagnosisAgent")).toMatchObject({
-      BEDROCK_MODEL_ID: "anthropic.claude-opus-5-5",
+      BEDROCK_MODEL_ID: "us.anthropic.claude-haiku-4-5-20251001-v1:0",
       BEDROCK_REGION: "ap-south-1",
       AGENT_SCOPE: "actions",
       DAY_LENGTH_SECONDS: "86400",
@@ -149,11 +206,37 @@ describe("agents", () => {
       PolicyDocument: {
         Statement: Match.arrayWith([
           Match.objectLike({
-            Action: Match.arrayWith(["bedrock-mantle:*", "bedrock:InvokeModel"]),
+            Action: Match.arrayWith(["bedrock:InvokeModel", "bedrock:ConverseStream"]),
           }),
         ]),
       },
     });
+  });
+
+  it("can be pointed at the Anthropic API, taking the key from Secrets Manager", () => {
+    const anthropic = synth({ modelProvider: "anthropic" }).agents;
+    const vars = env(anthropic, "DiagnosisAgent");
+    expect(vars).toMatchObject({
+      MODEL_PROVIDER: "anthropic",
+      ANTHROPIC_MODEL_ID: "claude-haiku-4-5",
+      ANTHROPIC_SECRET_NAME: "suryasaathi/anthropic-api-key",
+    });
+    // The key itself must never be synthesized into the template, in any form.
+    const template = JSON.stringify(anthropic.toJSON());
+    expect(template).not.toMatch(/sk-ant-/);
+    expect(template).not.toMatch(/ANTHROPIC_API_KEY/);
+    expect(template).not.toMatch(/\{\{resolve:secretsmanager/);
+    anthropic.hasResourceProperties("AWS::IAM::Policy", {
+      PolicyDocument: {
+        Statement: Match.arrayWith([Match.objectLike({ Action: "secretsmanager:GetSecretValue" })]),
+      },
+    });
+  });
+
+  it("asks for no secret when it is using Bedrock", () => {
+    const policies = JSON.stringify(t.agents.findResources("AWS::IAM::Policy"));
+    expect(policies).not.toContain("secretsmanager:GetSecretValue");
+    expect(env(t.agents, "DiagnosisAgent")).toMatchObject({ MODEL_PROVIDER: "bedrock" });
   });
 
   it("defines the case workflow state machine", () => {
@@ -223,7 +306,8 @@ describe("console", () => {
     t.console.hasResourceProperties("AWS::ApiGatewayV2::Api", {
       ProtocolType: "HTTP",
       CorsConfiguration: Match.objectLike({
-        AllowOrigins: ["http://localhost:3001"],
+        // The console's origin, then the website's for the public Live route.
+        AllowOrigins: ["http://localhost:3001", "http://localhost:3000"],
         AllowMethods: ["GET"],
       }),
     });
@@ -239,6 +323,57 @@ describe("console", () => {
     expect(env(t.console, "ConsoleApi")).toMatchObject({ ADMIN_GROUP: "admin" });
     const policies = JSON.stringify(t.console.findResources("AWS::IAM::Policy"));
     expect(policies).not.toMatch(/dynamodb:(PutItem|UpdateItem|DeleteItem|BatchWriteItem)/);
+  });
+
+  it("exposes one public, throttled, capped route for the site's Live page", () => {
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Route", {
+      RouteKey: "GET /public/live",
+      AuthorizationType: "NONE",
+    });
+    // The console's own routes must stay behind the authorizer.
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Route", {
+      RouteKey: "GET /{proxy+}",
+      AuthorizationType: "JWT",
+    });
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Stage", {
+      RouteSettings: {
+        "GET /public/live": { ThrottlingRateLimit: 5, ThrottlingBurstLimit: 10 },
+      },
+    });
+    // The stage carries settings for a route key, which API Gateway rejects with a 404
+    // if the route does not exist yet. Without this dependency CloudFormation updates
+    // the stage first and the deploy fails — and then the rollback fails too.
+    const stage = Object.entries(t.console.findResources("AWS::ApiGatewayV2::Stage"))[0]!;
+    const routes = Object.keys(t.console.findResources("AWS::ApiGatewayV2::Route"));
+    const dependsOn = (stage[1] as { DependsOn?: string | string[] }).DependsOn ?? [];
+    const liveRoute = routes.find((id) => id.startsWith("ApiGETpubliclive"));
+    expect(liveRoute, "the live route should exist").toBeDefined();
+    expect([dependsOn].flat()).toContain(liveRoute);
+
+    // Exactly one function is capped, and it is the public one.
+    const capped = Object.keys(
+      t.console.findResources("AWS::Lambda::Function", {
+        Properties: { ReservedConcurrentExecutions: 2 },
+      }),
+    );
+    expect(capped).toHaveLength(1);
+    expect(capped[0]).toMatch(/^LiveApi/);
+    // The public function reads, never writes.
+    const policies = JSON.stringify(t.console.findResources("AWS::IAM::Policy"));
+    expect(policies).not.toMatch(/dynamodb:(PutItem|UpdateItem|DeleteItem|BatchWriteItem)/);
+  });
+
+  it("lets the website read the live route cross-origin", () => {
+    const site = synth({
+      siteUrls: "https://site.example,http://localhost:3000",
+      consoleUrls: "https://console.example",
+    }).console;
+    site.hasResourceProperties("AWS::ApiGatewayV2::Api", {
+      CorsConfiguration: Match.objectLike({
+        AllowOrigins: ["https://console.example", "https://site.example", "http://localhost:3000"],
+      }),
+    });
+    site.hasOutput("NEXTPUBLICLIVEAPI", {});
   });
 
   it("outputs the console's build environment", () => {

@@ -306,7 +306,12 @@ means `AMPLIFY_MONOREPO_APP_ROOT` doesn't match the app's `appRoot`.
 
 **Thumbnails.** The film card on the home page, the README's film thumbnail and the first blog
 post's cover are rendered at 1280×720 from `docs/assets/thumbnails.html` (`#film-clean`,
-`#film` and `#blog`). Clicking the film card opens the film on YouTube.
+`#film` and `#blog`).
+
+**The film on the home page.** With the film at `apps/web/public/film.mp4`, pressing play on
+the film card plays it right there, in a plain video player (no YouTube). Prepare the file with
+`pnpm --filter web film:encode path/to/film.mov` (needs ffmpeg) and commit it. Until it's
+there, the card opens the film on YouTube.
 
 ## 10. Troubleshooting
 

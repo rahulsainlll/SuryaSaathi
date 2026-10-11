@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start --port 3000",
     "lint": "eslint .",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "film:encode": "sh scripts/film-encode.sh"
   },
   "dependencies": {
     "@heroui/react": "^3.2.6",

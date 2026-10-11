@@ -499,7 +499,8 @@ html[data-theme="dark"]:has(.site) {
     background: #14121c;
   }
   & .film-in > svg,
-  & .film-in > img {
+  & .film-in > img,
+  & .film-in > video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -527,6 +528,10 @@ html[data-theme="dark"]:has(.site) {
     place-items: center;
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
     transition: transform 160ms var(--ease-out);
+  }
+  & .film-in > video {
+    background: #000;
+    object-fit: contain;
   }
   & .film-in:hover .pb {
     transform: scale(1.05);

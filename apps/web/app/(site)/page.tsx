@@ -2,7 +2,7 @@ import Link from "next/link";
 import { REPO, SOURCES } from "../_site/content";
 import { CtaMini } from "../_site/cta-mini";
 import { Film } from "../_site/film";
-import { FilmPoster } from "../_site/film-poster";
+import { filmSource, FilmPoster } from "../_site/film-poster";
 import { Layers } from "../_site/layers";
 import { ScrollToFilm } from "../_site/scroll-to-film";
 import { delay, RevealHeading, words } from "../_site/words";
@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       <section id="film" className="film-section">
-        <Film poster={<FilmPoster />} />
+        <Film poster={<FilmPoster />} src={filmSource()} />
       </section>
 
       <section style={{ padding: "0 0 104px" }}>

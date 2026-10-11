@@ -1,53 +1,110 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { RevealHeading } from "../_site/words";
 import { POSTS } from "./_posts";
 import { formatDate } from "./format";
 
 export const metadata: Metadata = {
   title: "Blog · SuryaSaathi",
-  description: "How SuryaSaathi watches India’s rooftop solar, and how it’s built on AWS.",
+  description: "How SuryaSaathi watches India's rooftop solar, and how it's built on AWS.",
 };
 
+/** What the series covers next (from the first post's "What's next"). */
+const UPCOMING = [
+  "Modelling expected output from sunlight and haze",
+  "Reading an inverter screen with a camera clip",
+  "Chasing vendors: the case workflow on Step Functions",
+  "Inside the DISCOM console",
+];
+
 export default function BlogIndex() {
+  const [featured, ...rest] = POSTS;
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-      <p className="text-sm font-semibold tracking-wide text-accent uppercase">Blog</p>
-      <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Notes from the roof</h1>
-      <p className="mt-4 max-w-2xl text-lg text-muted">
-        How SuryaSaathi tells smog, dust and faults apart, how it makes vendors fix what they owe,
-        and how it’s built on AWS.
-      </p>
-      <ul className="mt-12 grid gap-6 md:grid-cols-2">
-        {POSTS.map((p, i) => (
-          <li key={p.slug}>
-            <Link
-              href={`/blog/${p.slug}`}
-              className="group block overflow-hidden rounded-3xl border border-separator bg-surface transition-colors hover:border-accent"
-            >
-              <Image
-                src={p.image.src}
-                alt=""
-                width={p.image.width}
-                height={p.image.height}
-                priority={i === 0}
-                sizes="(min-width: 768px) 560px, 100vw"
-                className="aspect-video w-full object-cover"
-              />
-              <div className="p-6">
-                <p className="text-sm text-muted">
-                  {p.tag} · <time dateTime={p.date}>{formatDate(p.date)}</time> · {p.readingMinutes}{" "}
-                  min read
-                </p>
-                <h2 className="mt-2 text-xl font-semibold text-balance group-hover:text-accent">
-                  {p.title}
-                </h2>
-                <p className="mt-2 text-muted">{p.description}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <section className="blog-hero">
+        <div className="wrap stack g20">
+          <span className="eyebrow">Blog</span>
+          <RevealHeading as="h1" className="h1 page hero-load">
+            Notes from the roof.
+          </RevealHeading>
+          <p className="lead fade hero-load" style={{ maxWidth: 620 }}>
+            How SuryaSaathi tells smog, dust and faults apart, how it makes vendors fix what they
+            owe, and how it&apos;s built on AWS.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ padding: "16px 0 96px" }}>
+        <div className="wrap stack g40">
+          {featured && <PostCard post={featured} priority />}
+          {rest.map((p) => (
+            <PostCard key={p.slug} post={p} />
+          ))}
+
+          <div className="stack g16 fade">
+            <span className="eyebrow">Coming next in the series</span>
+            <ol className="upcoming">
+              {UPCOMING.map((t, i) => (
+                <li key={t}>
+                  <span>{String(i + 2).padStart(2, "0")}</span>
+                  {t}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function PostCard({
+  post,
+  priority = false,
+}: {
+  post: (typeof POSTS)[number];
+  priority?: boolean;
+}) {
+  return (
+    <Link href={`/blog/${post.slug}`} className="post-card fade">
+      <div className="media">
+        <Image
+          src={post.image.src}
+          alt=""
+          width={post.image.width}
+          height={post.image.height}
+          priority={priority}
+          sizes="(min-width: 1120px) 580px, (min-width: 860px) 52vw, 100vw"
+        />
+      </div>
+      <div className="body">
+        <div className="meta">
+          <span>{post.tag}</span>
+          <span className="dot" />
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span className="dot" />
+          <span>{post.readingMinutes} min read</span>
+        </div>
+        <h2>{post.title}</h2>
+        <p className="muted">{post.description}</p>
+        <span className="more">
+          Read the post
+          <svg
+            aria-hidden="true"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </div>
+    </Link>
   );
 }

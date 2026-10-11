@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SuryaSaathi · Site prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Baloo+2:wght@800&family=Noto+Sans+Devanagari:wght@500&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --panel:#FFFFFF; --soft:#F6F6F7; --ink:#0B0D12; --muted:#565C68; --faint:#6E7480; --line:#E7E7EA;
+  --amber:#F5A524; --amber-text:#A15C00; --amber-soft:#FDF0DA; --blue:#2563EB; --blue-soft:#E8EFFE;
+  --ok:#15803D; --ok-soft:#E6F6EC; --panel-c:#3B4590; --bad:#C2185B; --bad-soft:#FCE7F0;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 30px -12px rgba(0,0,0,.12);
+  --sans:'Geist','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease-out:cubic-bezier(0.23,1,0.32,1); --ease-in-out:cubic-bezier(0.77,0,0.175,1);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C0D11; --panel:#14151B; --soft:#111217; --ink:#EDEEF1; --muted:#A4A8B3; --faint:#8D919C; --line:#24262E;
+  --amber-text:#F5B54A; --amber-soft:#33250C; --blue:#5B8DEF; --blue-soft:#14213D;
+  --ok:#4ADE80; --ok-soft:#0E2A1A; --panel-c:#2E3470; --bad:#F472B6; --bad-soft:#36101F; --shadow:0 0 0 1px #24262E;
+}}
+:root[data-theme="dark"]{
+  --bg:#0C0D11; --panel:#14151B; --soft:#111217; --ink:#EDEEF1; --muted:#A4A8B3; --faint:#8D919C; --line:#24262E;
+  --amber-text:#F5B54A; --amber-soft:#33250C; --blue:#5B8DEF; --blue-soft:#14213D;
+  --ok:#4ADE80; --ok-soft:#0E2A1A; --panel-c:#2E3470; --bad:#F472B6; --bad-soft:#36101F; --shadow:0 0 0 1px #24262E;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.035em;line-height:1.04}
+.h1{font-size:clamp(44px,7.2vw,92px);letter-spacing:-.045em}
+.h2{font-size:clamp(32px,4.6vw,56px)}
+h3{font-size:21px;letter-spacing:-.02em;line-height:1.2}
+p{margin:0}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--muted);line-height:1.5}
+.eyebrow{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--amber-text);letter-spacing:.02em}
+.muted{color:var(--muted)} .small{font-size:14px}
+.hl{color:var(--amber-text)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:8px}
+section.s{padding:104px 0}
+.alt{background:var(--soft)}
+.stack{display:flex;flex-direction:column}
+.g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g28{gap:28px}.g40{gap:40px}
+.center{text-align:center;align-items:center}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px}
+.grid{display:grid;gap:16px}
+.c2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.c3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.c4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:5px 11px;border-radius:999px;background:var(--soft);color:var(--muted);border:1px solid var(--line)}
+.chip.a{background:var(--amber-soft);color:var(--amber-text);border-color:transparent}
+.chip.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.chip.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.chip.b{background:var(--blue-soft);color:var(--blue);border-color:transparent}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;font-weight:600;font-size:16px;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--amber);color:#111}
+.btn-p:hover{background:#FFB43B}
+.btn-g{border-color:var(--line);color:var(--ink);background:var(--panel)}
+.btn-g:hover{background:var(--soft)}
+.btn-ink{background:var(--ink);color:var(--bg)}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);margin-top:calc(-1 * env(safe-area-inset-top,0px))}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Baloo 2',ui-rounded,sans-serif;font-weight:800;font-size:22px}
+.nav{display:flex;align-items:center;gap:2px;flex-wrap:wrap}
+.nav a.l{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:12px 11px;border-radius:10px}
+.nav a.l:hover,.nav a.l[aria-current="page"]{color:var(--ink)}
+.nav a.l[aria-current="page"]{background:var(--soft)}
+.icon-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.menu-btn{display:none}
+.mob{display:none;gap:8px;align-items:center}
+.desk-toggle{display:inline-flex;margin-left:4px}
+@media (max-width:860px){
+  .menu-btn{display:inline-flex}
+  .mob{display:flex}.desk-toggle{display:none}
+  .nav{display:none;width:100%;flex-direction:column;align-items:stretch;padding:8px 0 14px}
+  .hdr.open .nav{display:flex}
+  .nav a.l{padding:14px 10px}
+}
+
+/* text reveal */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.09em;margin-bottom:-.09em}
+.w>span{display:inline-block;transform:translateY(105%);transition:transform 700ms var(--ease-out);transition-delay:var(--d,0ms)}
+.in .w>span{transform:none}
+.fade{opacity:0;transform:translateY(12px);transition:opacity 600ms var(--ease-out),transform 600ms var(--ease-out);transition-delay:var(--d,0ms)}
+.fade.in{opacity:1;transform:none}
+.draw svg.sig{clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.65,0,.35,1) .2s}
+.draw.in svg.sig{clip-path:inset(0 0 0 0)}
+
+/* hero + film */
+.hero{padding:96px 0 44px}
+.pill{font-size:14px;color:var(--muted);border:1px solid var(--line);padding:6px 14px;border-radius:999px;background:var(--panel)}
+.film{max-width:1120px;margin:0 auto;border-radius:28px;border:1px solid var(--line);background:var(--panel);padding:10px;box-shadow:0 40px 90px -40px rgba(0,0,0,.4)}
+.film-in{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#14121C}
+.film-in svg{position:absolute;inset:0;width:100%;height:100%}
+.play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:transparent;border:0;cursor:pointer;width:100%}
+.play .pb{width:92px;height:92px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 14px 40px rgba(0,0,0,.45);transition:transform 200ms var(--ease-out)}
+.play:hover .pb{transform:scale(1.05)}.play:active .pb{transform:scale(.97)}
+.film-bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:12px;padding:16px 22px;color:#ECEAF5;font-weight:600;font-size:15px;background:linear-gradient(to top,rgba(14,12,22,.85),rgba(14,12,22,0));pointer-events:none}
+.film-bar span:last-child{font-weight:500;opacity:.8}
+dialog.vid{width:min(1100px,94vw);padding:0;border:0;border-radius:20px;background:#000;color:#fff;overflow:hidden;opacity:0;transform:scale(.96);transition:opacity 250ms var(--ease-out),transform 250ms var(--ease-out),display 250ms allow-discrete,overlay 250ms allow-discrete}
+dialog.vid[open]{opacity:1;transform:none}
+@starting-style{dialog.vid[open]{opacity:0;transform:scale(.96)}}
+dialog.vid::backdrop{background:rgba(5,6,10,.72);backdrop-filter:blur(4px)}
+.vid-frame{position:relative;aspect-ratio:16/9;background:#000}
+.vid-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px 10px 18px;font-size:14px;background:#0B0B10}
+.vid-bar a{color:#F5B54A}
+.vid-close{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font:inherit;cursor:pointer;transition:transform 160ms var(--ease-out)}
+.vid-close:active{transform:scale(.97)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:30px 20px;display:flex;flex-direction:column;gap:6px}
+.stat + .stat{border-left:1px solid var(--line)}
+@media (max-width:980px){.stat + .stat{border-left:0;border-top:1px solid var(--line)}}
+.stat .n{font-size:44px;font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.stat a{font-size:13px;color:var(--faint);text-underline-offset:3px}
+
+/* cause cards */
+.sigbox{background:var(--soft);border-radius:14px;padding:6px}
+svg.sig{display:block;width:100%;height:auto}
+.card.hot{border:2px solid var(--amber);padding:23px}
+
+/* steps */
+.num{width:36px;height:36px;border-radius:11px;background:var(--amber);color:#111;font-weight:700;display:grid;place-items:center;font-size:16px}
+.msg{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px 18px;max-width:560px}
+.msg .av{width:40px;height:40px;border-radius:50%;background:var(--amber);flex:none}
+
+/* layers */
+.layers{position:relative;display:flex;flex-direction:column;gap:12px;padding-left:34px}
+.rail{position:absolute;left:11px;top:30px;bottom:30px;width:3px;border-radius:2px;background:var(--line)}
+.rail i{position:absolute;left:0;top:0;width:3px;border-radius:2px;background:var(--amber);height:0;transition:height .6s cubic-bezier(.65,0,.35,1)}
+.ldot{position:absolute;left:2px;top:20px;width:21px;height:21px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 7px color-mix(in srgb,var(--amber) 25%,transparent);transition:top .6s cubic-bezier(.65,0,.35,1)}
+.lay{background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:14px 18px;display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:center;transition:border-color .3s}
+.lay.on{border-color:var(--amber)}
+.lay b{font-size:16px}
+.svc{display:flex;flex-wrap:wrap;gap:7px}
+.lay.on .chip{background:var(--amber-soft);color:var(--amber-text);border-color:transparent}
+@media (max-width:620px){.lay{grid-template-columns:1fr}}
+
+/* CTA */
+.cta{border-radius:30px;background:var(--panel);border:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden}
+.cta-l{padding:clamp(32px,5vw,64px);display:flex;flex-direction:column;gap:20px;justify-content:center}
+.cta-r{background:var(--soft);padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:14px;justify-content:center;border-left:1px solid var(--line)}
+@media (max-width:860px){.cta{grid-template-columns:1fr}.cta-r{border-left:0;border-top:1px solid var(--line)}}
+.mini{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+.mini svg{display:block;width:100%;height:auto}
+.case-row{display:flex;flex-wrap:wrap;gap:8px}
+.case-row .chip{transition:background .3s,color .3s,opacity .3s;opacity:.45}
+.case-row .chip.on{opacity:1}
+
+/* walkthrough */
+.how{position:relative;height:440vh}
+.sticky{position:sticky;top:68px;height:calc(100vh - 68px);display:flex;align-items:center}
+.how-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center;width:100%}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.step{padding:18px 20px;border-radius:16px;opacity:.42;display:grid;grid-template-columns:40px 1fr;gap:14px;transition:opacity .3s,background .3s}
+.step.on{opacity:1;background:var(--panel);box-shadow:var(--shadow)}
+.step .num{background:var(--soft);color:var(--muted)}
+.step.on .num{background:var(--amber);color:#111}
+.step p{color:var(--muted);font-size:16px}
+.bar{height:3px;border-radius:2px;background:var(--line);margin-top:12px;overflow:hidden;display:none}
+.step.on .bar{display:block}
+.bar i{display:block;height:100%;background:var(--amber);transform-origin:0 50%;transform:scaleX(0)}
+.stage{position:relative;height:480px;background:var(--panel);border:1px solid var(--line);border-radius:26px;overflow:hidden}
+.layer{position:absolute;inset:0;padding:26px;opacity:0;transition:opacity .35s;display:flex;flex-direction:column;gap:14px}
+.layer.on{opacity:1}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--faint)}
+.nodes{position:relative;display:flex;flex-direction:column;gap:10px;padding-left:44px}
+.nodes .rail{left:17px;top:24px;bottom:24px}
+.ndot{position:absolute;left:8px;width:21px;height:21px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 7px color-mix(in srgb,var(--amber) 25%,transparent)}
+.node{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:14px;border:2px solid var(--line);transition:border-color .25s,background .25s}
+.node b{font-size:18px}.node span{font-size:14px;color:var(--faint)}
+.node.on{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 7%,var(--panel))}
+.chart{background:var(--soft);border-radius:16px;padding:14px}
+.chart svg{display:block;width:100%;height:auto}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kv div{background:var(--soft);border-radius:14px;padding:10px 14px}
+.kv small{display:block;font-size:13px;color:var(--faint)}
+.kv strong{font-size:26px;font-weight:600;letter-spacing:-.03em}
+.verdict{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-radius:16px;border:2px solid var(--line);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s}
+.verdict.on{opacity:1;transform:none}.verdict.hit{border-color:var(--amber)}
+.verdict span.why{display:block;font-size:14px;color:var(--faint)}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:flex;gap:14px;padding-bottom:14px;position:relative;opacity:.4;transition:opacity .25s}
+.tl li:not(:last-child)::after{content:"";position:absolute;left:12px;top:28px;bottom:2px;width:2px;background:var(--line)}
+.tl .b{width:26px;height:26px;border-radius:50%;border:2px dashed var(--line);flex:none}
+.tl li.done,.tl li.warn{opacity:1}.tl li.done .b{background:var(--ok);border:0}.tl li.warn .b{background:var(--bad);border:0}
+.tl span{display:block;font-size:14px;color:var(--faint)}
+.wa{align-self:flex-start;max-width:92%;background:var(--soft);border-radius:18px 18px 18px 6px;padding:12px 16px;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s}
+.wa.on{opacity:1;transform:none}.wa small{display:block;font-size:12.5px;color:var(--faint)}
+@media (max-width:900px){
+  .how{height:480vh}.how-grid{grid-template-columns:1fr;gap:14px}
+  .sticky{align-items:flex-start;padding-top:12px}
+  .stage{height:54vh;min-height:390px;order:-1}.layer{padding:18px;gap:10px}
+  .steps .step{display:none}.steps .step.on{display:grid}
+}
+
+/* rules table */
+.rules{border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.rule{display:grid;grid-template-columns:180px 1fr auto;gap:16px;padding:18px 22px;align-items:center;background:var(--panel)}
+.rule + .rule{border-top:1px solid var(--line)}
+@media (max-width:700px){.rule{grid-template-columns:1fr}}
+
+/* progress */
+.prog{height:14px;border-radius:999px;background:var(--soft);border:1px solid var(--line);overflow:hidden}
+.prog i{display:block;height:100%;width:4.4%;background:var(--amber);border-radius:999px}
+.big{font-size:clamp(44px,6vw,68px);font-weight:600;letter-spacing:-.045em;line-height:1}
+
+/* footer */
+.foot{border-top:1px solid var(--line);margin-top:40px}
+.sky{position:relative;height:360px;overflow:hidden;touch-action:pan-y;cursor:crosshair;border-bottom:1px solid var(--line);
+  background:linear-gradient(to bottom,color-mix(in srgb,var(--amber) calc(var(--warm,0) * 16%),var(--bg)),var(--bg) 85%)}
+.sky .arc{position:absolute;inset:0 0 0 0;width:100%;height:100%;pointer-events:none}
+.sun{position:absolute;left:0;top:0;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:var(--amber);will-change:transform;pointer-events:none}
+.sun::before{content:"";position:absolute;inset:-52px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--amber) 30%,transparent),transparent)}
+.roofs{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:flex-end;gap:clamp(18px,4vw,56px);pointer-events:none}
+.house{display:flex;flex-direction:column;align-items:center}
+.arr{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;transform:skewX(-16deg);margin-bottom:6px}
+.pn{width:clamp(26px,3.2vw,40px);height:22px;border-radius:3px;background:var(--panel-c);position:relative;overflow:hidden;border:1px solid color-mix(in srgb,var(--panel-c) 60%,#fff)}
+.pn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,color-mix(in srgb,var(--amber) 85%,#fff) 50%,transparent 70%);opacity:var(--out,1)}
+.wall{width:100%;border-radius:6px 6px 0 0;background:var(--soft);border:1px solid var(--line);border-bottom:0}
+.house:nth-child(1) .wall{height:92px}.house:nth-child(2) .wall{height:128px}.house:nth-child(3) .wall{height:76px}
+@media (max-width:640px){.house:nth-child(3){display:none}.sky{height:400px}}
+.readout{position:absolute;left:clamp(16px,4vw,48px);top:28px;display:flex;flex-direction:column;gap:6px;max-width:360px}
+.readout .lbl{font-family:var(--mono);font-size:13px;color:var(--faint)}
+.readout .k{font-size:clamp(40px,5vw,56px);font-weight:600;letter-spacing:-.045em;font-variant-numeric:tabular-nums;line-height:1}
+.readout .k small{font-size:.45em;letter-spacing:0;color:var(--muted);font-weight:500;margin-left:4px}
+.meter{width:180px;height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:100%;background:var(--amber);border-radius:999px;transform-origin:0 50%}
+.readout p{font-size:14px;color:var(--muted);margin-top:4px}
+.fcols{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px;padding:48px 0 28px}
+@media (max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
+.fcols h4{margin:0 0 10px;font-size:13px;font-family:var(--mono);font-weight:500;color:var(--faint)}
+.fcols ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.fcols li a{display:inline-block;padding:7px 0;text-decoration:none;color:var(--muted);font-size:15px;transition:color 200ms ease}
+.fcols li a:hover{color:var(--ink)}
+.wordmark{font-family:'Baloo 2',ui-rounded,sans-serif;font-weight:800;font-size:clamp(64px,17vw,240px);line-height:.8;letter-spacing:-.03em;color:var(--soft);-webkit-text-stroke:1px var(--line);text-align:center;padding:10px 0 0;user-select:none;overflow:hidden}
+.legal{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding:18px 0 28px;font-size:13.5px;color:var(--faint);border-top:1px solid var(--line)}
+
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .w>span{transform:none}.fade{opacity:1;transform:none}.draw svg.sig{clip-path:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#/" aria-label="SuryaSaathi home">
+      <svg aria-hidden="true" width="30" height="30" viewBox="0 0 120 120"><g stroke="#F5A524" stroke-width="7" stroke-linecap="round"><line x1="92" y1="62" x2="103" y2="62"/><line x1="56" y1="98" x2="56" y2="109"/><line x1="20" y1="62" x2="9" y2="62"/><line x1="56" y1="26" x2="56" y2="15"/><line x1="81.5" y1="87.5" x2="89.2" y2="95.2"/><line x1="30.5" y1="87.5" x2="22.8" y2="95.2"/><line x1="30.5" y1="36.5" x2="22.8" y2="28.8"/></g><circle cx="56" cy="62" r="26" fill="#F5A524"/><path d="M42 62 L54 74 L96 30" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Surya<span class="hl">Saathi</span></span>
+    </a>
+    <div class="mob"><button class="icon-btn" aria-label="Switch colour theme" data-theme-toggle><svg class="i-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false" id="menuBtn"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+    <nav class="nav" aria-label="Main">
+      <a class="l" href="#/how-it-works">How it works</a>
+      <a class="l" href="#/technology">Technology</a>
+      <a class="l" href="#/impact">Impact</a>
+      <a class="l" href="https://web-xi-snowy-99.vercel.app/blog">Blog</a>
+      <a class="l" href="https://github.com/rahulsainlll/SuryaSaathi">GitHub</a>
+      <span class="desk-toggle"><button class="icon-btn" aria-label="Switch colour theme" data-theme-toggle><svg class="i-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button></span>
+      <a class="btn btn-ink" style="min-height:44px;margin-left:6px" href="https://web-xi-snowy-99.vercel.app/demo">Try the demo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div data-page="home">
+  <section class="hero">
+    <div class="wrap stack g28 center">
+      <span class="pill fade">AI agent for rooftop solar · built on AWS</span>
+      <h1 class="h1" data-reveal>50 lakh solar roofs. <br><span class="hl">Nobody's watching.</span></h1>
+      <p class="lead fade" style="max-width:640px;--d:250ms">SuryaSaathi checks every roof every day, tells smog, dust and faults apart, and makes the vendor fix what they owe. Families just get one WhatsApp message.</p>
+      <div class="fade" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;--d:400ms">
+        <a class="btn btn-p" href="https://web-xi-snowy-99.vercel.app/demo">Try the live demo</a>
+        <button class="btn btn-g" data-scroll="film"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>Watch the film · 70 s</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="film" style="padding:8px 24px 96px">
+    <div class="film fade">
+      <div class="film-in">
+        <svg aria-hidden="true" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+          <defs><radialGradient id="glow" cx="72%" cy="36%" r="42%"><stop offset="0" stop-color="#8B7CF6" stop-opacity=".38"/><stop offset="1" stop-color="#14121C" stop-opacity="0"/></radialGradient></defs>
+          <rect width="1600" height="900" fill="url(#glow)"/>
+          <circle cx="1180" cy="320" r="110" fill="#F5A524"/>
+          <rect x="0" y="640" width="260" height="260" fill="#221E35"/><rect x="268" y="560" width="300" height="340" fill="#1B1830"/><rect x="576" y="610" width="240" height="290" fill="#221E35"/><rect x="824" y="520" width="330" height="380" fill="#1B1830"/><rect x="1162" y="590" width="250" height="310" fill="#221E35"/><rect x="1420" y="540" width="180" height="360" fill="#1B1830"/>
+          <g fill="#4B3F96" stroke="#A99BFF" stroke-width="3"><polygon points="290,556 340,556 332,528 282,528"/><polygon points="350,556 400,556 392,528 342,528"/><polygon points="410,556 460,556 452,528 402,528"/><polygon points="846,516 896,516 888,488 838,488"/><polygon points="906,516 956,516 948,488 898,488"/><polygon points="966,516 1016,516 1008,488 958,488"/><polygon points="1026,516 1076,516 1068,488 1018,488"/><polygon points="1440,536 1490,536 1482,508 1432,508"/><polygon points="1500,536 1550,536 1542,508 1492,508"/></g>
+        </svg>
+        <button class="play" data-film aria-label="Play the 70-second SuryaSaathi film">
+          <span class="pb"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="#111"><polygon points="7 4 21 12 7 20"/></svg></span>
+        </button>
+        <div class="film-bar" aria-hidden="true"><span>SuryaSaathi in 70 seconds</span><span>Sound on · 1:10</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:0 0 104px"><div class="wrap">
+    <div class="stats fade">
+      <div class="stat"><span class="n" data-count="50" data-suffix=" lakh+">50 lakh+</span><span class="muted small">homes with rooftop solar under PM Surya Ghar</span><a href="https://www.pv-magazine-india.com/?p=16188">pv magazine India</a></div>
+      <div class="stat"><span class="n" data-count="14.8" data-dec="1" data-suffix=" GW">14.8 GW</span><span class="muted small">of rooftop capacity commissioned</span><a href="https://www.pv-magazine-india.com/?p=16188">pv magazine India</a></div>
+      <div class="stat"><span class="n" data-count="99" data-suffix="%">99%</span><span class="muted small">stop monitoring once the installer leaves</span><a href="https://etvbharat.com/en/bharat/rooftop-solar-push-under-pm-surya-ghar-yojana-crossed-37-lakh-but-maintenance-a-challenge-enn26070705272">ETV Bharat</a></div>
+      <div class="stat"><span class="n">17–25%</span><span class="muted small">of a year's output lost to dust in North India</span><a href="https://renewablewatch.in/2018/12/22/soiling-analysis/">Renewable Watch</a></div>
+    </div>
+  </div></section>
+
+  <section style="padding:0 0 104px"><div class="wrap stack g40">
+    <div class="stack g16" style="max-width:720px">
+      <span class="eyebrow">The hidden problem</span>
+      <h2 class="h2" data-reveal>Three causes. One bill that can't tell them apart.</h2>
+      <p class="lead fade">The vendor's easy answer is always "it's just the pollution." But each cause leaves its own signature in the gap between what the roof should make and what it does.</p>
+    </div>
+    <div class="grid c3">
+      <article class="card stack g12 draw fade">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Smog</h3><span class="small muted">Nobody's problem</span></div>
+        <div class="sigbox"><svg class="sig" role="img" aria-label="Expected and actual dip together" viewBox="0 0 300 110"><polyline points="16,30 80,32 120,72 170,78 210,36 284,30" fill="none" stroke="var(--blue)" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/><polyline points="16,40 80,42 120,82 170,88 210,46 284,40" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="muted" style="font-size:15.5px">Expected and actual fall together, and recover together.</p>
+        <span class="chip" style="align-self:flex-start">No action needed</span>
+      </article>
+      <article class="card hot stack g12 draw fade" style="--d:120ms">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Dust</h3><span class="small muted">The vendor's problem</span></div>
+        <div class="sigbox"><svg class="sig" role="img" aria-label="Actual drifts below expected each dry day, recovers after rain" viewBox="0 0 300 110"><rect x="176" y="8" width="20" height="94" rx="5" fill="var(--blue)" opacity=".12"/><polyline points="16,28 284,28" fill="none" stroke="var(--blue)" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/><polyline points="16,34 180,82 188,36 284,62" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="muted" style="font-size:15.5px">The gap widens every dry day; rain resets it.</p>
+        <span class="chip a" style="align-self:flex-start">Free cleaning, owed for 5 years</span>
+      </article>
+      <article class="card stack g12 draw fade" style="--d:240ms">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Fault</h3><span class="small muted">The vendor's problem</span></div>
+        <div class="sigbox"><svg class="sig" role="img" aria-label="Actual collapses overnight while expected holds" viewBox="0 0 300 110"><polyline points="16,28 284,28" fill="none" stroke="var(--blue)" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/><polyline points="16,34 170,35 186,88 284,90" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="muted" style="font-size:15.5px">Output collapses overnight while sunlight doesn't.</p>
+        <span class="chip a" style="align-self:flex-start">Free repair, owed for 5 years</span>
+      </article>
+    </div>
+  </div></section>
+
+  <section class="s alt"><div class="wrap stack g40">
+    <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-end">
+      <div class="stack g16" style="max-width:640px"><span class="eyebrow">How it works</span><h2 class="h2" data-reveal>From a reading on a roof to a fixed panel</h2></div>
+      <a href="#/how-it-works" class="btn btn-g">See the full walkthrough →</a>
+    </div>
+    <ol class="grid c4" style="list-style:none;margin:0;padding:0">
+      <li class="card stack g12 fade"><span class="num">1</span><h3>Collect</h3><p class="muted" style="font-size:15px">Yesterday's reading arrives on its own: a DISCOM data logger, the inverter's cloud or a camera clip.</p></li>
+      <li class="card stack g12 fade" style="--d:100ms"><span class="num">2</span><h3>Compare</h3><p class="muted" style="font-size:15px">Against what that exact roof should have made, from satellite sunlight and haze.</p></li>
+      <li class="card stack g12 fade" style="--d:200ms"><span class="num">3</span><h3>Diagnose</h3><p class="muted" style="font-size:15px">Smog, dust or a fault, told apart by signature. Smog never triggers a complaint.</p></li>
+      <li class="card stack g12 fade" style="--d:300ms"><span class="num">4</span><h3>Act and verify</h3><p class="muted" style="font-size:15px">Claim filed with evidence, deadline chased, DISCOM steps in if missed, fix checked from new readings.</p></li>
+    </ol>
+    <div class="msg fade" style="align-self:center"><span class="av"></span><div class="stack"><span class="small muted">The only message the family gets</span><span style="font-weight:500">सफाई हो गई! Output वापस 96% पर है।</span></div></div>
+  </div></section>
+
+  <section class="s"><div class="wrap grid c2" style="gap:48px;align-items:center">
+    <div class="stack g16">
+      <span class="eyebrow">Built on AWS</span>
+      <h2 class="h2" data-reveal>Serverless, end to end</h2>
+      <p class="lead fade">Agents built with Strands on Amazon Bedrock, every case run by Step Functions, consent enforced by Cedar, and the whole stack defined in AWS CDK.</p>
+      <a href="#/technology" class="btn btn-g fade" style="align-self:flex-start">Explore the technology →</a>
+    </div>
+    <div class="layers" data-layers>
+      <div class="rail"><i></i></div><div class="ldot"></div>
+      <div class="lay"><b>Ingest</b><div class="svc"><span class="chip">AWS IoT Core</span><span class="chip">EventBridge</span><span class="chip">End User Messaging</span></div></div>
+      <div class="lay"><b>Agents</b><div class="svc"><span class="chip">Strands Agents</span><span class="chip">Amazon Bedrock</span><span class="chip">AWS Lambda</span></div></div>
+      <div class="lay"><b>Memory &amp; rules</b><div class="svc"><span class="chip">DynamoDB</span><span class="chip">Amazon S3</span><span class="chip">Cedar</span></div></div>
+      <div class="lay"><b>Act &amp; report</b><div class="svc"><span class="chip">Step Functions</span><span class="chip">SES + SNS</span><span class="chip">Amplify</span></div></div>
+    </div>
+  </div></section>
+
+  <section style="padding:0 0 40px"><div class="wrap">
+    <div class="cta fade">
+      <div class="cta-l">
+        <span class="eyebrow">Live demo · no login</span>
+        <h2 class="h2" data-reveal>See a whole month on one roof, in a minute.</h2>
+        <p class="lead">Dust builds up, the agent catches it, the vendor misses the deadline, the DISCOM steps in, and the family gets one message. All in your browser.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-p" href="https://web-xi-snowy-99.vercel.app/demo">Try the live demo</a><a class="btn btn-g" href="https://github.com/rahulsainlll/SuryaSaathi">View on GitHub</a></div>
+      </div>
+      <div class="cta-r" aria-label="Preview of the demo">
+        <div class="mini">
+          <div class="top" style="margin-bottom:8px"><span>3 kW · Dwarka</span><span class="chip">Simulated</span></div>
+          <svg viewBox="0 0 320 120" aria-hidden="true"><defs><clipPath id="mclip"><rect id="mrev" x="0" y="0" width="0" height="120"/></clipPath></defs>
+            <g clip-path="url(#mclip)"><polyline points="10,30 60,28 110,31 160,29 210,32 260,30 310,29" fill="none" stroke="var(--blue)" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/><polyline points="10,36 60,46 110,58 160,70 200,82 214,38 260,36 310,35" fill="none" stroke="#F5A524" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+        </div>
+        <div class="case-row" id="caseRow"><span class="chip b">Dust found</span><span class="chip a">Claim filed</span><span class="chip bad">Deadline missed</span><span class="chip bad">Escalated</span><span class="chip ok">Verified · 96%</span></div>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ============ HOW IT WORKS ============ -->
+<div data-page="how-it-works" hidden>
+  <section class="hero" style="padding-bottom:24px"><div class="wrap stack g20">
+    <span class="eyebrow">How it works</span>
+    <h1 class="h1" data-reveal style="font-size:clamp(40px,6vw,76px)">From a reading on a roof to a fixed panel.</h1>
+    <p class="lead fade" style="max-width:640px">Scroll to follow one reading from a 3 kW roof in Dwarka, through the diagnosis, to the family's single WhatsApp message.</p>
+  </div></section>
+
+  <section class="how" id="how"><div class="sticky"><div class="wrap" style="width:100%"><div class="how-grid">
+    <ol class="steps">
+      <li class="step on"><span class="num">1</span><div><h3>Every roof reports itself</h3><p>A DISCOM data logger, the inverter's cloud or a camera clip sends yesterday's reading to AWS IoT Core. The family does nothing.</p><div class="bar"><i></i></div></div></li>
+      <li class="step"><span class="num">2</span><div><h3>Compared with what the sun allowed</h3><p>Satellite sunlight and haze for that exact roof and day give the output it should have made.</p><div class="bar"><i></i></div></div></li>
+      <li class="step"><span class="num">3</span><div><h3>Smog, dust or fault, told apart</h3><p>Smog drops both lines together. Dust widens the gap every dry day. A fault collapses output overnight.</p><div class="bar"><i></i></div></div></li>
+      <li class="step"><span class="num">4</span><div><h3>Claimed, chased, verified</h3><p>A free-maintenance claim goes to the vendor with evidence. Miss the deadline and the DISCOM steps in. When output recovers, the family hears once.</p><div class="bar"><i></i></div></div></li>
+    </ol>
+    <div class="stage" role="img" aria-label="Animated view of the current step">
+      <div class="layer on">
+        <div class="top"><span>One reading, 12 Oct</span><span class="chip">Simulated</span></div>
+        <div class="nodes" id="nodes"><div class="rail"><i id="railFill"></i></div><div class="ndot" id="ndot"></div>
+          <div class="node"><b>Rooftop</b><span>3 kW · Dwarka</span></div><div class="node"><b>Inverter</b><span>9.1 kWh today</span></div><div class="node"><b>Data logger</b><span>every 15 min</span></div><div class="node"><b>AWS IoT Core</b><span>MQTT over TLS</span></div><div class="node"><b>Agents</b><span>Strands + Bedrock</span></div></div>
+      </div>
+      <div class="layer">
+        <div class="top"><span>Expected vs actual, 14 days</span><span class="chip">Simulated</span></div>
+        <div class="chart"><svg viewBox="0 0 520 200" aria-hidden="true"><defs><clipPath id="clipA"><rect id="revA" x="0" y="0" width="0" height="200"/></clipPath></defs><rect x="36" y="8" width="26" height="186" rx="6" fill="var(--blue)" opacity=".1"/><g clip-path="url(#clipA)"><polyline id="exp" fill="none" stroke="var(--blue)" stroke-width="3.5" stroke-dasharray="9 7" stroke-linecap="round"/><polyline id="act" fill="none" stroke="#F5A524" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+        <div class="kv"><div><small>Should have made</small><strong>11.6</strong></div><div><small>Made</small><strong>9.1</strong></div><div><small>Performance</small><strong id="perf">100%</strong></div></div>
+      </div>
+      <div class="layer">
+        <div class="top"><span>What the agent checked</span><span class="chip">Simulated</span></div>
+        <div class="verdict"><div><b>Smog in the air</b><span class="why">Already counted in "expected"</span></div><span class="chip">Ruled out</span></div>
+        <div class="verdict"><div><b>Inverter fault</b><span class="why">No fault code, no sudden drop</span></div><span class="chip">Ruled out</span></div>
+        <div class="verdict hit"><div><b>Dust on panels</b><span class="why">Gap widens every dry day; rain reset it</span></div><span class="chip a">Diagnosed</span></div>
+      </div>
+      <div class="layer">
+        <div class="top"><span>Case SS-0142 · free cleaning</span><span class="chip b" id="caseChip">Filed</span></div>
+        <ol class="tl" id="tl">
+          <li><span class="b"></span><div><b>Complaint sent to the vendor</b><span>Chart, readings and ₹ lost attached</span></div></li>
+          <li><span class="b"></span><div><b>Deadline missed</b><span>No visit within 3 days</span></div></li>
+          <li><span class="b"></span><div><b>Escalated to the DISCOM</b><span>Full case file, automatically</span></div></li>
+          <li><span class="b"></span><div><b>Fix verified from new readings</b><span>Performance back to 96%</span></div></li>
+        </ol>
+        <div class="wa" id="wa"><small>The only message the family gets</small>आपके panels पर धूल थी। हमने मुफ्त सफाई करवा दी। Output वापस 96% पर है।</div>
+      </div>
+    </div>
+  </div></div></div></section>
+
+  <section class="s"><div class="wrap stack g28">
+    <div class="stack g16" style="max-width:680px"><span class="eyebrow">Diagnosis rules · v1</span><h2 class="h2" data-reveal>Simple rules the agent can explain</h2><p class="lead fade">The rules decide; the model explains each decision in plain words and acts through tools. Every decision is logged with its reason.</p></div>
+    <div class="rules fade">
+      <div class="rule"><b>Performance</b><span class="muted">Actual ÷ expected, where expected already includes that day's haze.</span><span class="chip">Measure</span></div>
+      <div class="rule"><b>Smog</b><span class="muted">Expected is low but performance stays above 90%.</span><span class="chip">No action</span></div>
+      <div class="rule"><b>Dust</b><span class="muted">3-day average below 91% and falling over 5 dry days. Closes itself if rain restores it.</span><span class="chip a">Claim cleaning</span></div>
+      <div class="rule"><b>Fault</b><span class="muted">Performance below 60% overnight, or the inverter reports a fault code.</span><span class="chip a">Claim repair</span></div>
+      <div class="rule"><b>Verified fix</b><span class="muted">Performance back above 93% after the visit.</span><span class="chip ok">Close case</span></div>
+    </div>
+  </div></section>
+
+  <section class="s alt"><div class="wrap stack g28">
+    <div class="stack g16" style="max-width:680px"><span class="eyebrow">Works with any roof</span><h2 class="h2" data-reveal>No new hardware on most roofs</h2></div>
+    <div class="grid c4">
+      <article class="card stack g8 fade"><span class="chip b" style="align-self:flex-start">New Delhi roofs</span><h3>Data logger</h3><p class="muted small">Fitted by the DISCOM at installation; reads the inverter every 15 minutes.</p></article>
+      <article class="card stack g8 fade" style="--d:100ms"><span class="chip b" style="align-self:flex-start">WiFi inverters</span><h3>Inverter cloud</h3><p class="muted small">The maker's cloud API, pulled once a day with the family's consent.</p></article>
+      <article class="card stack g8 fade" style="--d:200ms"><span class="chip b" style="align-self:flex-start">Any roof, any age</span><h3>Camera clip</h3><p class="muted small">An ESP32-CAM on FreeRTOS photographs the inverter screen. No wiring touched.</p></article>
+      <article class="card stack g8 fade" style="--d:300ms"><span class="chip" style="align-self:flex-start">Fallback</span><h3>WhatsApp photo</h3><p class="muted small">The family sends a picture of the screen; Amazon Bedrock reads the numbers.</p></article>
+    </div>
+  </div></section>
+
+  <section class="s"><div class="wrap grid c2" style="gap:24px">
+    <article class="card stack g16 fade"><span class="eyebrow">The family's flow</span><h3 style="font-size:26px">Consent once. Then only good news.</h3>
+      <ol class="tl" style="margin-top:6px"><li class="done"><span class="b"></span><div><b>Vendor installs, QR sticker on the inverter</b><span>Consent recorded once</span></div></li><li class="done"><span class="b"></span><div><b>Readings arrive every day</b><span>The family does nothing</span></div></li><li class="done"><span class="b"></span><div><b>Problem found, claim filed, fix verified</b><span>All automatic</span></div></li><li class="done"><span class="b"></span><div><b>One WhatsApp message, in Hindi</b><span>Plus a monthly money report</span></div></li></ol></article>
+    <article class="card stack g16 fade" style="--d:120ms"><span class="eyebrow">The DISCOM's flow</span><h3 style="font-size:26px">Cases arrive already investigated.</h3>
+      <ol class="tl" style="margin-top:6px"><li class="done"><span class="b"></span><div><b>Open the console</b><span>Health and ₹ being lost, by zone</span></div></li><li class="done"><span class="b"></span><div><b>Check the vendor leaderboard</b><span>Who's slow, who's overdue</span></div></li><li class="done"><span class="b"></span><div><b>Work the escalation queue</b><span>Readings, chart and notices attached</span></div></li><li class="done"><span class="b"></span><div><b>Act on repeat offenders</b><span>Under rules that already allow it</span></div></li></ol></article>
+  </div></section>
+</div>
+
+<!-- ============ TECHNOLOGY ============ -->
+<div data-page="technology" hidden>
+  <section class="hero" style="padding-bottom:32px"><div class="wrap stack g20">
+    <span class="eyebrow">Technology</span>
+    <h1 class="h1" data-reveal style="font-size:clamp(40px,6vw,76px)">Serverless, end to end, on AWS.</h1>
+    <p class="lead fade" style="max-width:660px">Four layers, one reading's path. Idle costs stay near zero, and a nightly rollup means the DISCOM console never scans raw readings.</p>
+  </div></section>
+
+  <section style="padding:24px 0 104px"><div class="wrap grid c2" style="gap:24px;align-items:start">
+    <div class="layers" data-layers>
+      <div class="rail"><i></i></div><div class="ldot"></div>
+      <div class="lay"><b>Ingest</b><div class="svc"><span class="chip">AWS IoT Core</span><span class="chip">EventBridge</span><span class="chip">End User Messaging Social</span></div></div>
+      <div class="lay"><b>Agents</b><div class="svc"><span class="chip">AWS Lambda</span><span class="chip">Strands Agents</span><span class="chip">Amazon Bedrock</span><span class="chip">Amazon Transcribe</span></div></div>
+      <div class="lay"><b>Memory &amp; rules</b><div class="svc"><span class="chip">DynamoDB</span><span class="chip">Amazon S3</span><span class="chip">OpenSearch</span><span class="chip">Cedar</span></div></div>
+      <div class="lay"><b>Act &amp; report</b><div class="svc"><span class="chip">Step Functions</span><span class="chip">SES + SNS</span><span class="chip">Amplify + Cognito</span><span class="chip">CloudWatch</span></div></div>
+    </div>
+    <div class="card stack g16 fade"><span class="eyebrow">AWS open source</span>
+      <div class="stack g12">
+        <div><b>Strands Agents</b><p class="muted small">Runs the diagnosis, accountability and messenger agents.</p></div>
+        <div><b>Cedar</b><p class="muted small">Consent and access checked before every agent tool call.</p></div>
+        <div><b>OpenSearch</b><p class="muted small">Searchable inverter manuals and fault codes.</p></div>
+        <div><b>AWS CDK</b><p class="muted small">The whole stack as code; one command deploys it.</p></div>
+        <div><b>FreeRTOS</b><p class="muted small">Runs on the camera-clip hardware.</p></div>
+      </div>
+      <a class="btn btn-ink" href="https://github.com/rahulsainlll/SuryaSaathi" style="align-self:flex-start">Read the code on GitHub</a>
+    </div>
+  </div></section>
+
+  <section class="s alt"><div class="wrap stack g28">
+    <div class="stack g16" style="max-width:680px"><span class="eyebrow">Why each service</span><h2 class="h2" data-reveal>Every service does one job</h2></div>
+    <div class="grid c3">
+      <div class="card stack g8 fade"><b>AWS IoT Core</b><p class="muted small">Per-device certificates; scales to millions of devices; routes messages without servers.</p></div>
+      <div class="card stack g8 fade"><b>Amazon Bedrock</b><p class="muted small">Agent reasoning, reading screen photos, and messages in Hindi and English.</p></div>
+      <div class="card stack g8 fade"><b>AWS Step Functions</b><p class="muted small">Waits days for a vendor at near-zero cost, with a visual audit trail per case.</p></div>
+      <div class="card stack g8 fade"><b>Amazon DynamoDB</b><p class="muted small">Millisecond lookups by system ID at any scale; old raw readings age out.</p></div>
+      <div class="card stack g8 fade"><b>Amazon EventBridge</b><p class="muted small">Daily expected-output runs, connector pulls and nightly rollups.</p></div>
+      <div class="card stack g8 fade"><b>End User Messaging Social</b><p class="muted small">WhatsApp in and out, connected directly to AWS.</p></div>
+    </div>
+  </div></section>
+
+  <section class="s"><div class="wrap grid c2" style="gap:48px;align-items:center">
+    <div class="stack g16"><span class="eyebrow">Hardware</span><h2 class="h2" data-reveal>A camera clip for roofs with nothing</h2><p class="lead fade">An ESP32-CAM on FreeRTOS, clipped by the vendor in front of the inverter, photographs the screen every hour. Bedrock reads the numbers. It works with any brand and never touches the wiring.</p></div>
+    <div class="card fade" style="padding:32px"><svg viewBox="0 0 440 220" role="img" aria-label="A small camera module clipped onto an inverter screen" style="width:100%;height:auto"><rect x="90" y="40" width="240" height="160" rx="18" fill="var(--soft)" stroke="var(--line)" stroke-width="3"/><rect x="122" y="70" width="176" height="70" rx="8" fill="color-mix(in srgb,#8B7CF6 25%,var(--soft))"/><text x="140" y="112" font-family="Geist Mono, monospace" font-size="20" fill="var(--ink)">E-TODAY 9.1</text><rect x="250" y="16" width="120" height="84" rx="14" fill="var(--panel)" stroke="#F5A524" stroke-width="4"/><circle cx="310" cy="58" r="22" fill="none" stroke="#F5A524" stroke-width="6"/><circle cx="310" cy="58" r="8" fill="#F5A524"/></svg></div>
+  </div></section>
+</div>
+
+<!-- ============ IMPACT ============ -->
+<div data-page="impact" hidden>
+  <section class="hero" style="padding-bottom:32px"><div class="wrap stack g20">
+    <span class="eyebrow">Why now</span>
+    <h1 class="h1" data-reveal style="font-size:clamp(40px,6vw,76px)">The duty exists. The tool doesn't.</h1>
+    <p class="lead fade" style="max-width:660px">Delhi's Solar Energy Policy, Second Amendment (17 September 2026), puts monitoring on the DISCOMs. SuryaSaathi is how they do it.</p>
+  </div></section>
+
+  <section style="padding:24px 0 104px"><div class="wrap stack g28">
+    <div class="grid c3">
+      <div class="card stack g8 fade"><span class="eyebrow">New DISCOM duty</span><h3>Find under-performing roofs</h3><p class="muted small">Monitoring generation and identifying under-performing systems is now the DISCOM's job.</p></div>
+      <div class="card stack g8 fade" style="--d:100ms"><span class="eyebrow">DSAIN</span><h3>An ID for every roof</h3><p class="muted small">Each system gets a Digital Solar Asset Identification Number. SuryaSaathi keeps its generation record accurate.</p></div>
+      <div class="card stack g8 fade" style="--d:200ms"><span class="eyebrow">Still owed</span><h3>5 years of free maintenance</h3><p class="muted small">Vendors must clean and repair at their own cost. The evidence is what's missing.</p></div>
+    </div>
+    <div class="card stack g16 fade">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:baseline"><b>Delhi rooftops installed vs targeted by March 2027</b><span class="muted small">10,073 of 2.30 lakh</span></div>
+      <div class="prog"><i></i></div>
+      <p class="muted small">About 2.2 lakh more systems are about to need monitoring. <a href="https://aninews.in/news/national/general-news/delhi-solar-policy-gets-major-push-230-lakh-rooftops-targeted-by-march-202720260901221119/">Source: ANI</a></p>
+    </div>
+  </div></section>
+
+  <section class="s alt"><div class="wrap stack g28">
+    <div class="stack g16" style="max-width:680px"><span class="eyebrow">Impact · estimates</span><h2 class="h2" data-reveal>Small per roof. Large across the country.</h2></div>
+    <div class="grid c3">
+      <div class="card stack g8 fade"><span class="big">₹5–6k</span><p class="muted">a year back for a 3 kW home</p><span class="chip" style="align-self:flex-start">Estimate</span></div>
+      <div class="card stack g8 fade" style="--d:100ms"><span class="big">~2 TWh</span><p class="muted">a year of clean energy recovered nationally</p><span class="chip" style="align-self:flex-start">Estimate</span></div>
+      <div class="card stack g8 fade" style="--d:200ms"><span class="big">5 years</span><p class="muted">of free maintenance, actually claimed</p><span class="chip a" style="align-self:flex-start">Owed by vendors</span></div>
+    </div>
+    <div class="card stack g12 fade"><b>How we estimate</b>
+      <p class="muted small">A 3 kW roof in Delhi makes about 4,700 kWh a year. Recovering 15–18% lost to unchecked dust and faults is 700–850 kWh, or ₹5–6k at ₹7 per kWh.</p>
+      <p class="muted small">14.8 GW of rooftop solar makes roughly 20 TWh a year; recovering a tenth of it is about 2 TWh.</p>
+    </div>
+  </div></section>
+
+  <section class="s"><div class="wrap stack g20"><span class="eyebrow">Sources</span>
+    <ul class="stack g8 fade" style="margin:0;padding-left:20px;color:var(--muted)">
+      <li><a href="https://www.pv-magazine-india.com/?p=16188">PM Surya Ghar progress, pv magazine India</a></li>
+      <li><a href="https://etvbharat.com/en/bharat/rooftop-solar-push-under-pm-surya-ghar-yojana-crossed-37-lakh-but-maintenance-a-challenge-enn26070705272">Users who stop monitoring, ETV Bharat</a></li>
+      <li><a href="https://renewablewatch.in/2018/12/22/soiling-analysis/">Dust losses in Delhi, Renewable Watch</a></li>
+      <li><a href="https://solar.delhi.gov.in/page/operation-and-maintenance-procedure">Vendor maintenance duty, Delhi Solar Portal</a></li>
+      <li><a href="https://advocategandhi.com/delhi-solar-energy-policy-2023-gets-major-second-amendment-new-rooftop-solar-subsidies-free-solar-for-eligible-households-and-discom-trusteeship-model-introduced/">Delhi policy, Second Amendment (summary)</a></li>
+    </ul>
+  </div></section>
+</div>
+</main>
+
+<dialog class="vid" id="filmDlg" aria-label="SuryaSaathi film">
+  <div class="vid-frame" id="vidFrame"></div>
+  <div class="vid-bar"><span>Not loading? <a href="https://www.youtube.com/watch?v=m6HiN65kmdo" target="_blank" rel="noopener">Watch on YouTube</a></span><button class="vid-close" id="vidClose">Close</button></div>
+</dialog>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="sky" id="sky" role="group" aria-label="Interactive: move across the sky to move the sun and see this roof's output">
+    <svg class="arc" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"><path d="M30 300 Q500 -60 970 300" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"/></svg>
+    <div class="sun" id="sun"></div>
+    <div class="roofs" aria-hidden="true"><div class="house"><div class="arr"><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span></div><div class="wall"></div></div><div class="house"><div class="arr"><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span></div><div class="wall"></div></div><div class="house"><div class="arr"><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span><span class="pn"></span></div><div class="wall"></div></div></div>
+    <div class="readout" aria-live="off">
+      <span class="lbl">Live output · <span id="tod">12:00 pm</span></span>
+      <span class="k"><span id="kw">3.0</span><small>kW of 3 kW</small></span>
+      <div class="meter"><i id="meter"></i></div>
+      <p id="hint">Move across the sky. SuryaSaathi does this maths for every roof, every day: what the sun allowed, against what the roof made.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="fcols">
+      <div class="stack g12"><a class="logo" href="#/" aria-label="SuryaSaathi home"><span>Surya<span class="hl">Saathi</span></span></a><p class="muted small" style="max-width:320px">An AI agent that keeps India's rooftop solar working. Built by Team Mythos for Environmental Hacks 2026.</p></div>
+      <div><h4>Product</h4><ul><li><a href="#/how-it-works">How it works</a></li><li><a href="#/technology">Technology</a></li><li><a href="#/impact">Impact</a></li><li><a href="https://web-xi-snowy-99.vercel.app/demo">Live demo</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="https://www.youtube.com/watch?v=m6HiN65kmdo">The film</a></li><li><a href="https://web-xi-snowy-99.vercel.app/blog">Blog</a></li><li><a href="https://github.com/rahulsainlll/SuryaSaathi">GitHub</a></li><li><a href="https://github.com/rahulsainlll/SuryaSaathi/blob/main/LICENSE">MIT licence</a></li></ul></div>
+      <div><h4>Team Mythos</h4><ul><li><a href="https://github.com/rahulsainlll">Rahul Sain</a></li><li><a href="https://github.com/Kiarstein">Yukti</a></li><li><a href="https://github.com/mayankdhokal">Mayank Dhokal</a></li></ul></div>
+    </div>
+    <div class="legal"><span>Environmental Hacks · Waste and Energy track · Bharat Builds Tour by WeMakeDevs × AWS, October 2026</span><span>All systems shown are simulated.</span></div>
+  </div>
+  <div class="wordmark" aria-hidden="true">SuryaSaathi</div>
+</footer>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+
+  // ---- theme ----
+  function sysDark(){ return matchMedia('(prefers-color-scheme: dark)').matches; }
+  function applyTheme(t){ root.setAttribute('data-theme', t); document.querySelectorAll('.i-moon').forEach(e=>e.style.display = t==='dark'?'none':''); document.querySelectorAll('.i-sun').forEach(e=>e.style.display = t==='dark'?'':'none'); }
+  let saved=null; try{ saved = localStorage.getItem('ss-theme'); }catch(e){}
+  applyTheme(saved || (sysDark()?'dark':'light'));
+  document.querySelectorAll('[data-theme-toggle]').forEach(b=>b.addEventListener('click',()=>{
+    const t = root.getAttribute('data-theme')==='dark'?'light':'dark'; applyTheme(t); try{ localStorage.setItem('ss-theme',t);}catch(e){}
+  }));
+
+  // ---- mobile menu ----
+  const hdr=document.getElementById('hdr'), mb=document.getElementById('menuBtn');
+  mb.addEventListener('click',()=>{const o=hdr.classList.toggle('open'); mb.setAttribute('aria-expanded',o);});
+
+  // ---- split headings into words ----
+  function split(el){
+    if(el.dataset.split) return; el.dataset.split='1'; let i=0;
+    (function walk(node){
+      [...node.childNodes].forEach(n=>{
+        if(n.nodeType===3){
+          const frag=document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part=>{
+            if(!part) return;
+            if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));return;}
+            const w=document.createElement('span'); w.className='w';
+            const s=document.createElement('span'); s.textContent=part; s.style.setProperty('--d',(i++*45)+'ms');
+            w.appendChild(s); frag.appendChild(w);
+          });
+          n.replaceWith(frag);
+        } else if(n.nodeType===1 && n.tagName!=='BR'){ walk(n); }
+      });
+    })(el);
+  }
+  document.querySelectorAll('[data-reveal]').forEach(split);
+
+  // ---- reveal on view ----
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); if(e.target.dataset.count!==undefined) countUp(e.target); io.unobserve(e.target);} }),{threshold:.2, rootMargin:'0px 0px -6% 0px'});
+  function observeAll(){ document.querySelectorAll('[data-reveal],.fade,.draw,[data-count]').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); }); }
+
+  function countUp(el){
+    const to=parseFloat(el.dataset.count), dec=+(el.dataset.dec||0), pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
+    if(reduce){ el.textContent=pre+to.toFixed(dec)+suf; return; }
+    const t0=performance.now(), dur=1200;
+    (function f(now){ const k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=pre+(to*e).toFixed(dec)+suf; if(k<1) requestAnimationFrame(f); })(t0);
+  }
+
+  // ---- router ----
+  const pages=[...document.querySelectorAll('[data-page]')];
+  function route(){
+    const r=(location.hash.replace(/^#\/?/,'')||'home').split('?')[0];
+    const name=pages.some(p=>p.dataset.page===r)?r:'home';
+    pages.forEach(p=>p.hidden = p.dataset.page!==name);
+    document.querySelectorAll('.nav a.l').forEach(a=>{ const h=a.getAttribute('href'); if(h && h==='#/'+name) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+    hdr.classList.remove('open'); mb.setAttribute('aria-expanded','false');
+    window.scrollTo(0,0); observeAll(); lastStep=-1; updateHow();
+  }
+  addEventListener('hashchange',route);
+  document.querySelectorAll('[data-scroll]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.scroll).scrollIntoView({behavior:reduce?'auto':'smooth'})));
+
+  // ---- layers (home + technology) ----
+  function initLayers(box){
+    const lays=[...box.querySelectorAll('.lay')], dot=box.querySelector('.ldot'), fill=box.querySelector('.rail i');
+    const c=l=>l.offsetTop+l.offsetHeight/2;
+    function light(n){ lays.forEach((l,k)=>l.classList.toggle('on',k<=n)); dot.style.top=(c(lays[n])-10)+'px'; fill.style.height=(c(lays[n])-c(lays[0]))+'px'; }
+    if(reduce){ light(3); return; }
+    let i=-1, timer=null;
+    light(0);
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting && !timer){ timer=setInterval(()=>{ i=(i+1)%5; if(i===4){ lays.forEach(l=>l.classList.remove('on')); fill.style.height='0px'; dot.style.top=(c(lays[0])-10)+'px'; } else light(i); },1300); }
+      if(!e.isIntersecting && timer){ clearInterval(timer); timer=null; }
+    }),{threshold:.35}).observe(box);
+  }
+  document.querySelectorAll('[data-layers]').forEach(initLayers);
+
+  // ---- CTA mini demo loop ----
+  const mrev=document.getElementById('mrev'), chips=[...document.querySelectorAll('#caseRow .chip')];
+  if(reduce){ mrev.setAttribute('width',320); chips.forEach(c=>c.classList.add('on')); }
+  else { let t0=performance.now(); (function loop(now){ const k=((now-t0)%7000)/7000; mrev.setAttribute('width',Math.min(1,k/0.45)*320); chips.forEach((c,i)=>c.classList.toggle('on',k>0.3+i*0.1)); requestAnimationFrame(loop); })(t0); }
+
+  // ---- walkthrough ----
+  const EXP=[118,112,116,113,120,115,111,117,114,121,115,117,113,116].map(v=>v*1.25-112);
+  const ACT=[170,120,126,128,140,140,144,156,156,170,168,176,180,188].map(v=>v*1.25-112);
+  const X=i=>20+i*37, pts=a=>a.map((y,i)=>X(i)+','+y.toFixed(1)).join(' ');
+  document.getElementById('exp').setAttribute('points',pts(EXP));
+  document.getElementById('act').setAttribute('points',pts(ACT));
+  const how=document.getElementById('how'), steps=[...how.querySelectorAll('.step')], layers=[...how.querySelectorAll('.layer')];
+  const nodes=[...document.querySelectorAll('#nodes .node')], ndot=document.getElementById('ndot'), railFill=document.getElementById('railFill');
+  const revA=document.getElementById('revA'), perf=document.getElementById('perf'), verdicts=[...how.querySelectorAll('.verdict')];
+  const tl=[...document.querySelectorAll('#tl li')], wa=document.getElementById('wa'), caseChip=document.getElementById('caseChip');
+  const clamp=v=>Math.max(0,Math.min(1,v));
+  let lastStep=-1, ticking=false;
+  function updateHow(){
+    ticking=false;
+    if(how.closest('[data-page]').hidden) return;
+    const r=how.getBoundingClientRect(), total=how.offsetHeight-innerHeight, p=clamp(-r.top/total);
+    const s=Math.min(3,Math.floor(p*4)), lp=clamp(p*4-s);
+    if(s!==lastStep){ steps.forEach((e,i)=>e.classList.toggle('on',i===s)); layers.forEach((e,i)=>e.classList.toggle('on',i===s)); lastStep=s; }
+    steps[s].querySelector('.bar i').style.transform='scaleX('+lp+')';
+    if(s===0){ const a=nodes[0].offsetTop+nodes[0].offsetHeight/2, b=nodes[4].offsetTop+nodes[4].offsetHeight/2, y=a+(b-a)*Math.min(1,lp*1.15);
+      ndot.style.top=(y-10)+'px'; railFill.style.height=(y-a)+'px'; nodes.forEach(n=>n.classList.toggle('on',n.offsetTop+n.offsetHeight/2<=y+2)); }
+    if(s===1){ const k=Math.min(1,lp*1.2); revA.setAttribute('width',520*k); perf.textContent=Math.round(100-22*k)+'%'; }
+    if(s===2){ verdicts.forEach((v,i)=>v.classList.toggle('on',lp>0.12+i*0.28)); }
+    if(s===3){ const th=[0.08,0.28,0.48,0.68]; tl.forEach((li,i)=>{const on=lp>th[i]; li.classList.toggle('done',on&&i!==1); li.classList.toggle('warn',on&&i===1);});
+      caseChip.textContent=lp>0.68?'Verified':lp>0.48?'Escalated':lp>0.28?'Overdue':'Filed'; caseChip.className='chip '+(lp>0.68?'ok':lp>0.28?'bad':'b'); wa.classList.toggle('on',lp>0.82); }
+  }
+  addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(updateHow);} },{passive:true});
+  addEventListener('resize',updateHow);
+
+  // ---- film dialog ----
+  const dlg=document.getElementById('filmDlg'), frame=document.getElementById('vidFrame');
+  function openFilm(){ frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/m6HiN65kmdo?autoplay=1&rel=0" title="SuryaSaathi film" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'; if(dlg.showModal) dlg.showModal(); else location.href='https://www.youtube.com/watch?v=m6HiN65kmdo'; }
+  function closeFilm(){ dlg.close(); }
+  dlg.addEventListener('close',()=>{ frame.innerHTML=''; });
+  dlg.addEventListener('click',e=>{ if(e.target===dlg) closeFilm(); });
+  document.getElementById('vidClose').addEventListener('click',closeFilm);
+  document.querySelectorAll('[data-film]').forEach(b=>b.addEventListener('click',openFilm));
+
+  // ---- interactive footer sky (spring-driven, decorative) ----
+  const sky=document.getElementById('sky'), sunEl=document.getElementById('sun'), kwEl=document.getElementById('kw'), todEl=document.getElementById('tod'), meter=document.getElementById('meter'), hint=document.getElementById('hint');
+  if(matchMedia('(hover: none)').matches) hint.textContent='Drag across the sky. SuryaSaathi does this maths for every roof, every day: what the sun allowed, against what the roof made.';
+  let target=0.5, pos=0.5, vel=0, lastMove=-1e9;
+  function setT(clientX){ const r=sky.getBoundingClientRect(); target=Math.max(0.03,Math.min(0.97,(clientX-r.left)/r.width)); lastMove=performance.now(); }
+  sky.addEventListener('pointermove',e=>setT(e.clientX));
+  sky.addEventListener('pointerdown',e=>setT(e.clientX));
+  function render(t){
+    const r=sky.getBoundingClientRect(), W=r.width, H=r.height;
+    const yv=(1-t)*(1-t)*300+2*(1-t)*t*(-60)+t*t*300;
+    const x=W*(0.03+0.94*t), y=H*yv/300;
+    sunEl.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';
+    const h=Math.max(0,Math.sin(Math.PI*t)), kw=3*Math.pow(h,1.3);
+    kwEl.textContent=kw.toFixed(1);
+    meter.style.transform='scaleX('+(kw/3).toFixed(3)+')';
+    sky.style.setProperty('--out',(0.15+0.85*h).toFixed(3));
+    sky.style.setProperty('--warm',(1-h).toFixed(3));
+    const mins=Math.round((6+12*t)*60), hh=Math.floor(mins/60), mm=mins%60, ap=hh>=12?'pm':'am', h12=((hh+11)%12)+1;
+    todEl.textContent=h12+':'+String(mm).padStart(2,'0')+' '+ap;
+  }
+  if(reduce){ const upd=()=>render(target); sky.addEventListener('pointermove',upd); sky.addEventListener('pointerdown',upd); addEventListener('resize',upd); render(0.5); }
+  else {
+    let visible=false;
+    new IntersectionObserver(es=>es.forEach(e=>visible=e.isIntersecting)).observe(sky);
+    (function loop(now){
+      if(visible){
+        if(now-lastMove>2500) target=0.5+0.4*Math.sin(now/3400);
+        vel+=(target-pos)*0.06; vel*=0.8; pos+=vel;
+        render(pos);
+      }
+      requestAnimationFrame(loop);
+    })(performance.now());
+    render(0.5);
+  }
+
+  route();
+})();
+</script>
+</body>
+</html>

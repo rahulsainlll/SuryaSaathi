@@ -1,6 +1,6 @@
 import { familyMessage } from "@suryasaathi/engine";
 import Link from "next/link";
-import { REPO, SOURCES } from "../../_landing/content";
+import { REPO, SOURCES } from "../../_site/content";
 import type { Post } from "./types";
 
 const FAMILY_MESSAGE = familyMessage({ id: "SS-142", cause: "dust", resolvedBy: "discom" }, 96);
@@ -79,7 +79,7 @@ function Content() {
         Each cause leaves a different shape in the gap between expected and actual. The rules are
         deliberately simple, so a vendor or a DISCOM engineer can check every decision:
       </p>
-      <div className="table-wrap">
+      <div className="table-wrap" tabIndex={0} role="region" aria-label="The three signatures">
         <table>
           <thead>
             <tr>

@@ -257,7 +257,47 @@ The first URL in `consoleUrls` becomes `NEXT_PUBLIC_COGNITO_REDIRECT_URI`. Pass 
 context flags on every later deploy (or put them in `infra/cdk.json`), or the defaults
 come back.
 
-## 9. Troubleshooting
+## 9. Host the website on AWS Amplify
+
+The marketing site, demo and blog (`apps/web`) deploy to Amplify Hosting from the repository.
+`amplify.yml` at the root configures the monorepo build: it installs pnpm, switches to the
+hoisted `node_modules` layout Amplify requires for pnpm workspaces (only inside the build),
+builds the workspace packages the site uses, then the site. The site doesn't need the CDK
+stacks; everything it shows is simulated in the browser.
+
+1. **Connect the repository.** In the Amplify console choose _Create new app_ → GitHub,
+   authorise the Amplify GitHub App for `rahulsainlll/SuryaSaathi`, and pick the branch.
+2. **Mark it as a monorepo.** Tick _My app is a monorepo_ and enter `apps/web` as the root
+   directory. Amplify then reads `amplify.yml` and sets `AMPLIFY_MONOREPO_APP_ROOT=apps/web`;
+   check it under _Hosting → Environment variables_ (it must equal `appRoot` in the file).
+3. **Leave the detected settings.** Amplify detects Next.js and hosts it with server-side
+   rendering (`WEB_COMPUTE`). Keep the build image's default Node.js 20 or later.
+4. **Set the site URL** (optional, for absolute Open Graph links): add the environment
+   variable `SITE_URL=https://main.<app-id>.amplifyapp.com`, or your custom domain.
+5. **Save and deploy.** Each push to the branch rebuilds the site. Add a custom domain under
+   _Hosting → Custom domains_ if you have one.
+
+The same steps from the CLI, once the app is connected:
+
+```bash
+APP_ID=$(aws amplify list-apps --query "apps[?name=='SuryaSaathi'].appId" --output text)
+aws amplify update-app --app-id "$APP_ID" \
+  --environment-variables AMPLIFY_MONOREPO_APP_ROOT=apps/web
+aws amplify start-job --app-id "$APP_ID" --branch-name main --job-type RELEASE
+```
+
+The DISCOM console (`apps/console`) is a separate Amplify app; section 8 covers its settings.
+
+**If a build fails:** `ERR_PNPM_OUTDATED_LOCKFILE` means `pnpm-lock.yaml` wasn't committed with
+a dependency change (run `pnpm install` and commit it); a missing module at build time usually
+means `AMPLIFY_MONOREPO_APP_ROOT` doesn't match `appRoot`.
+
+**The film poster.** The home page's film card uses `apps/web/public/images/film-poster.jpg`
+when it exists: the text-free frame at 0:20 of the film. With the film at
+`apps/web/public/film.mp4`, run `pnpm --filter web film:poster` (needs ffmpeg) and commit the
+image. Without it, the card shows the illustrated poster from the design.
+
+## 10. Troubleshooting
 
 | Symptom                                      | Likely cause and fix                                                                                                                                                                                                                               |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -273,7 +313,7 @@ come back.
 | Console: HTTP 503                            | No rollup yet: invoke the rollups function as above                                                                                                                                                                                                |
 | Console: figures lag the scenario            | Outside demo mode the rollup runs nightly, as of yesterday: invoke it with `{"asOf":"latest"}`                                                                                                                                                     |
 
-## 10. Costs and clean-up
+## 11. Costs and clean-up
 
 Everything is serverless and idle costs are close to zero. The main variable cost is Bedrock:
 by default the agent calls the model only on days something happens (smog, dust, fault, a case

@@ -28,6 +28,18 @@ def validator(name: SchemaName) -> Draft202012Validator:
     return Draft202012Validator(schema, registry=_registry(), format_checker=FormatChecker())
 
 
+@cache
+def console_validator(definition: str) -> Draft202012Validator:
+    """Validator for one console API response (``$defs`` entry of console.schema.json)."""
+    schema = {"$ref": f"{BASE}console.schema.json#/$defs/{definition}"}
+    return Draft202012Validator(schema, registry=_registry(), format_checker=FormatChecker())
+
+
+def validate_console(definition: str, data: Any) -> None:
+    """Raises ``jsonschema.ValidationError`` when ``data`` isn't a valid ``definition``."""
+    console_validator(definition).validate(data)
+
+
 def validate(name: SchemaName, data: Any) -> None:
     """Raises ``jsonschema.ValidationError`` when ``data`` doesn't match the schema."""
     validator(name).validate(data)

@@ -15,6 +15,11 @@ class Settings:
     readings_table: str = "suryasaathi-readings"
     cases_table: str = "suryasaathi-cases"
     expected_table: str = "suryasaathi-expected"
+    #: Console summary items written nightly by services/rollups.
+    summaries_table: str = "suryasaathi-summaries"
+    #: Rupees per kWh for the console's money-lost figure, and its window in days.
+    tariff_inr: float = 7.0
+    window_days: int = 30
     #: Lambda that computes expected output on a cache miss.
     expected_function: str | None = None
     #: Step Functions state machine started for every new case.
@@ -44,6 +49,9 @@ class Settings:
             readings_table=_env("READINGS_TABLE", d.readings_table) or d.readings_table,
             cases_table=_env("CASES_TABLE", d.cases_table) or d.cases_table,
             expected_table=_env("EXPECTED_TABLE", d.expected_table) or d.expected_table,
+            summaries_table=_env("SUMMARIES_TABLE", d.summaries_table) or d.summaries_table,
+            tariff_inr=float(_env("TARIFF_INR", "7") or 7),
+            window_days=int(_env("WINDOW_DAYS", "30") or 30),
             expected_function=_env("EXPECTED_FUNCTION"),
             case_workflow_arn=_env("CASE_WORKFLOW_ARN"),
             bedrock_model_id=_env("BEDROCK_MODEL_ID", d.bedrock_model_id) or d.bedrock_model_id,

@@ -311,7 +311,11 @@ function close(s: SimState, k: SimCase, d: number) {
   s.activeCase = null;
 }
 
-function familyMessage(k: SimCase, pct: number): string {
+/** The one WhatsApp message the family gets when a case is verified, in Hindi. */
+export function familyMessage(
+  k: Pick<SimCase, "id" | "cause" | "resolvedBy">,
+  pct: number,
+): string {
   const what =
     k.cause === "fault"
       ? "Inverter में खराबी थी। Vendor ने मुफ्त repair कर दिया।"

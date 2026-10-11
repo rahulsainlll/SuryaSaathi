@@ -15,9 +15,13 @@
   "dependencies": {
     "@heroui/react": "^3.2.6",
     "@heroui/styles": "^3.2.6",
+    "@suryasaathi/console-data": "workspace:*",
     "@suryasaathi/ui": "workspace:*",
+    "cmdk": "^1.1.1",
+    "liveline": "^0.0.7",
     "next": "^16.4.0",
     "react": "^19.3.0",
+    "react-aria-components": "^1.22.1",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {

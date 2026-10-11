@@ -1,0 +1,14 @@
+[project]
+name = "suryasaathi-console-api"
+version = "0.0.0"
+description = "Read-only API for the DISCOM console"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["suryasaathi-core"]
+
+[tool.uv.sources]
+suryasaathi-core = { workspace = true }
+
+[build-system]
+requires = ["uv_build>=0.9,<0.12"]
+build-backend = "uv_build"

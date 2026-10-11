@@ -17,6 +17,7 @@ resolution-markers = [
 members = [
     "suryasaathi",
     "suryasaathi-agents",
+    "suryasaathi-console-api",
     "suryasaathi-core",
     "suryasaathi-device-sim",
     "suryasaathi-expected-output",
@@ -2487,6 +2488,7 @@ version = "0.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "suryasaathi-agents" },
+    { name = "suryasaathi-console-api" },
     { name = "suryasaathi-core" },
     { name = "suryasaathi-device-sim" },
     { name = "suryasaathi-expected-output" },
@@ -2509,6 +2511,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "suryasaathi-agents", editable = "services/agents" },
+    { name = "suryasaathi-console-api", editable = "services/console-api" },
     { name = "suryasaathi-core", editable = "services/core" },
     { name = "suryasaathi-device-sim", editable = "tools/device-sim" },
     { name = "suryasaathi-expected-output", editable = "services/expected-output" },
@@ -2544,6 +2547,17 @@ requires-dist = [
     { name = "strands-agents", extras = ["anthropic"], specifier = ">=1.20" },
     { name = "suryasaathi-core", editable = "services/core" },
 ]
+
+[[package]]
+name = "suryasaathi-console-api"
+version = "0.0.0"
+source = { editable = "services/console-api" }
+dependencies = [
+    { name = "suryasaathi-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "suryasaathi-core", editable = "services/core" }]
 
 [[package]]
 name = "suryasaathi-core"
@@ -2611,6 +2625,12 @@ requires-dist = [{ name = "suryasaathi-core", editable = "services/core" }]
 name = "suryasaathi-rollups"
 version = "0.0.0"
 source = { editable = "services/rollups" }
+dependencies = [
+    { name = "suryasaathi-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "suryasaathi-core", editable = "services/core" }]
 
 [[package]]
 name = "suryasaathi-whatsapp"

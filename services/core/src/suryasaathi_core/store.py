@@ -87,10 +87,29 @@ class Store:
 
     def readings_between(self, system_id: str, first: str, last: str) -> list[dict[str, Any]]:
         """Readings with first <= date <= last, oldest first."""
+        items: list[dict[str, Any]] = []
+        kwargs: dict[str, Any] = {
+            "KeyConditionExpression": Key("systemId").eq(system_id)
+            & Key("date").between(first, last)
+        }
+        while True:
+            page = self.readings.query(**kwargs)
+            items += [from_item(i) for i in page.get("Items", [])]
+            if "LastEvaluatedKey" not in page:
+                return items
+            kwargs["ExclusiveStartKey"] = page["LastEvaluatedKey"]
+
+    def latest_reading_date(self, system_id: str) -> str | None:
+        """Date of the system's newest reading (one item read by key)."""
         page = self.readings.query(
-            KeyConditionExpression=Key("systemId").eq(system_id) & Key("date").between(first, last)
+            KeyConditionExpression=Key("systemId").eq(system_id),
+            ScanIndexForward=False,
+            Limit=1,
+            ProjectionExpression="#d",
+            ExpressionAttributeNames={"#d": "date"},
         )
-        return [from_item(i) for i in page.get("Items", [])]
+        items = page.get("Items", [])
+        return str(items[0]["date"]) if items else None
 
     def recent_readings(self, system_id: str, day: str, days: int) -> list[dict[str, Any]]:
         """The ``days`` days up to and including ``day``."""
@@ -144,6 +163,31 @@ class Store:
         )
         updated: dict[str, Any] = from_item(result["Attributes"])
         return updated
+
+    def list_cases(self) -> list[dict[str, Any]]:
+        """Every case (a scan: the cases table stays small next to the readings)."""
+        items: list[dict[str, Any]] = []
+        kwargs: dict[str, Any] = {}
+        while True:
+            page = self.cases.scan(**kwargs)
+            items += [from_item(i) for i in page.get("Items", [])]
+            if "LastEvaluatedKey" not in page:
+                return items
+            kwargs["ExclusiveStartKey"] = page["LastEvaluatedKey"]
+
+    def cases_for_system(self, system_id: str) -> list[dict[str, Any]]:
+        """All of a system's cases, oldest first."""
+        items: list[dict[str, Any]] = []
+        kwargs: dict[str, Any] = {
+            "IndexName": CASES_BY_SYSTEM,
+            "KeyConditionExpression": Key("systemId").eq(system_id),
+        }
+        while True:
+            page = self.cases.query(**kwargs)
+            items += [from_item(i) for i in page.get("Items", [])]
+            if "LastEvaluatedKey" not in page:
+                return items
+            kwargs["ExclusiveStartKey"] = page["LastEvaluatedKey"]
 
     def open_case(self, system_id: str) -> dict[str, Any] | None:
         """The system's newest case that isn't verified yet, if any."""

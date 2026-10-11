@@ -2,7 +2,7 @@
 
 From a laptop to a full 30-day scenario on AWS: readings arrive over MQTT, the agent
 diagnoses them on Amazon Bedrock, cases are filed, escalated and verified by Step
-Functions, and every decision lands in CloudWatch.
+Functions, every decision lands in CloudWatch, and the DISCOM console shows it all.
 
 Everything here runs from the repository root unless a step says `cd infra`.
 
@@ -70,11 +70,14 @@ Optional context flags (add any of them to the command above):
 | `-c senderEmail=… -c vendorEmail=… -c discomEmail=…` | unset                       | Send case emails through SES (see below)                        |
 | `-c vendorName=…`                                    | `[Vendor name] Solar`       | Vendor name in decisions and emails                             |
 | `-c lambdaArchitecture=x86_64`                       | `arm64`                     | Lambda CPU architecture                                         |
+| `-c consoleUrls=https://…,http://localhost:3001`     | `http://localhost:3001`     | Where the console runs: Cognito redirects and API CORS          |
+| `-c cognitoDomainPrefix=…`                           | `suryasaathi-<account id>`  | Hosted sign-in domain prefix (unique per region)                |
+| `-c tariffInr=…`                                     | `7`                         | ₹ per kWh for the console's money-lost figure                   |
 
-The first deploy builds three container images and takes roughly 10–15 minutes. It creates
-six stacks: `SuryaSaathi-Data`, `-Ingest`, `-ExpectedOutput`, `-Agents`, `-Whatsapp` and
-`-Rollups` (the last two are empty for now). Note the outputs, especially
-`SuryaSaathi-Ingest.IotEndpointAddress`.
+The first deploy builds the container images (one per Python service) and takes roughly
+15–20 minutes. It creates seven stacks: `SuryaSaathi-Data`, `-Ingest`, `-ExpectedOutput`,
+`-Agents`, `-Whatsapp` (empty for now), `-Rollups` and `-Console`. Note the outputs,
+especially `SuryaSaathi-Ingest.IotEndpointAddress`; section 8 uses the Console stack's.
 
 **Emails (optional).** Without SES settings the workflow logs each email it would send
 (`email_skipped`) and carries on. To send real emails from an SES sandbox account, verify the
@@ -170,7 +173,91 @@ aws dynamodb scan --table-name suryasaathi-cases \
   --expression-attribute-names '{"#s":"status"}' --output table
 ```
 
-## 8. Troubleshooting
+## 8. Open the DISCOM console
+
+The `SuryaSaathi-Console` stack holds a Cognito user pool (no self sign-up, an `admin`
+group, a hosted sign-in page), a read-only HTTP API (`services/console-api`) behind a JWT
+authorizer, and its outputs are the console's build settings. The `SuryaSaathi-Rollups`
+function fills the summaries table the API reads: nightly at 06:00 IST, or every 5 minutes
+up to the newest reading with `demoMode=true`.
+
+A helper for reading stack outputs:
+
+```bash
+out() { aws cloudformation describe-stacks --stack-name "$1" \
+  --query "Stacks[0].Outputs[?OutputKey=='$2'].OutputValue" --output text; }
+```
+
+### Create the first admin user
+
+Self sign-up is off: console users are created from the AWS CLI, by anyone whose AWS
+credentials may administer the user pool. Use your own email: Cognito sends the temporary
+password there.
+
+```bash
+POOL=$(out SuryaSaathi-Console UserPoolId)
+EMAIL=you@example.com
+
+aws cognito-idp admin-create-user --user-pool-id "$POOL" --username "$EMAIL" \
+  --user-attributes Name=email,Value="$EMAIL" Name=email_verified,Value=true \
+  --desired-delivery-mediums EMAIL
+aws cognito-idp admin-add-user-to-group --user-pool-id "$POOL" --username "$EMAIL" \
+  --group-name admin
+```
+
+The first sign-in asks for a new password (12+ characters with upper and lower case and a
+digit); you can add an authenticator app afterwards. For a shared demo account without an
+inbox, add `--message-action SUPPRESS` to the first command and set the password directly:
+
+```bash
+aws cognito-idp admin-set-user-password --user-pool-id "$POOL" --username "$EMAIL" \
+  --password 'Choose-a-long-one-2026' --permanent
+```
+
+Users outside the `admin` group can sign in but the API answers 403. To remove access:
+`aws cognito-idp admin-remove-user-from-group … --group-name admin` (or
+`admin-disable-user`).
+
+### Fill the summaries
+
+After a scenario has run (section 6), roll up straight away instead of waiting for the
+schedule:
+
+```bash
+aws lambda invoke --function-name "$(out SuryaSaathi-Rollups RollupsFunctionName)" \
+  --cli-binary-format raw-in-base64-out --payload '{"asOf":"latest"}' /dev/stdout
+# {"asOf": "<newest reading date>", "systems": 5, "cases": …, "written": …, "deleted": 0}
+```
+
+`asOf` can also be a date (`"2026-10-20"`) to see the fleet as it was that day. Until the
+first rollup the API answers 503.
+
+### Run the console against the API
+
+```bash
+out SuryaSaathi-Console AmplifyEnvironmentVariables | tr ',' '\n' > apps/console/.env.local
+pnpm dev --filter console     # http://localhost:3001
+```
+
+The console sends you to the hosted sign-in page and back to `/auth/callback`. Every page
+then reads the API; the "Simulated data" badge stays on because the simulator's systems
+are marked as simulated.
+
+**Hosting on Amplify.** Create an Amplify Hosting app from the repository (app root
+`apps/console`), then pass its URL to the stack so Cognito and CORS accept it, and give the
+branch the build settings:
+
+```bash
+cd infra && pnpm cdk deploy SuryaSaathi-Console -c consoleUrls=https://main.d1234abcd.amplifyapp.com,http://localhost:3001
+aws amplify update-branch --app-id d1234abcd --branch-name main \
+  --environment-variables "$(out SuryaSaathi-Console AmplifyEnvironmentVariables)"
+```
+
+The first URL in `consoleUrls` becomes `NEXT_PUBLIC_COGNITO_REDIRECT_URI`. Pass the same
+context flags on every later deploy (or put them in `infra/cdk.json`), or the defaults
+come back.
+
+## 9. Troubleshooting
 
 | Symptom                                      | Likely cause and fix                                                                                                                                                                                                                               |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -181,15 +268,20 @@ aws dynamodb scan --table-name suryasaathi-cases \
 | Executions stuck at Recheck → WaitForReading | The deadline day's reading hasn't arrived (simulator stopped or slower than one day per minute in demo mode)                                                                                                                                       |
 | `MessageRejected` from SES                   | The account is in the SES sandbox: verify the recipients too, or leave the email flags off                                                                                                                                                         |
 | Docker build fails with `exec format error`  | Building arm64 images on an x86 machine without emulation: add `-c lambdaArchitecture=x86_64`                                                                                                                                                      |
+| Console: "redirect_mismatch" from Cognito    | The console's URL isn't in `consoleUrls`: redeploy `SuryaSaathi-Console` with it, and set `NEXT_PUBLIC_COGNITO_REDIRECT_URI` to `<url>/auth/callback`                                                                                              |
+| Console: HTTP 403                            | The user isn't in the `admin` group (`admin-add-user-to-group`), then sign out and in again for a fresh token                                                                                                                                      |
+| Console: HTTP 503                            | No rollup yet: invoke the rollups function as above                                                                                                                                                                                                |
+| Console: figures lag the scenario            | Outside demo mode the rollup runs nightly, as of yesterday: invoke it with `{"asOf":"latest"}`                                                                                                                                                     |
 
-## 9. Costs and clean-up
+## 10. Costs and clean-up
 
 Everything is serverless and idle costs are close to zero. The main variable cost is Bedrock:
 by default the agent calls the model only on days something happens (smog, dust, fault, a case
 opened or closed), between one and four calls per system in the 30-day scenarios; routine days
 and days with a case already open use the rule wording. Use `-c agentEnabled=false` for free rehearsals.
 
-Remove everything (tables, logs, the IoT thing and certificate, the state machine):
+Remove everything (tables, logs, the IoT thing and certificate, the state machine, the
+user pool and its users, the console API):
 
 ```bash
 cd infra

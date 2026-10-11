@@ -1,0 +1,807 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://suryasaathi.dev/schemas/console.schema.json",
+  "title": "ConsoleApi",
+  "description": "Responses of the console API (services/console-api), also produced by the console's mock adapter. Each $defs entry is one response or a part of one.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "Overview": {
+      "$ref": "#/$defs/Overview"
+    },
+    "VendorList": {
+      "$ref": "#/$defs/VendorList"
+    },
+    "VendorDetail": {
+      "$ref": "#/$defs/VendorDetail"
+    },
+    "CaseList": {
+      "$ref": "#/$defs/CaseList"
+    },
+    "CaseDetail": {
+      "$ref": "#/$defs/CaseDetail"
+    },
+    "SystemList": {
+      "$ref": "#/$defs/SystemList"
+    },
+    "SystemDetail": {
+      "$ref": "#/$defs/SystemDetail"
+    },
+    "Breakdown": {
+      "$ref": "#/$defs/Breakdown"
+    },
+    "SearchIndex": {
+      "$ref": "#/$defs/SearchIndex"
+    }
+  },
+  "$defs": {
+    "Diagnosis": {
+      "title": "ConsoleDiagnosis",
+      "type": "string",
+      "enum": ["healthy", "smog", "dust", "fault"]
+    },
+    "CaseCause": {
+      "title": "ConsoleCaseCause",
+      "type": "string",
+      "enum": ["dust", "fault"]
+    },
+    "CaseStatus": {
+      "title": "ConsoleCaseStatus",
+      "type": "string",
+      "enum": ["filed", "escalated", "fixed", "verified"]
+    },
+    "SystemStatus": {
+      "title": "SystemStatus",
+      "description": "open_case: a maintenance case is open; underperforming: latest performance below 90% with no case yet.",
+      "type": "string",
+      "enum": ["healthy", "underperforming", "open_case"]
+    },
+    "Reason": {
+      "title": "DecisionReason",
+      "description": "One plain-language reason the agent gave for a decision.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "source"],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "enum": ["agent", "rules"]
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["neutral", "info", "success", "warning", "danger"]
+        }
+      }
+    },
+    "ReadingRow": {
+      "title": "ReadingRow",
+      "description": "One day's reading for a system, with what the agent made of it.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "date",
+        "energyKwh",
+        "expectedKwh",
+        "performance",
+        "rained",
+        "diagnosis",
+        "action",
+        "reasons"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "energyKwh": {
+          "type": "number"
+        },
+        "expectedKwh": {
+          "type": ["number", "null"]
+        },
+        "performance": {
+          "description": "Actual / expected.",
+          "type": ["number", "null"]
+        },
+        "rained": {
+          "type": "boolean"
+        },
+        "diagnosis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Diagnosis"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action": {
+          "type": ["string", "null"]
+        },
+        "faultCode": {
+          "type": "string"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Reason"
+          }
+        }
+      }
+    },
+    "FleetPoint": {
+      "title": "FleetPoint",
+      "description": "Daily totals for a set of systems.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "expectedKwh", "actualKwh", "performance", "underperforming"],
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "expectedKwh": {
+          "type": "number"
+        },
+        "actualKwh": {
+          "type": "number"
+        },
+        "performance": {
+          "description": "Sum of actual / sum of expected.",
+          "type": ["number", "null"]
+        },
+        "underperforming": {
+          "description": "Systems below 90% that day.",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "VendorRow": {
+      "title": "VendorRow",
+      "description": "A vendor's standing across the systems it maintains.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vendorId",
+        "name",
+        "systems",
+        "underperforming",
+        "underperformingPct",
+        "openCases",
+        "pastDeadline",
+        "avgFixDays",
+        "energyLostKwh"
+      ],
+      "properties": {
+        "vendorId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "systems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "underperforming": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "underperformingPct": {
+          "type": "number"
+        },
+        "openCases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pastDeadline": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "avgFixDays": {
+          "description": "Mean days from filing to a verified fix (rain closures excluded); null without fixes.",
+          "type": ["number", "null"]
+        },
+        "energyLostKwh": {
+          "type": "number"
+        }
+      }
+    },
+    "CaseSummary": {
+      "title": "CaseSummary",
+      "description": "A maintenance case as listed in the console.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "caseId",
+        "systemId",
+        "vendorId",
+        "vendorName",
+        "zone",
+        "cause",
+        "status",
+        "openedDate",
+        "deadlineDate",
+        "pastDeadline",
+        "daysOverdue",
+        "daysOpen"
+      ],
+      "properties": {
+        "caseId": {
+          "type": "string"
+        },
+        "systemId": {
+          "type": "string"
+        },
+        "vendorId": {
+          "type": "string"
+        },
+        "vendorName": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "cause": {
+          "$ref": "#/$defs/CaseCause"
+        },
+        "status": {
+          "$ref": "#/$defs/CaseStatus"
+        },
+        "openedDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "deadlineDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "escalatedDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "fixedDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "verifiedDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "resolvedBy": {
+          "type": "string",
+          "enum": ["vendor", "discom", "rain"]
+        },
+        "pastDeadline": {
+          "description": "Escalated, or still filed after the vendor deadline.",
+          "type": "boolean"
+        },
+        "daysOverdue": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "daysOpen": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "TimelineEvent": {
+      "title": "TimelineEvent",
+      "description": "A step in a case's history.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "kind", "label"],
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "filed",
+            "vendor_notified",
+            "deadline",
+            "escalated",
+            "discom_notified",
+            "fixed",
+            "verified",
+            "closed_by_rain"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "upcoming": {
+          "description": "A deadline still ahead.",
+          "type": "boolean"
+        }
+      }
+    },
+    "SystemSummary": {
+      "title": "SystemSummary",
+      "description": "A monitored system as listed in the console.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "systemId",
+        "vendorId",
+        "vendorName",
+        "zone",
+        "dataSource",
+        "consent",
+        "capacityKw",
+        "latestPerformance",
+        "status",
+        "energyLostKwh",
+        "simulated"
+      ],
+      "properties": {
+        "systemId": {
+          "type": "string"
+        },
+        "dsain": {
+          "type": "string"
+        },
+        "vendorId": {
+          "type": "string"
+        },
+        "vendorName": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "dataSource": {
+          "type": "string",
+          "enum": ["data_logger", "inverter_cloud", "camera_clip", "whatsapp_photo"]
+        },
+        "consent": {
+          "type": "boolean"
+        },
+        "capacityKw": {
+          "type": "number"
+        },
+        "latestPerformance": {
+          "type": ["number", "null"]
+        },
+        "status": {
+          "$ref": "#/$defs/SystemStatus"
+        },
+        "openCaseId": {
+          "type": "string"
+        },
+        "energyLostKwh": {
+          "type": "number"
+        },
+        "simulated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ZoneRow": {
+      "title": "ZoneRow",
+      "description": "A DISCOM zone's standing.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "zone",
+        "systems",
+        "underperforming",
+        "openCases",
+        "pastDeadline",
+        "energyLostKwh"
+      ],
+      "properties": {
+        "zone": {
+          "type": "string"
+        },
+        "systems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "underperforming": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "openCases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pastDeadline": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "energyLostKwh": {
+          "type": "number"
+        }
+      }
+    },
+    "CauseRow": {
+      "title": "CauseRow",
+      "description": "Cases and energy lost by cause; other is shortfall with no dust or fault case.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cause", "cases", "openCases", "energyLostKwh"],
+      "properties": {
+        "cause": {
+          "type": "string",
+          "enum": ["dust", "fault", "other"]
+        },
+        "cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "openCases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "energyLostKwh": {
+          "type": "number"
+        }
+      }
+    },
+    "SearchItem": {
+      "title": "SearchItem",
+      "description": "An entry in the command palette.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id", "label", "hint"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["system", "vendor", "case"]
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "hint": {
+          "type": "string"
+        }
+      }
+    },
+    "Overview": {
+      "title": "Overview",
+      "description": "GET /overview",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asOf",
+        "simulated",
+        "systemsWatched",
+        "underperforming",
+        "openCases",
+        "pastDeadline",
+        "energyLostKwh",
+        "moneyLostInr",
+        "tariffInr",
+        "windowDays",
+        "fleet"
+      ],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "systemsWatched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "underperforming": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "openCases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pastDeadline": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "energyLostKwh": {
+          "description": "Shortfall against expected over the window.",
+          "type": "number"
+        },
+        "moneyLostInr": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tariffInr": {
+          "type": "number"
+        },
+        "windowDays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fleet": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FleetPoint"
+          }
+        }
+      }
+    },
+    "VendorList": {
+      "title": "VendorList",
+      "description": "GET /vendors",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "vendors"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "vendors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VendorRow"
+          }
+        }
+      }
+    },
+    "VendorDetail": {
+      "title": "VendorDetail",
+      "description": "GET /vendors/{vendorId}",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "vendor", "systems", "cases", "fleet"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "vendor": {
+          "$ref": "#/$defs/VendorRow"
+        },
+        "systems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SystemSummary"
+          }
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CaseSummary"
+          }
+        },
+        "fleet": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FleetPoint"
+          }
+        }
+      }
+    },
+    "CaseList": {
+      "title": "CaseList",
+      "description": "GET /cases",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "cases"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CaseSummary"
+          }
+        }
+      }
+    },
+    "CaseDetail": {
+      "title": "CaseDetail",
+      "description": "GET /cases/{caseId}",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "case", "reason", "timeline", "readings"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "case": {
+          "$ref": "#/$defs/CaseSummary"
+        },
+        "reason": {
+          "description": "Why the agent opened the case.",
+          "type": "string"
+        },
+        "familyMessage": {
+          "type": "string"
+        },
+        "timeline": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TimelineEvent"
+          }
+        },
+        "readings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReadingRow"
+          }
+        }
+      }
+    },
+    "SystemList": {
+      "title": "SystemList",
+      "description": "GET /systems",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "systems"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "systems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SystemSummary"
+          }
+        }
+      }
+    },
+    "SystemDetail": {
+      "title": "SystemDetail",
+      "description": "GET /systems/{systemId}",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "system", "location", "readings", "cases"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "system": {
+          "$ref": "#/$defs/SystemSummary"
+        },
+        "location": {
+          "title": "SystemLocation",
+          "description": "Where the system is.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lat", "lon", "zone"],
+          "properties": {
+            "lat": {
+              "type": "number"
+            },
+            "lon": {
+              "type": "number"
+            },
+            "zone": {
+              "type": "string"
+            }
+          }
+        },
+        "installedOn": {
+          "type": "string",
+          "format": "date"
+        },
+        "consentRecordedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "readings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReadingRow"
+          }
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CaseSummary"
+          }
+        }
+      }
+    },
+    "Breakdown": {
+      "title": "Breakdown",
+      "description": "GET /breakdown",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "causes", "zones"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "causes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CauseRow"
+          }
+        },
+        "zones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ZoneRow"
+          }
+        }
+      }
+    },
+    "SearchIndex": {
+      "title": "SearchIndex",
+      "description": "GET /search",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asOf", "simulated", "items"],
+      "properties": {
+        "asOf": {
+          "description": "Last day with readings; every figure is as of this day.",
+          "type": "string",
+          "format": "date"
+        },
+        "simulated": {
+          "description": "True when the figures come from simulated systems (show the Simulated data badge).",
+          "type": "boolean"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SearchItem"
+          }
+        }
+      }
+    }
+  }
+}

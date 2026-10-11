@@ -25,7 +25,7 @@ To keep Bedrock calls proportional, the agent runs when something happens (smog,
 fault, a case opened or closed); routine days use the rule wording. Set `AGENT_SCOPE=all`
 to run it on every reading, or `AGENT_ENABLED=false` to run the rules alone.
 
-Configuration: `BEDROCK_MODEL_ID` (default `anthropic.claude-opus-5-5`), `BEDROCK_REGION`,
+Configuration: `BEDROCK_MODEL_ID` (default `anthropic.claude-haiku-4-5-20251001-v1:0`), `BEDROCK_REGION`,
 `AGENT_EFFORT` (default `low`), plus the table names and `CASE_WORKFLOW_ARN` set by infra.
 
 ```bash

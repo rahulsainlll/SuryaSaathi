@@ -15,16 +15,56 @@ Everything here runs from the repository root unless a step says `cd infra`.
 | Docker (running)        | `docker info` — CDK builds the Lambda images locally |
 | AWS CLI v2, signed in   | `aws sts get-caller-identity`                        |
 
-Pick a region and use it for every command (the examples use Mumbai):
+Pick an account, a profile and a region, and pin all three for every command — `cdk`, the
+AWS CLI and `device-sim` alike. Team Mythos deploys to the `anshu` profile in `us-east-1`:
 
 ```bash
-export AWS_REGION=ap-south-1          # or set AWS_PROFILE / AWS_DEFAULT_REGION
+export AWS_PROFILE=anshu
+export AWS_REGION=us-east-1
+export AWS_DEFAULT_REGION=$AWS_REGION
 export CDK_DEFAULT_REGION=$AWS_REGION
 ```
 
-**Amazon Bedrock model access.** The agent calls Claude Opus 5.5 (`anthropic.claude-opus-5-5`)
-through Bedrock. In the Bedrock console for the region you will use, open _Model access_ and
-enable it. If it isn't offered in your deployment region, deploy anyway and point the agent at
+Keep these in a gitignored `.envrc` at the repository root (and in
+`.claude/settings.local.json` under an `env` key, also gitignored, if you use Claude Code).
+Both are gitignored. **Pin the profile explicitly**: `bin/infra.ts` takes the region from
+`AWS_REGION`/`CDK_DEFAULT_REGION`, so a shell where `AWS_PROFILE` is unset silently falls back
+to the *default* profile's region and synthesizes the whole stack — including
+`BEDROCK_REGION` — for the wrong region, with no error. Check it before deploying:
+
+```bash
+aws sts get-caller-identity          # must show the account you expect
+```
+
+**Organization SCPs.** If the account is a member of an AWS Organization, a Service Control
+Policy can deny the services this stack needs, and no IAM grant or CDK flag can override it.
+`cdk bootstrap` alone needs `cloudformation`, `ecr`, `ssm`, `s3` and `iam`; the stacks also
+need `lambda`, `dynamodb`, `iot`, `states`, `secretsmanager`, `ses`, `sns`, `events`,
+`apigateway`, `cognito-idp` and `bedrock`/`bedrock-mantle`. A denial names the policy:
+
+```
+is not authorized to perform: cloudformation:ListStacks ... with an explicit deny in a
+service control policy: arn:aws:organizations::<mgmt-account>:policy/o-…/service_control_policy/p-…
+```
+
+Only an administrator of the organization's **management** account can detach or amend it.
+`aws organizations describe-organization` shows which account that is.
+
+**Amazon Bedrock model access.** The agent calls Claude Haiku 4.5
+(`anthropic.claude-haiku-4-5-20251001-v1:0`) through Bedrock. Haiku is the default because the
+diagnosis call is small and well-scoped (one to four calls per system across a 30-day run), so
+a larger model costs more without deciding anything differently; pass `-c bedrockModelId=…` to
+use one. In the Bedrock console for the region you will use, open _Model access_ and enable it.
+
+The agent reaches Bedrock through the Anthropic SDK's Bedrock (Mantle) client
+(`AsyncAnthropicBedrockMantle`), not `bedrock-runtime`, so the model ID is the plain
+foundation-model ID as `aws bedrock list-foundation-models` reports it. Do **not** use a
+`us.`-prefixed cross-region inference profile ID here — that is the `bedrock-runtime` form.
+
+Brand-new AWS accounts cannot invoke any model until AWS finishes verifying them
+(`AccessDeniedException: Your account is currently being verified`, usually under two hours).
+The control plane still answers, so `list-foundation-models` works while invocation does not.
+Deploy anyway and the agent falls back to its rules; see `agent_error` in section 10. If it isn't offered in your deployment region, deploy anyway and point the agent at
 a region that has it with `-c bedrockRegion=us-east-1` in step 4. To run without the model,
 add `-c agentEnabled=false`: the rules still decide everything and the reasons use the
 demo's wording.
@@ -62,7 +102,7 @@ Optional context flags (add any of them to the command above):
 | Flag                                                 | Default                     | Effect                                                          |
 | ---------------------------------------------------- | --------------------------- | --------------------------------------------------------------- |
 | `-c demoMode=true`                                   | false                       | 60-second workflow days instead of 24 hours                     |
-| `-c bedrockModelId=…`                                | `anthropic.claude-opus-5-5` | Model for the diagnosis agent                                   |
+| `-c bedrockModelId=…`                                | `anthropic.claude-haiku-4-5-20251001-v1:0` | Model for the diagnosis agent                    |
 | `-c bedrockRegion=…`                                 | stack region                | Region the agent calls Bedrock in                               |
 | `-c agentEnabled=false`                              | true                        | Rules only, no Bedrock calls                                    |
 | `-c agentScope=all`                                  | `actions`                   | Ask the model on every reading, not only when something happens |
@@ -317,6 +357,10 @@ there, pressing play embeds the YouTube film in the card, on the page.
 
 | Symptom                                      | Likely cause and fix                                                                                                                                                                                                                               |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `explicit deny in a service control policy`  | An Organization SCP blocks the service; see section 1. Only the management account can lift it — `aws organizations describe-organization` names it. No IAM or CDK change helps                                                                   |
+| `tsx: command not found` from `cdk`          | Dependencies aren't installed: run `pnpm install` at the repository root first                                                                                                                                                                     |
+| Stack synthesized for the wrong region       | `AWS_PROFILE` was unset, so the default profile's region won. Export all four variables from section 1 and re-check with `aws sts get-caller-identity`                                                                                            |
+| Bedrock: `Your account is currently being verified` | A new AWS account cannot invoke models yet; it usually clears within two hours. Deploy anyway — the rules decide and `reasonSource` stays `rules`                                                                                          |
 | `device-sim` can't connect                   | Run `fetch-cert` again; keep `--client-id suryasaathi-sim` (the policy only allows that prefix); check `--endpoint` is the `-ats` data endpoint                                                                                                    |
 | Readings in MQTT but not in DynamoDB         | CloudWatch log group of the ingest function: `reading_rejected` with `unknown_system` means the systems weren't registered (don't use `--no-register` on a fresh deploy); IoT rule errors go to the `RuleErrors` log group in `SuryaSaathi-Ingest` |
 | Decisions all say `reasonSource: rules`      | Look for `agent_error` in the agent's logs: usually Bedrock model access isn't enabled in `bedrockRegion`, or the model ID is wrong. The rules still decide, so cases continue                                                                     |

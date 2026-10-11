@@ -140,7 +140,7 @@ describe("agents", () => {
 
   it("configures Bedrock from context, defaulting to Claude Opus 5.5 in the stack region", () => {
     expect(env(t.agents, "DiagnosisAgent")).toMatchObject({
-      BEDROCK_MODEL_ID: "anthropic.claude-opus-5-5",
+      BEDROCK_MODEL_ID: "anthropic.claude-haiku-4-5-20251001-v1:0",
       BEDROCK_REGION: "ap-south-1",
       AGENT_SCOPE: "actions",
       DAY_LENGTH_SECONDS: "86400",

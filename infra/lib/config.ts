@@ -39,7 +39,7 @@ export function readConfig(node: Node): SuryaConfig {
   return {
     demoMode,
     dayLengthSeconds: demoMode ? 60 : 86_400,
-    bedrockModelId: str(c("bedrockModelId")) ?? "anthropic.claude-opus-5-5",
+    bedrockModelId: str(c("bedrockModelId")) ?? "anthropic.claude-haiku-4-5-20251001-v1:0",
     bedrockRegion: str(c("bedrockRegion")),
     agentEnabled: flag(c("agentEnabled"), true),
     agentScope: str(c("agentScope")) === "all" ? "all" : "actions",

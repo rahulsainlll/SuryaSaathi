@@ -311,7 +311,7 @@ post's cover are rendered at 1280×720 from `docs/assets/thumbnails.html` (`#fil
 **The film on the home page.** With the film at `apps/web/public/film.mp4`, pressing play on
 the film card plays it right there, in a plain video player (no YouTube). Prepare the file with
 `pnpm --filter web film:encode path/to/film.mov` (needs ffmpeg) and commit it. Until it's
-there, the card opens the film on YouTube.
+there, pressing play embeds the YouTube film in the card, on the page.
 
 ## 10. Troubleshooting
 

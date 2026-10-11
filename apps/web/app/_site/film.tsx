@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { YOUTUBE_URL } from "./content";
+import { YOUTUBE_ID } from "./content";
 
 const PLAY_ICON = (
   <span className="pb">
@@ -19,37 +19,17 @@ const BAR = (
 );
 
 /**
- * The film card. With the film hosted on the site (`src`), pressing play swaps the thumbnail
- * for a plain video player in the same card: no pop-up, nothing from YouTube. Without it,
- * the card links to the film on YouTube.
+ * The film card, right under the hero. Pressing play plays the film in place, filling the
+ * card (it's 16:9, like the card): from public/film.mp4 when the site hosts it, otherwise the
+ * YouTube film, embedded without leaving the page. Nothing loads until play is pressed.
  */
 export function Film({ poster, src }: { poster: ReactNode; src?: string }) {
   const [playing, setPlaying] = useState(false);
 
-  if (!src) {
-    return (
-      <div className="film fade">
-        <a
-          className="film-in"
-          href={YOUTUBE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Watch the 70-second SuryaSaathi film on YouTube (opens in a new tab)"
-        >
-          {poster}
-          <span className="play" aria-hidden="true">
-            {PLAY_ICON}
-          </span>
-          {BAR}
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div className="film fade">
       <div className="film-in">
-        {playing ? (
+        {playing && src ? (
           // Started by the click, so it may play with sound; the browser's own controls only.
           <video
             src={src}
@@ -59,6 +39,13 @@ export function Film({ poster, src }: { poster: ReactNode; src?: string }) {
             preload="auto"
             aria-label="SuryaSaathi film"
             onEnded={() => setPlaying(false)}
+          />
+        ) : playing ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+            title="SuryaSaathi film"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
           />
         ) : (
           <>

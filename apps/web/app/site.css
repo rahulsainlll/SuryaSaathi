@@ -491,6 +491,7 @@ html[data-theme="dark"]:has(.site) {
     box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.4);
   }
   & .film-in {
+    display: block;
     position: relative;
     aspect-ratio: 16/9;
     border-radius: 20px;
@@ -527,10 +528,10 @@ html[data-theme="dark"]:has(.site) {
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
     transition: transform 160ms var(--ease-out);
   }
-  & .play:hover .pb {
+  & .film-in:hover .pb {
     transform: scale(1.05);
   }
-  & .play:active .pb {
+  & .film-in:active .pb {
     transform: scale(0.97);
   }
   & .film-bar {
@@ -1339,23 +1340,6 @@ html[data-theme="dark"]:has(.site) {
   & .fcols li a:hover {
     color: var(--ink);
   }
-  /* Decorative: the text comes from CSS so it isn't read or checked as content. */
-  & .wordmark::before {
-    content: "SuryaSaathi";
-  }
-  & .wordmark {
-    font-family: var(--logo-font);
-    font-weight: 800;
-    font-size: clamp(64px, 17vw, 240px);
-    line-height: 0.8;
-    letter-spacing: -0.03em;
-    color: var(--soft);
-    -webkit-text-stroke: 1px var(--line);
-    text-align: center;
-    padding: 10px 0 0;
-    user-select: none;
-    overflow: hidden;
-  }
   & .legal {
     display: flex;
     flex-wrap: wrap;
@@ -1373,82 +1357,6 @@ html[data-theme="dark"]:has(.site) {
 }
 :root[data-theme="dark"] .site .i-moon {
   display: none;
-}
-
-/* The film dialog (rendered in the top layer, so it carries the .site class itself). */
-dialog.vid {
-  width: min(1100px, 94vw);
-  max-width: none;
-  padding: 0;
-  margin: auto;
-  border: 0;
-  border-radius: 20px;
-  background: #000;
-  color: #fff;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(0.96);
-  transition:
-    opacity 250ms var(--ease-out),
-    transform 250ms var(--ease-out),
-    display 250ms allow-discrete,
-    overlay 250ms allow-discrete;
-}
-dialog.vid[open] {
-  opacity: 1;
-  transform: none;
-}
-@starting-style {
-  dialog.vid[open] {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-}
-dialog.vid::backdrop {
-  background: rgba(5, 6, 10, 0.72);
-  backdrop-filter: blur(4px);
-}
-dialog.vid .vid-frame {
-  position: relative;
-  aspect-ratio: 16/9;
-  background: #000;
-}
-dialog.vid .vid-frame iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-dialog.vid .vid-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px 10px 18px;
-  font-size: 14px;
-  background: #0b0b10;
-}
-dialog.vid .vid-bar a {
-  color: #f5b54a;
-}
-dialog.vid .vid-close {
-  min-height: 40px;
-  padding: 0 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  cursor: pointer;
-  transition: transform 160ms var(--ease-out);
-}
-dialog.vid .vid-close:active {
-  transform: scale(0.97);
-}
-dialog.vid :focus-visible {
-  outline: 3px solid #5b8def;
-  outline-offset: 2px;
 }
 
 @keyframes ss-word {
@@ -1471,8 +1379,7 @@ dialog.vid :focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site *,
-  dialog.vid {
+  .site * {
     transition: none !important;
     animation: none !important;
   }

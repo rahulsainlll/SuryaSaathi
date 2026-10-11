@@ -17,8 +17,21 @@ export function Logo({ height = 28, className }: LogoProps) {
   const size = { width, height };
   return (
     <span className={`ss-logo inline-flex shrink-0 ${className ?? ""}`}>
-      <img src={brandAssets.logo} alt="SuryaSaathi" {...size} className="ss-logo-light block" />
-      <img src={brandAssets.logoDark} alt="SuryaSaathi" {...size} className="ss-logo-dark hidden" />
+      <img
+        src={brandAssets.logo}
+        alt="SuryaSaathi"
+        {...size}
+        loading="lazy"
+        className="ss-logo-light block"
+      />
+      {/* Lazy, so the theme's hidden variant is never downloaded. */}
+      <img
+        src={brandAssets.logoDark}
+        alt="SuryaSaathi"
+        {...size}
+        loading="lazy"
+        className="ss-logo-dark hidden"
+      />
     </span>
   );
 }

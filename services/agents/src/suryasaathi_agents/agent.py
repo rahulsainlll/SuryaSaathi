@@ -141,11 +141,10 @@ def anthropic_model(settings: Settings) -> Any:
     if not settings.anthropic_secret_name:
         raise ValueError("MODEL_PROVIDER=anthropic needs ANTHROPIC_SECRET_NAME")
     key = _anthropic_api_key(settings.anthropic_secret_name, settings.bedrock_region)
-    model = AnthropicModel(
-        model_id=settings.anthropic_model_id,
-        max_tokens=4096,
-        params={"output_config": {"effort": settings.agent_effort}},
-    )
+    # No effort parameter: Haiku 4.5 rejects it outright ("This model does not support the
+    # effort parameter"), and Converse has no equivalent, so AGENT_EFFORT goes unused on
+    # both paths.
+    model = AnthropicModel(model_id=settings.anthropic_model_id, max_tokens=4096)
     model.client = anthropic.AsyncAnthropic(api_key=key)  # type: ignore[assignment]
     return model
 

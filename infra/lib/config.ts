@@ -24,6 +24,8 @@ export interface SuryaConfig {
   architecture: "arm64" | "x86_64";
   /** Where the console runs (origins), for Cognito redirects and CORS. */
   consoleUrls: string[];
+  /** Where the public website runs (origins), for the Live page's CORS. */
+  siteUrls: string[];
   /** Prefix of the Cognito hosted sign-in domain; unique per region. */
   cognitoDomainPrefix?: string;
   /** ₹ per kWh for the console's money-lost figure. */
@@ -60,6 +62,10 @@ export function readConfig(node: Node): SuryaConfig {
     discomEmail: str(c("discomEmail")),
     architecture,
     consoleUrls: (str(c("consoleUrls")) ?? "http://localhost:3001")
+      .split(",")
+      .map((u) => u.trim().replace(/\/+$/, ""))
+      .filter(Boolean),
+    siteUrls: (str(c("siteUrls")) ?? "http://localhost:3000")
       .split(",")
       .map((u) => u.trim().replace(/\/+$/, ""))
       .filter(Boolean),

@@ -15,6 +15,8 @@ export interface ConsoleStackProps extends StackProps {
 
 export const ADMIN_GROUP = "admin";
 export const CALLBACK_PATH = "/auth/callback";
+/** The site's public, unauthenticated read of the live demo fleet. */
+export const LIVE_PATH = "/public/live";
 
 /**
  * The DISCOM console's backend: a Cognito user pool (admins only, no self sign-up) with a
@@ -25,6 +27,8 @@ export class ConsoleStack extends Stack {
   readonly userPool: cognito.UserPool;
   readonly client: cognito.UserPoolClient;
   readonly apiUrl: string;
+  /** The public Live endpoint, for the website's NEXT_PUBLIC_LIVE_API. */
+  readonly liveUrl: string;
 
   constructor(scope: Construct, id: string, props: ConsoleStackProps) {
     super(scope, id, props);
@@ -90,12 +94,34 @@ export class ConsoleStack extends Stack {
     data.cases.grantReadData(consoleApi.fn);
     data.readings.grantReadData(consoleApi.fn);
 
+    // The public endpoint behind the website's Live page. Its own function, so the
+    // console's API is never reachable without a token, and so this one can be capped
+    // on its own: reserved concurrency costs nothing and bounds a public endpoint.
+    const liveApi = new ServiceFunction(this, "LiveApi", {
+      service: "live-api",
+      handler: "suryasaathi_live_api.handler.handler",
+      config,
+      environment: {
+        ...data.tableEnvironment,
+        MODEL_PROVIDER: config.modelProvider,
+        BEDROCK_MODEL_ID: config.bedrockModelId,
+        ANTHROPIC_MODEL_ID: config.anthropicModelId,
+      },
+      timeout: Duration.seconds(15),
+      memorySize: 512,
+      reservedConcurrency: 2,
+    });
+    data.summaries.grantReadData(liveApi.fn);
+    data.cases.grantReadData(liveApi.fn);
+    data.readings.grantReadData(liveApi.fn);
+
     const api = new apigwv2.HttpApi(this, "Api", {
       apiName: "suryasaathi-console",
-      description: "Read-only API for the DISCOM console",
+      description: "Read-only API for the DISCOM console, plus the site's public Live route",
       createDefaultStage: false,
       corsPreflight: {
-        allowOrigins: config.consoleUrls,
+        // The console's own origins, plus the website's for the public Live route.
+        allowOrigins: [...config.consoleUrls, ...config.siteUrls],
         allowMethods: [apigwv2.CorsHttpMethod.GET],
         allowHeaders: ["Authorization"],
         maxAge: Duration.hours(1),
@@ -109,13 +135,27 @@ export class ConsoleStack extends Stack {
       methods: [apigwv2.HttpMethod.GET],
       integration: new HttpLambdaIntegration("ConsoleApi", consoleApi.fn),
     });
+    api.addRoutes({
+      path: LIVE_PATH,
+      methods: [apigwv2.HttpMethod.GET],
+      integration: new HttpLambdaIntegration("LiveApi", liveApi.fn),
+      // Deliberately unauthenticated: this is what the public site reads.
+      authorizer: new apigwv2.HttpNoneAuthorizer(),
+    });
     const stage = new apigwv2.HttpStage(this, "Stage", {
       httpApi: api,
       stageName: "$default",
       autoDeploy: true,
       throttle: { rateLimit: 20, burstLimit: 40 },
     });
+    // Per-route throttling is L1 only: the L2 stage exposes the default settings alone.
+    // routeSettings is typed `any`, so CDK does not camel-case it for us — these have to
+    // be the CloudFormation property names or the limits are silently dropped.
+    (stage.node.defaultChild as apigwv2.CfnStage).routeSettings = {
+      [`GET ${LIVE_PATH}`]: { ThrottlingRateLimit: 5, ThrottlingBurstLimit: 10 },
+    };
     this.apiUrl = stage.url;
+    this.liveUrl = `${stage.url.replace(/\/+$/, "")}${LIVE_PATH}`;
 
     // What the console needs at build time, e.g. for Amplify Hosting or .env.local.
     const env: Record<string, string> = {
@@ -142,5 +182,15 @@ export class ConsoleStack extends Stack {
     new CfnOutput(this, "UserPoolId", { value: this.userPool.userPoolId });
     new CfnOutput(this, "AdminGroupName", { value: ADMIN_GROUP });
     new CfnOutput(this, "ConsoleApiFunctionName", { value: consoleApi.fn.functionName });
+    new CfnOutput(this, "LiveApiFunctionName", { value: liveApi.fn.functionName });
+    new CfnOutput(this, "NEXTPUBLICLIVEAPI", {
+      key: "NEXTPUBLICLIVEAPI",
+      value: this.liveUrl,
+      description: "NEXT_PUBLIC_LIVE_API — set this on the website's Amplify app",
+    });
+    new CfnOutput(this, "WebsiteEnvironmentVariables", {
+      description: "KEY=value pairs for the website's `aws amplify update-branch`",
+      value: `NEXT_PUBLIC_LIVE_API=${this.liveUrl}`,
+    });
   }
 }

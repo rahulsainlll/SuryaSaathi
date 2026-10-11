@@ -97,16 +97,17 @@ describe("stacks", () => {
     }
   });
 
-  it("reserves no Lambda capacity", () => {
+  // Provisioned concurrency keeps execution environments warm and bills for them by the
+  // hour. Reserved concurrency is free and only caps scaling, so the public Live function
+  // uses it deliberately — the two are a letter apart and nothing alike on the invoice.
+  it("keeps no Lambda capacity warm", () => {
     for (const stack of Object.values(t.stacks)) {
       const template = Template.fromStack(stack);
       template.resourceCountIs("AWS::Lambda::Alias", 0);
-      const fns = Object.values(template.findResources("AWS::Lambda::Function")) as {
-        Properties: Record<string, unknown>;
-      }[];
-      for (const fn of fns) {
-        expect(fn.Properties.ReservedConcurrentExecutions).toBeUndefined();
-      }
+      template.resourceCountIs("AWS::Lambda::Version", 0);
+      const json = JSON.stringify(template.toJSON());
+      expect(json).not.toContain("ProvisionedConcurrencyConfig");
+      expect(json).not.toContain("ProvisionedConcurrentExecutions");
     }
   });
 });
@@ -305,7 +306,8 @@ describe("console", () => {
     t.console.hasResourceProperties("AWS::ApiGatewayV2::Api", {
       ProtocolType: "HTTP",
       CorsConfiguration: Match.objectLike({
-        AllowOrigins: ["http://localhost:3001"],
+        // The console's origin, then the website's for the public Live route.
+        AllowOrigins: ["http://localhost:3001", "http://localhost:3000"],
         AllowMethods: ["GET"],
       }),
     });
@@ -321,6 +323,47 @@ describe("console", () => {
     expect(env(t.console, "ConsoleApi")).toMatchObject({ ADMIN_GROUP: "admin" });
     const policies = JSON.stringify(t.console.findResources("AWS::IAM::Policy"));
     expect(policies).not.toMatch(/dynamodb:(PutItem|UpdateItem|DeleteItem|BatchWriteItem)/);
+  });
+
+  it("exposes one public, throttled, capped route for the site's Live page", () => {
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Route", {
+      RouteKey: "GET /public/live",
+      AuthorizationType: "NONE",
+    });
+    // The console's own routes must stay behind the authorizer.
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Route", {
+      RouteKey: "GET /{proxy+}",
+      AuthorizationType: "JWT",
+    });
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Stage", {
+      RouteSettings: {
+        "GET /public/live": { ThrottlingRateLimit: 5, ThrottlingBurstLimit: 10 },
+      },
+    });
+    // Exactly one function is capped, and it is the public one.
+    const capped = Object.keys(
+      t.console.findResources("AWS::Lambda::Function", {
+        Properties: { ReservedConcurrentExecutions: 2 },
+      }),
+    );
+    expect(capped).toHaveLength(1);
+    expect(capped[0]).toMatch(/^LiveApi/);
+    // The public function reads, never writes.
+    const policies = JSON.stringify(t.console.findResources("AWS::IAM::Policy"));
+    expect(policies).not.toMatch(/dynamodb:(PutItem|UpdateItem|DeleteItem|BatchWriteItem)/);
+  });
+
+  it("lets the website read the live route cross-origin", () => {
+    const site = synth({
+      siteUrls: "https://site.example,http://localhost:3000",
+      consoleUrls: "https://console.example",
+    }).console;
+    site.hasResourceProperties("AWS::ApiGatewayV2::Api", {
+      CorsConfiguration: Match.objectLike({
+        AllowOrigins: ["https://console.example", "https://site.example", "http://localhost:3000"],
+      }),
+    });
+    site.hasOutput("NEXTPUBLICLIVEAPI", {});
   });
 
   it("outputs the console's build environment", () => {

@@ -18,6 +18,12 @@ export interface ServiceFunctionProps {
   environment?: Record<string, string>;
   timeout?: Duration;
   memorySize?: number;
+  /**
+   * Cap on simultaneous executions. Free — unlike provisioned concurrency it keeps
+   * nothing warm, it only refuses to scale past this — so it is the right guard on a
+   * public endpoint, where the bill is otherwise whatever the internet decides.
+   */
+  reservedConcurrency?: number;
 }
 
 /** A Lambda function running one Python service from the shared container image. */
@@ -45,6 +51,7 @@ export class ServiceFunction extends Construct {
       architecture: arm ? lambda.Architecture.ARM_64 : lambda.Architecture.X86_64,
       timeout: props.timeout ?? Duration.seconds(30),
       memorySize: props.memorySize ?? 512,
+      reservedConcurrentExecutions: props.reservedConcurrency,
       logGroup: this.logGroup,
       environment: {
         POWERTOOLS_SERVICE_NAME: props.service,

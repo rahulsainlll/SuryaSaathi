@@ -213,8 +213,8 @@ export const post: Post = {
   readingMinutes: 8,
   tag: "How it works",
   image: {
-    src: "/images/blog/its-not-the-pollution.jpg",
-    alt: "“It’s the pollution.” Three cards, smog, dust and fault, with dust highlighted: the vendor must clean it, free.",
+    src: "/images/blog/its-not-the-pollution-cover.jpg",
+    alt: "“It’s the pollution.” Usually, it isn’t. Three signature charts for smog, dust and fault, with dust highlighted.",
     width: 1280,
     height: 720,
   },

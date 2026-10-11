@@ -376,6 +376,27 @@ describe("console", () => {
     site.hasOutput("NEXTPUBLICLIVEAPI", {});
   });
 
+  it("gives the website its own password-auth client, leaving the console's alone", () => {
+    const clients = Object.entries(t.console.findResources("AWS::Cognito::UserPoolClient")) as [
+      string,
+      { Properties: Record<string, unknown> },
+    ][];
+    expect(clients).toHaveLength(2);
+
+    const demo = clients.find(([, c]) => c.Properties.ClientName === "suryasaathi-web-demo")!;
+    expect(demo).toBeDefined();
+    expect(demo[1].Properties.ExplicitAuthFlows).toEqual(
+      expect.arrayContaining(["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]),
+    );
+    expect(demo[1].Properties.GenerateSecret).toBeFalsy();
+
+    // The console's client must not gain password auth: it is the one guarding the API.
+    const consoleClient = clients.find(([, c]) => c.Properties.ClientName === "console")!;
+    const flows = (consoleClient[1].Properties.ExplicitAuthFlows ?? []) as string[];
+    expect(flows).not.toContain("ALLOW_USER_PASSWORD_AUTH");
+    t.console.hasOutput("NEXTPUBLICCOGNITOWEBCLIENTID", {});
+  });
+
   it("outputs the console's build environment", () => {
     for (const key of [
       "NEXTPUBLICCONSOLEDATA",

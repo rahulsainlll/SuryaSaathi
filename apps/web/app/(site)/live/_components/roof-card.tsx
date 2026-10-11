@@ -1,8 +1,4 @@
-"use client";
-
-import { chartColor } from "@suryasaathi/ui";
-import { Liveline, type LivelineSeries } from "liveline";
-import { useEffect, useState } from "react";
+import { Sparkline } from "./sparkline";
 import type { Diagnosis, LiveSystem } from "./types";
 
 const SOURCE_LABEL: Record<string, string> = {
@@ -19,70 +15,56 @@ const DIAGNOSIS_CHIP: Record<string, string> = {
   fault: "chip bad",
 };
 
+const DIAGNOSIS_LABEL: Record<string, string> = {
+  healthy: "Healthy",
+  smog: "Smog",
+  dust: "Dust",
+  fault: "Inverter fault",
+};
+
 export function diagnosisLabel(d: Diagnosis): string {
-  return d ? d[0]!.toUpperCase() + d.slice(1) : "No reading yet";
+  return d ? (DIAGNOSIS_LABEL[d] ?? d) : "No reading yet";
 }
 
-/** Light or dark, watched live so the canvas repaints when the toggle flips. */
-function useChartTheme(): "light" | "dark" {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  useEffect(() => {
-    const read = () =>
-      setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
-    read();
-    const observer = new MutationObserver(read);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-    return () => observer.disconnect();
-  }, []);
-  return theme;
+/** "dwarka" is how the zone is stored; it is a place name on screen. */
+function titleCase(value: string): string {
+  return value.replace(/\b[a-z]/g, (c) => c.toUpperCase());
 }
 
 /**
- * One rooftop: how it is doing today and the last month of expected against actual.
- * The series is historical, so the chart is paused — Liveline is drawing a month that
- * has already happened, not a stream.
+ * What the agent says about this roof when there is no fresh diagnosis. While a case is
+ * open the agent waits rather than re-diagnosing, so `diagnosis` is null — showing "No
+ * reading yet" there is wrong, and alarming next to a perfectly good percentage.
  */
+function statusChip(system: LiveSystem): { chip: string; label: string } {
+  if (system.diagnosis) {
+    return {
+      chip: DIAGNOSIS_CHIP[system.diagnosis] ?? "chip",
+      label: diagnosisLabel(system.diagnosis),
+    };
+  }
+  if (system.status === "open_case") return { chip: "chip a", label: "Case open" };
+  if (system.latestReadingDate) return { chip: "chip", label: "Waiting on the vendor" };
+  return { chip: "chip", label: "No reading yet" };
+}
+
+/** One rooftop: how it is doing today, and the last month of expected against actual. */
 export function RoofCard({ system }: { system: LiveSystem }) {
-  const theme = useChartTheme();
   const points = system.series.filter((p) => p.actualKwh !== null && p.expectedKwh !== null);
-  // Liveline wants seconds; one point per day, ending now so the window frames them all.
-  const day = 86_400;
-  const end = Math.floor(Date.now() / 1000);
-  const at = (i: number) => end - (points.length - 1 - i) * day;
-  const series: LivelineSeries[] = [
-    {
-      id: "expected",
-      label: "Expected",
-      color: chartColor.expected,
-      data: points.map((p, i) => ({ time: at(i), value: p.expectedKwh! })),
-      value: points.at(-1)?.expectedKwh ?? 0,
-    },
-    {
-      id: "actual",
-      label: "Actual",
-      color: chartColor.actual,
-      data: points.map((p, i) => ({ time: at(i), value: p.actualKwh! })),
-      value: points.at(-1)?.actualKwh ?? 0,
-    },
-  ];
   const performance = system.performance === null ? null : Math.round(system.performance * 100);
+  const status = statusChip(system);
   const summary = `${system.systemId}: ${
     performance === null ? "no reading yet" : `${performance}% of expected`
-  }, ${diagnosisLabel(system.diagnosis).toLowerCase()}.`;
+  }, ${status.label.toLowerCase()}. Expected against actual kWh over ${points.length} days.`;
 
   return (
     <article className="card stack g12 live-roof">
       <div className="live-roof-head">
         <div className="stack g8">
-          <span className="eyebrow">{system.zone ?? "Delhi"}</span>
+          <span className="eyebrow">{titleCase(system.zone ?? "Delhi")}</span>
           <h3 className="as-h3">{system.systemId}</h3>
         </div>
-        <span className={DIAGNOSIS_CHIP[system.diagnosis ?? ""] ?? "chip"}>
-          {diagnosisLabel(system.diagnosis)}
-        </span>
+        <span className={`${status.chip} live-pill`}>{status.label}</span>
       </div>
 
       <div className="live-figures">
@@ -105,20 +87,7 @@ export function RoofCard({ system }: { system: LiveSystem }) {
       </div>
 
       {points.length > 1 ? (
-        <div className="live-chart" role="img" aria-label={summary}>
-          <Liveline
-            data={[]}
-            value={0}
-            series={series}
-            theme={theme}
-            paused
-            window={(points.length + 1) * day}
-            formatValue={(v) => `${v.toFixed(1)} kWh`}
-            formatTime={(t) =>
-              new Date(t * 1000).toLocaleDateString("en-GB", { day: "numeric", month: "short" })
-            }
-          />
-        </div>
+        <Sparkline points={points} label={summary} />
       ) : (
         <p className="small muted">Not enough readings yet to draw a month.</p>
       )}

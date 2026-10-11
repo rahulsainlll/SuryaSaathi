@@ -3,7 +3,7 @@
 import type { FleetPoint, ReadingRow } from "@suryasaathi/console-data";
 import { chartColor } from "@suryasaathi/ui";
 import { Liveline, type LivelineSeries } from "liveline";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Card, Disclosure } from "@heroui/react";
 import { DataTable } from "./data-table";
 import { day, kwh, pct } from "../lib/format";
@@ -20,6 +20,28 @@ function useTimeline(dates: string[]) {
     return dates[i] ? day(dates[i]) : "";
   };
   return { time, label, window: dates.length + 1 };
+}
+
+/** The console follows the system theme; the canvas has to be told which one it is. */
+function useChartTheme(): "light" | "dark" {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  useEffect(() => {
+    const read = () =>
+      setTheme(
+        document.documentElement.classList.contains("dark") ||
+          document.documentElement.getAttribute("data-theme") === "dark"
+          ? "dark"
+          : "light",
+      );
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"],
+    });
+    return () => observer.disconnect();
+  }, []);
+  return theme;
 }
 
 function ChartBox({
@@ -59,6 +81,7 @@ function ChartBox({
 /** Fleet (or vendor) performance per day, with the 90% underperforming line. */
 export function PerformanceChart({ points, label }: { points: FleetPoint[]; label: string }) {
   const valid = points.filter((p) => p.performance !== null);
+  const theme = useChartTheme();
   const t = useTimeline(valid.map((p) => p.date));
   const data = valid.map((p, i) => ({ time: t.time(i), value: p.performance! * 100 }));
   const latest = data.at(-1)?.value ?? 0;
@@ -80,17 +103,25 @@ export function PerformanceChart({ points, label }: { points: FleetPoint[]; labe
         />
       }
     >
+      {/* Same single-series call shape as ExpectedActualChart below, which draws: an
+          explicit `series` with `data={[]}`. The bare `data` + `color` form left the
+          canvas blank here. */}
       <Liveline
-        data={data}
-        value={latest}
-        theme="light"
-        color={chartColor.actual}
+        data={[]}
+        value={0}
+        series={[
+          {
+            id: "performance",
+            label: "Performance",
+            color: chartColor.actual,
+            data,
+            value: latest,
+          },
+        ]}
+        theme={theme}
         window={t.window}
         paused
         pulse={false}
-        badge={false}
-        momentum={false}
-        scrub
         referenceLine={{ value: 90, label: "90%" }}
         formatValue={(v) => `${v.toFixed(1)}%`}
         formatTime={t.label}
@@ -108,6 +139,7 @@ export function ExpectedActualChart({
   label: string;
 }) {
   const rows = readings.filter((r) => r.expectedKwh !== null);
+  const theme = useChartTheme();
   const t = useTimeline(rows.map((r) => r.date));
   const series: LivelineSeries[] = [
     {
@@ -146,7 +178,7 @@ export function ExpectedActualChart({
         data={[]}
         value={0}
         series={series}
-        theme="light"
+        theme={theme}
         window={t.window}
         paused
         pulse={false}

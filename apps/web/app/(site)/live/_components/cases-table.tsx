@@ -41,7 +41,7 @@ export function CasesTable({ cases }: { cases: LiveCase[] }) {
                 <td className="live-mono">{c.systemId}</td>
                 <td>{c.cause === "fault" ? "Inverter fault" : "Dust"}</td>
                 <td>
-                  <span className={status.chip}>{status.label}</span>
+                  <span className={`${status.chip} live-pill`}>{status.label}</span>
                 </td>
                 <td>{c.vendorDeadline ?? "—"}</td>
                 <td className="live-msg">{c.familyMessage ?? <span className="muted">—</span>}</td>

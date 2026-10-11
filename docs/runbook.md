@@ -450,6 +450,62 @@ Without the variable the page renders its offline state and says so; the rest of
 is unaffected. With the variable but before the first rollup the endpoint answers 503 and
 the page shows its empty state — run the rollups function (section 8) to fill it.
 
+## 9c. The demo sign-in on /login
+
+`/login` on the website is a real Amazon Cognito sign-in against the user pool the Console
+stack already deploys. Two tabs, DISCOM admin and Vendor, each pre-filled with a demo
+account so a visitor can sign in without one of their own. "Continue as guest" goes to the
+same destination without signing in.
+
+It uses a **second app client**, `suryasaathi-web-demo`, not the console's. The console's
+client guards the console API with authorization-code + PKCE and must not gain
+`ALLOW_USER_PASSWORD_AUTH`; a test in `infra/test/stacks.test.ts` asserts it never does.
+
+The browser posts `InitiateAuth` directly — a public client has no secret, so there is
+nothing to sign and no Amplify Auth library to ship:
+
+```bash
+curl -s -X POST "https://cognito-idp.us-east-1.amazonaws.com/" \
+  -H "Content-Type: application/x-amz-json-1.1" \
+  -H "X-Amz-Target: AWSCognitoIdentityProviderService.InitiateAuth" \
+  -d '{"AuthFlow":"USER_PASSWORD_AUTH","ClientId":"<client id>",
+       "AuthParameters":{"USERNAME":"discom@demo.suryasaathi","PASSWORD":"<password>"}}'
+```
+
+### Create the demo users
+
+The pool requires **12+ characters** with upper, lower and a digit, so a shorter demo
+password is rejected by `admin-set-user-password`. `--message-action SUPPRESS` stops
+Cognito emailing a temporary password to a domain that does not exist, and `--permanent`
+skips the force-change-password challenge, which plain `InitiateAuth` cannot answer.
+
+```bash
+POOL=$(out SuryaSaathi-Console UserPoolId)
+
+for U in discom@demo.suryasaathi vendor@demo.suryasaathi; do
+  aws cognito-idp admin-create-user --user-pool-id "$POOL" --username "$U" \
+    --user-attributes Name=email,Value="$U" Name=email_verified,Value=true \
+    --message-action SUPPRESS
+  aws cognito-idp admin-set-user-password --user-pool-id "$POOL" --username "$U" \
+    --password 'Demo@12345678' --permanent
+done
+
+# Only the DISCOM demo user may read the console API.
+aws cognito-idp admin-add-user-to-group --user-pool-id "$POOL" \
+  --username discom@demo.suryasaathi --group-name admin
+```
+
+### What the website needs
+
+| Key                             | Where it comes from                                    |
+| ------------------------------- | ------------------------------------------------------ |
+| `NEXT_PUBLIC_COGNITO_CLIENT_ID` | `out SuryaSaathi-Console NEXTPUBLICCOGNITOWEBCLIENTID` |
+| `NEXT_PUBLIC_COGNITO_REGION`    | the deployment region, `us-east-1`                     |
+
+`out SuryaSaathi-Console WebsiteEnvironmentVariables` prints these together with
+`NEXT_PUBLIC_LIVE_API`, ready for `aws amplify update-branch --environment-variables`.
+Without the client ID the form says so rather than failing silently.
+
 ## 10. Troubleshooting
 
 | Symptom                                             | Likely cause and fix                                                                                                                                                                                                                               |

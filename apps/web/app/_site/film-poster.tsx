@@ -14,7 +14,7 @@ export function filmSource(): string | undefined {
 export function FilmPoster() {
   return (
     <Image
-      src="/images/film-thumbnail.jpg"
+      src="/images/film-poster-voiceover.jpg"
       alt=""
       width={1280}
       height={720}

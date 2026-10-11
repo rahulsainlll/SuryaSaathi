@@ -13,7 +13,7 @@ It watches every roof, works out why output dropped (smog, dust or a fault), fil
 
 Built by **Team Mythos** for Environmental Hacks 2026
 
-[Live demo](#try-the-demo) · [Video](https://www.youtube.com/watch?v=m6HiN65kmdo) · [Architecture](#architecture) · [Getting started](#getting-started) · [Roadmap](#roadmap)
+[Live demo](#try-the-demo) · [Video](https://www.youtube.com/watch?v=bkJ0GL8D9BI) · [Architecture](#architecture) · [Getting started](#getting-started) · [Roadmap](#roadmap)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 ![Built on AWS](https://img.shields.io/badge/built%20on-AWS-FF9900)
@@ -23,11 +23,11 @@ Built by **Team Mythos** for Environmental Hacks 2026
 
 <br>
 
-<a href="https://www.youtube.com/watch?v=m6HiN65kmdo" title="Watch the 70-second film on YouTube">
-  <img src="docs/assets/film-thumbnail.jpg" alt="SuryaSaathi film: smog, dust or a fault? One agent tells them apart. Click to watch on YouTube (1:10)" width="720">
+<a href="https://www.youtube.com/watch?v=bkJ0GL8D9BI" title="Watch the film on YouTube">
+  <img src="docs/assets/film-thumbnail.jpg" alt="SuryaSaathi film: smog, dust or a fault? One agent tells them apart. Click to watch it on YouTube, with voiceover" width="720">
 </a>
 
-<sub>▶ <a href="https://www.youtube.com/watch?v=m6HiN65kmdo">Watch the 70-second film on YouTube</a></sub>
+<sub>▶ <a href="https://www.youtube.com/watch?v=bkJ0GL8D9BI">Watch the film on YouTube</a> (with voiceover)</sub>
 
 </div>
 

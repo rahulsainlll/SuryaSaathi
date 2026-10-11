@@ -13,8 +13,8 @@ const PLAY_ICON = (
 
 const BAR = (
   <span className="film-bar" aria-hidden="true">
-    <span>SuryaSaathi in 70 seconds</span>
-    <span>Sound on · 1:10</span>
+    <span>The SuryaSaathi film</span>
+    <span>Sound on</span>
   </span>
 );
 
@@ -53,7 +53,7 @@ export function Film({ poster, src }: { poster: ReactNode; src?: string }) {
             <button
               className="play"
               onClick={() => setPlaying(true)}
-              aria-label="Play the 70-second SuryaSaathi film"
+              aria-label="Play the SuryaSaathi film"
             >
               {PLAY_ICON}
             </button>

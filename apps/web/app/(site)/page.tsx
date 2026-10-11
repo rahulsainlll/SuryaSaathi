@@ -86,7 +86,7 @@ export default function Home() {
               >
                 <polygon points="6 4 20 12 6 20" />
               </svg>
-              Watch the film · 70 s
+              Watch the film
             </ScrollToFilm>
           </div>
         </div>

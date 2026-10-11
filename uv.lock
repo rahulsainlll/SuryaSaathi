@@ -2611,6 +2611,12 @@ requires-dist = [{ name = "suryasaathi-core", editable = "services/core" }]
 name = "suryasaathi-rollups"
 version = "0.0.0"
 source = { editable = "services/rollups" }
+dependencies = [
+    { name = "suryasaathi-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "suryasaathi-core", editable = "services/core" }]
 
 [[package]]
 name = "suryasaathi-whatsapp"

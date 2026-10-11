@@ -1717,9 +1717,11 @@ html[data-theme="dark"]:has(.site) {
   }
   & .live-pipe-step {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 8px;
-    flex: 1 1 180px;
+    /* Equal basis so a wrap gives even rows instead of one orphan stretched wide. */
+    flex: 1 1 164px;
+    min-width: 0;
   }
   & .live-pipe-body {
     display: flex;
@@ -1773,8 +1775,44 @@ html[data-theme="dark"]:has(.site) {
     line-height: 1.2;
     font-variant-numeric: tabular-nums;
   }
-  & .live-chart {
-    height: 164px;
+  /* A chip is only a pill while its label stays on one line; wrapped, the 999px
+     radius turns it into a circle. */
+  & .live-pill {
+    white-space: nowrap;
+  }
+  & .live-spark {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  & .live-spark svg {
+    display: block;
+    width: 100%;
+    height: 104px;
+    overflow: visible;
+  }
+  & .live-spark-axis {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--faint);
+  }
+  & .live-spark-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  & .live-spark-key i {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+  & .live-spark-key i + i {
+    margin-left: 8px;
   }
 
   /* The decision feed. */
@@ -1890,5 +1928,77 @@ html[data-theme="dark"]:has(.site) {
   .site .live-dot.on,
   .site .live-skel {
     animation: none;
+  }
+}
+
+/* --- Demo sign-in (/login) ---------------------------------------------------------- */
+
+.site {
+  & .login-wrap {
+    max-width: 520px;
+  }
+  & .login-card {
+    padding: 22px;
+  }
+  & .login-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 14px;
+    background: var(--soft);
+  }
+  & .login-tab {
+    flex: 1;
+    min-height: 40px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  & .login-tab.on {
+    background: var(--panel);
+    color: var(--ink);
+    box-shadow: var(--shadow);
+  }
+  & .login-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 13px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+  }
+  & .login-input:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 1px;
+  }
+  & .login-error {
+    margin: 0;
+    padding: 10px 13px;
+    border-radius: 12px;
+    background: var(--bad-soft);
+    color: var(--bad);
+    font-size: 14px;
+  }
+  & .login-guest {
+    align-self: center;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  & .login-guest:hover {
+    color: var(--ink);
   }
 }

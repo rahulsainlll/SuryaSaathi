@@ -1,0 +1,28 @@
+# AWS Amplify Hosting: the marketing site (apps/web), a Next.js app in this pnpm monorepo.
+# Set the app's environment variable AMPLIFY_MONOREPO_APP_ROOT=apps/web (it must match
+# appRoot). Steps: docs/runbook.md, "Host the website on AWS Amplify".
+version: 1
+applications:
+  - appRoot: apps/web
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            # pnpm isn't in Amplify's build image; use the version package.json pins.
+            - corepack enable
+            - corepack prepare pnpm@10.28.0 --activate
+            # Amplify needs a hoisted node_modules for pnpm monorepos. Written here, at build
+            # time, so local installs keep pnpm's default layout.
+            - echo "node-linker=hoisted" >> ../../.npmrc
+            - (cd ../.. && pnpm install --frozen-lockfile)
+        build:
+          commands:
+            # Builds the workspace packages the site depends on (schemas, engine), then the site.
+            - (cd ../.. && pnpm turbo run build --filter=web...)
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - .next/cache/**/*

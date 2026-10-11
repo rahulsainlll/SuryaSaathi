@@ -76,6 +76,9 @@ export function SiteHeader() {
           <span className="desk-toggle">
             <ThemeToggle />
           </span>
+          <Link className="l" href="/login">
+            Log in
+          </Link>
           <Link className="btn btn-ink" style={{ minHeight: 44, marginLeft: 6 }} href="/demo">
             Try the demo
           </Link>

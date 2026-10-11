@@ -26,6 +26,8 @@ export const LIVE_PATH = "/public/live";
 export class ConsoleStack extends Stack {
   readonly userPool: cognito.UserPool;
   readonly client: cognito.UserPoolClient;
+  /** Public client for the website's demo sign-in (password auth, no secret). */
+  readonly demoClient: cognito.UserPoolClient;
   readonly apiUrl: string;
   /** The public Live endpoint, for the website's NEXT_PUBLIC_LIVE_API. */
   readonly liveUrl: string;
@@ -75,6 +77,20 @@ export class ConsoleStack extends Stack {
         logoutUrls: config.consoleUrls.map((u) => `${u}/`),
       },
       supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.COGNITO],
+      preventUserExistenceErrors: true,
+      accessTokenValidity: Duration.hours(1),
+      idTokenValidity: Duration.hours(1),
+      refreshTokenValidity: Duration.days(1),
+    });
+
+    // A second client for the website's demo sign-in. Separate from the console's so
+    // enabling password auth here cannot change how the console API authenticates: that
+    // one stays authorization-code + PKCE with no USER_PASSWORD_AUTH.
+    this.demoClient = this.userPool.addClient("WebDemo", {
+      userPoolClientName: "suryasaathi-web-demo",
+      generateSecret: false,
+      // ALLOW_USER_PASSWORD_AUTH; CDK always adds ALLOW_REFRESH_TOKEN_AUTH alongside.
+      authFlows: { userPassword: true },
       preventUserExistenceErrors: true,
       accessTokenValidity: Duration.hours(1),
       idTokenValidity: Duration.hours(1),
@@ -192,9 +208,18 @@ export class ConsoleStack extends Stack {
       value: this.liveUrl,
       description: "NEXT_PUBLIC_LIVE_API — set this on the website's Amplify app",
     });
+    new CfnOutput(this, "NEXTPUBLICCOGNITOWEBCLIENTID", {
+      key: "NEXTPUBLICCOGNITOWEBCLIENTID",
+      value: this.demoClient.userPoolClientId,
+      description: "NEXT_PUBLIC_COGNITO_CLIENT_ID — set this on the website's Amplify app",
+    });
     new CfnOutput(this, "WebsiteEnvironmentVariables", {
       description: "KEY=value pairs for the website's `aws amplify update-branch`",
-      value: `NEXT_PUBLIC_LIVE_API=${this.liveUrl}`,
+      value: Fn.join(",", [
+        `NEXT_PUBLIC_LIVE_API=${this.liveUrl}`,
+        `NEXT_PUBLIC_COGNITO_CLIENT_ID=${this.demoClient.userPoolClientId}`,
+        `NEXT_PUBLIC_COGNITO_REGION=${this.region}`,
+      ]),
     });
   }
 }

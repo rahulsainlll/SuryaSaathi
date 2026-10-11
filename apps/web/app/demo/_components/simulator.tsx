@@ -72,6 +72,12 @@ export function Simulator() {
           <Button variant="secondary" onPress={s.reset}>
             Reset
           </Button>
+          <Link
+            href="/login"
+            className="flex h-10 items-center rounded-xl border border-separator px-3.5 font-medium hover:bg-default"
+          >
+            Log in
+          </Link>
         </div>
       </header>
 

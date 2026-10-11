@@ -18,7 +18,7 @@ const LAYERS = [
   { name: "Memory & rules", services: ["DynamoDB", "Amazon S3", "OpenSearch", "Cedar"] },
   {
     name: "Act & report",
-    services: ["Step Functions", "SES + SNS", "Amplify + Cognito", "CloudWatch"],
+    services: ["Step Functions", "SES + SNS", "Amplify", "Cognito (demo sign-in)", "CloudWatch"],
   },
 ];
 

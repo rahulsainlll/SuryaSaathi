@@ -1,0 +1,5895 @@
+{
+  "asOf": "2026-10-10",
+  "tariffInr": 7,
+  "windowDays": 30,
+  "vendors": [
+    {
+      "vendorId": "VND-DL-0042",
+      "name": "Vendor VND-DL-0042"
+    },
+    {
+      "vendorId": "VND-DL-0117",
+      "name": "Vendor VND-DL-0117"
+    },
+    {
+      "vendorId": "VND-DL-0203",
+      "name": "Vendor VND-DL-0203"
+    },
+    {
+      "vendorId": "VND-DL-0318",
+      "name": "Vendor VND-DL-0318"
+    },
+    {
+      "vendorId": "VND-DL-0451",
+      "name": "Vendor VND-DL-0451"
+    },
+    {
+      "vendorId": "VND-DL-0560",
+      "name": "Vendor VND-DL-0560"
+    }
+  ],
+  "systems": [
+    {
+      "systemId": "SS-DL-001001",
+      "dsain": "DSAIN-DL-0240000",
+      "vendorId": "VND-DL-0042",
+      "dataSource": "data_logger",
+      "consent": true,
+      "consentRecordedAt": "2026-05-25T10:00:00Z",
+      "capacityKw": 3,
+      "location": {
+        "lat": 28.5817,
+        "lon": 77.0481,
+        "zone": "Dwarka"
+      },
+      "installedOn": "2025-11-07",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 11.15,
+          "expectedKwh": 11.104,
+          "performance": 1.0041,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.1 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 11.26,
+          "expectedKwh": 11.475,
+          "performance": 0.9813,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 11.5 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 11.51,
+          "expectedKwh": 11.547,
+          "performance": 0.9968,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.5 of 11.5 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 11.63,
+          "expectedKwh": 12.004,
+          "performance": 0.9689,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 12.0 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 11.43,
+          "expectedKwh": 11.853,
+          "performance": 0.9643,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.4 of 11.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 11.31,
+          "expectedKwh": 11.776,
+          "performance": 0.9604,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 11.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 11.32,
+          "expectedKwh": 11.74,
+          "performance": 0.9642,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 11.7 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 11.11,
+          "expectedKwh": 11.549,
+          "performance": 0.962,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.5 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 11.1,
+          "expectedKwh": 11.866,
+          "performance": 0.9354,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.9 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 11.29,
+          "expectedKwh": 11.961,
+          "performance": 0.9439,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 12.0 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 11.31,
+          "expectedKwh": 12.085,
+          "performance": 0.9359,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 12.1 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 10.32,
+          "expectedKwh": 11.269,
+          "performance": 0.9158,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.3 of 11.3 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 10.73,
+          "expectedKwh": 11.517,
+          "performance": 0.9317,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.7 of 11.5 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 10.46,
+          "expectedKwh": 11.6,
+          "performance": 0.9017,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.5 of 11.6 kWh (90%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 10.59,
+          "expectedKwh": 11.611,
+          "performance": 0.912,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.6 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 10.41,
+          "expectedKwh": 11.487,
+          "performance": 0.9062,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001001-20260926 filed to Vendor VND-DL-0042: free cleaning under 5-year O&M. Deadline 29 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 10.3,
+          "expectedKwh": 11.585,
+          "performance": 0.8891,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0042: 2 days left. Reading 89%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 10.03,
+          "expectedKwh": 11.34,
+          "performance": 0.8845,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0042 cleaned the panels on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 12.11,
+          "expectedKwh": 11.994,
+          "performance": 1.0097,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 101%. Case SS-DL-001001-20260926 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 10.98,
+          "expectedKwh": 11.334,
+          "performance": 0.9688,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.3 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 10.93,
+          "expectedKwh": 11.342,
+          "performance": 0.9637,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.3 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 11.61,
+          "expectedKwh": 11.726,
+          "performance": 0.9901,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 11.7 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 10.69,
+          "expectedKwh": 11.201,
+          "performance": 0.9544,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.7 of 11.2 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 11.43,
+          "expectedKwh": 11.7,
+          "performance": 0.977,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.4 of 11.7 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 11.44,
+          "expectedKwh": 12.12,
+          "performance": 0.9439,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.4 of 12.1 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 10.93,
+          "expectedKwh": 11.639,
+          "performance": 0.9391,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.6 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 3.62,
+          "expectedKwh": 11.934,
+          "performance": 0.3033,
+          "rained": false,
+          "diagnosis": "fault",
+          "action": "open_case",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001001-20261007 filed to Vendor VND-DL-0042: free repair under 5-year O&M. Deadline 10 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 3.39,
+          "expectedKwh": 11.311,
+          "performance": 0.2997,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0042: 2 days left. Reading 30%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 3.38,
+          "expectedKwh": 11.607,
+          "performance": 0.2912,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0042 repaired the inverter on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 10.93,
+          "expectedKwh": 11.725,
+          "performance": 0.9322,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 93%. Case SS-DL-001001-20261007 closed.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001002",
+      "dsain": "DSAIN-DL-0240037",
+      "vendorId": "VND-DL-0117",
+      "dataSource": "data_logger",
+      "consent": true,
+      "consentRecordedAt": "2026-06-23T10:00:00Z",
+      "capacityKw": 3,
+      "location": {
+        "lat": 28.7397,
+        "lon": 77.0741,
+        "zone": "Rohini"
+      },
+      "installedOn": "2025-08-14",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 10.83,
+          "expectedKwh": 11.131,
+          "performance": 0.973,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.1 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 11.59,
+          "expectedKwh": 11.732,
+          "performance": 0.9879,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 11.7 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 11.03,
+          "expectedKwh": 11.3,
+          "performance": 0.9761,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.3 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 11.22,
+          "expectedKwh": 11.401,
+          "performance": 0.9842,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 11.4 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 11.07,
+          "expectedKwh": 11.708,
+          "performance": 0.9455,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.7 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 11.03,
+          "expectedKwh": 11.526,
+          "performance": 0.957,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.5 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 7.73,
+          "expectedKwh": 7.998,
+          "performance": 0.9665,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 8.0 kWh. System healthy at 97%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 11.21,
+          "expectedKwh": 11.989,
+          "performance": 0.935,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 12.0 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 10.59,
+          "expectedKwh": 11.263,
+          "performance": 0.9403,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.3 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 11.02,
+          "expectedKwh": 11.611,
+          "performance": 0.9491,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.6 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 10.52,
+          "expectedKwh": 11.475,
+          "performance": 0.9168,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.5 of 11.5 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 10.51,
+          "expectedKwh": 11.583,
+          "performance": 0.9074,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.5 of 11.6 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 10.62,
+          "expectedKwh": 11.66,
+          "performance": 0.9108,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.7 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 10.71,
+          "expectedKwh": 11.831,
+          "performance": 0.9053,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001002-20260924 filed to Vendor VND-DL-0117: free cleaning under 5-year O&M. Deadline 27 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 10.99,
+          "expectedKwh": 11.992,
+          "performance": 0.9165,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0117: 2 days left. Reading 92%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 10.68,
+          "expectedKwh": 11.716,
+          "performance": 0.9116,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0117 cleaned the panels on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 11.9,
+          "expectedKwh": 11.839,
+          "performance": 1.0052,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 100%. Case SS-DL-001002-20260924 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 12.12,
+          "expectedKwh": 12.088,
+          "performance": 1.0027,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 12.1 of 12.1 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 11.59,
+          "expectedKwh": 11.628,
+          "performance": 0.9968,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 11.6 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 11.67,
+          "expectedKwh": 12.09,
+          "performance": 0.9653,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.7 of 12.1 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 11,
+          "expectedKwh": 11.526,
+          "performance": 0.9544,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.5 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 10.76,
+          "expectedKwh": 11.25,
+          "performance": 0.9565,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.2 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 10.94,
+          "expectedKwh": 11.322,
+          "performance": 0.9662,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.3 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 10.54,
+          "expectedKwh": 11.235,
+          "performance": 0.9382,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.5 of 11.2 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 10.9,
+          "expectedKwh": 11.385,
+          "performance": 0.9574,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.4 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 10.37,
+          "expectedKwh": 11.307,
+          "performance": 0.9172,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.4 of 11.3 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 11.03,
+          "expectedKwh": 11.677,
+          "performance": 0.9446,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 10.35,
+          "expectedKwh": 11.397,
+          "performance": 0.9081,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.3 of 11.4 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 10.37,
+          "expectedKwh": 11.132,
+          "performance": 0.9315,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.4 of 11.1 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 10.28,
+          "expectedKwh": 11.197,
+          "performance": 0.9181,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.3 of 11.2 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001003",
+      "dsain": "DSAIN-DL-0240074",
+      "vendorId": "VND-DL-0203",
+      "dataSource": "inverter_cloud",
+      "consent": true,
+      "consentRecordedAt": "2026-05-11T10:00:00Z",
+      "capacityKw": 2,
+      "location": {
+        "lat": 28.535,
+        "lon": 77.1896,
+        "zone": "Saket"
+      },
+      "installedOn": "2025-09-05",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 7.52,
+          "expectedKwh": 7.448,
+          "performance": 1.0097,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.5 of 7.4 kWh (101%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 7.92,
+          "expectedKwh": 7.972,
+          "performance": 0.9935,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.9 of 8.0 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 7.94,
+          "expectedKwh": 7.967,
+          "performance": 0.9967,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.9 of 8.0 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 7.31,
+          "expectedKwh": 7.459,
+          "performance": 0.98,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.3 of 7.5 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 7.24,
+          "expectedKwh": 7.632,
+          "performance": 0.9487,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.2 of 7.6 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 7.43,
+          "expectedKwh": 7.872,
+          "performance": 0.9439,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.9 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 7.73,
+          "expectedKwh": 8.001,
+          "performance": 0.9662,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.7 of 8.0 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 7.13,
+          "expectedKwh": 7.501,
+          "performance": 0.9506,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.1 of 7.5 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 6.95,
+          "expectedKwh": 7.401,
+          "performance": 0.9391,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 6.9 of 7.4 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 7.15,
+          "expectedKwh": 7.786,
+          "performance": 0.9183,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.1 of 7.8 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 7.44,
+          "expectedKwh": 7.997,
+          "performance": 0.9303,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 8.0 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 7.02,
+          "expectedKwh": 7.481,
+          "performance": 0.9384,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.0 of 7.5 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 7.44,
+          "expectedKwh": 7.506,
+          "performance": 0.9912,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.5 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 7.75,
+          "expectedKwh": 7.9,
+          "performance": 0.9811,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.8 of 7.9 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 7.71,
+          "expectedKwh": 7.729,
+          "performance": 0.9975,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.7 of 7.7 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 7.5,
+          "expectedKwh": 7.773,
+          "performance": 0.9649,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.5 of 7.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 7.94,
+          "expectedKwh": 8.073,
+          "performance": 0.9836,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.9 of 8.1 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 7.44,
+          "expectedKwh": 7.819,
+          "performance": 0.9515,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.8 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 7.51,
+          "expectedKwh": 7.981,
+          "performance": 0.941,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.5 of 8.0 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 7.59,
+          "expectedKwh": 7.872,
+          "performance": 0.9641,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.6 of 7.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 7.38,
+          "expectedKwh": 7.919,
+          "performance": 0.932,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.9 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 7.34,
+          "expectedKwh": 7.917,
+          "performance": 0.9271,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.3 of 7.9 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 7.26,
+          "expectedKwh": 7.732,
+          "performance": 0.9389,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.3 of 7.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 7.5,
+          "expectedKwh": 8.039,
+          "performance": 0.9329,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.5 of 8.0 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 6.94,
+          "expectedKwh": 7.456,
+          "performance": 0.9308,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 6.9 of 7.5 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 7.1,
+          "expectedKwh": 7.681,
+          "performance": 0.9244,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.1 of 7.7 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 7.08,
+          "expectedKwh": 7.714,
+          "performance": 0.9178,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.1 of 7.7 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 6.63,
+          "expectedKwh": 7.423,
+          "performance": 0.8931,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 6.6 of 7.4 kWh (89%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 6.75,
+          "expectedKwh": 7.633,
+          "performance": 0.8843,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001003-20261009 filed to Vendor VND-DL-0203: free cleaning under 5-year O&M. Deadline 12 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 6.48,
+          "expectedKwh": 7.413,
+          "performance": 0.8741,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0203: 2 days left. Reading 87%.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001004",
+      "dsain": "DSAIN-DL-0240111",
+      "vendorId": "VND-DL-0318",
+      "dataSource": "camera_clip",
+      "consent": true,
+      "consentRecordedAt": "2026-08-06T10:00:00Z",
+      "capacityKw": 5,
+      "location": {
+        "lat": 28.6089,
+        "lon": 77.0821,
+        "zone": "Janakpuri"
+      },
+      "installedOn": "2026-02-18",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 18.89,
+          "expectedKwh": 19.399,
+          "performance": 0.9738,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.9 of 19.4 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 19.92,
+          "expectedKwh": 20.041,
+          "performance": 0.9939,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.9 of 20.0 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 19.29,
+          "expectedKwh": 20.113,
+          "performance": 0.9591,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.3 of 20.1 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 18.18,
+          "expectedKwh": 18.641,
+          "performance": 0.9753,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.2 of 18.6 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 18.88,
+          "expectedKwh": 19.195,
+          "performance": 0.9836,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.9 of 19.2 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 18.7,
+          "expectedKwh": 19.142,
+          "performance": 0.9769,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.7 of 19.1 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 18.54,
+          "expectedKwh": 19.723,
+          "performance": 0.94,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.5 of 19.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 17.77,
+          "expectedKwh": 18.766,
+          "performance": 0.9469,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.8 of 18.8 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 18.63,
+          "expectedKwh": 19.543,
+          "performance": 0.9533,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.5 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 17.29,
+          "expectedKwh": 18.852,
+          "performance": 0.9171,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.3 of 18.9 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 18.19,
+          "expectedKwh": 19.989,
+          "performance": 0.91,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.2 of 20.0 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 18.34,
+          "expectedKwh": 19.701,
+          "performance": 0.9309,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.3 of 19.7 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 17.36,
+          "expectedKwh": 19.083,
+          "performance": 0.9097,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.4 of 19.1 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 18.32,
+          "expectedKwh": 19.949,
+          "performance": 0.9184,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.3 of 19.9 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 17.52,
+          "expectedKwh": 19.394,
+          "performance": 0.9034,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.5 of 19.4 kWh (90%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 17.81,
+          "expectedKwh": 20.053,
+          "performance": 0.8881,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001004-20260926 filed to Vendor VND-DL-0318: free cleaning under 5-year O&M. Deadline 29 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 17.47,
+          "expectedKwh": 19.975,
+          "performance": 0.8746,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0318: 2 days left. Reading 87%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 17.31,
+          "expectedKwh": 20.059,
+          "performance": 0.863,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0318: 1 day left. Reading 86%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 11.65,
+          "expectedKwh": 13.33,
+          "performance": 0.874,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001004-20260926 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 16.4,
+          "expectedKwh": 18.53,
+          "performance": 0.885,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "DISCOM has the case. Reading 89%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 11.71,
+          "expectedKwh": 13.33,
+          "performance": 0.8785,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "After DISCOM escalation, Vendor VND-DL-0318 cleaned the panels.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 19.68,
+          "expectedKwh": 19.559,
+          "performance": 1.0062,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 101%. Case SS-DL-001004-20260926 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 19.31,
+          "expectedKwh": 19.485,
+          "performance": 0.991,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.3 of 19.5 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 18.95,
+          "expectedKwh": 19.742,
+          "performance": 0.9599,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.0 of 19.7 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 18.6,
+          "expectedKwh": 19.369,
+          "performance": 0.9603,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.4 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 18.29,
+          "expectedKwh": 19.336,
+          "performance": 0.9459,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.3 of 19.3 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 18.02,
+          "expectedKwh": 19.15,
+          "performance": 0.941,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.0 of 19.2 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 19.01,
+          "expectedKwh": 20.028,
+          "performance": 0.9492,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.0 of 20.0 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 18.6,
+          "expectedKwh": 19.296,
+          "performance": 0.9639,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.3 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 17.81,
+          "expectedKwh": 19.014,
+          "performance": 0.9367,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.8 of 19.0 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001005",
+      "dsain": "DSAIN-DL-0240148",
+      "vendorId": "VND-DL-0451",
+      "dataSource": "data_logger",
+      "consent": true,
+      "consentRecordedAt": "2026-04-14T10:00:00Z",
+      "capacityKw": 3,
+      "location": {
+        "lat": 28.6152,
+        "lon": 77.2866,
+        "zone": "Mayur Vihar"
+      },
+      "installedOn": "2026-03-14",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 11.41,
+          "expectedKwh": 11.519,
+          "performance": 0.9906,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.4 of 11.5 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 11.93,
+          "expectedKwh": 11.89,
+          "performance": 1.0034,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.9 of 11.9 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 11.08,
+          "expectedKwh": 11.535,
+          "performance": 0.9606,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.5 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 11.95,
+          "expectedKwh": 12.063,
+          "performance": 0.9907,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.9 of 12.1 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 11.13,
+          "expectedKwh": 11.677,
+          "performance": 0.9532,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.7 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 11.2,
+          "expectedKwh": 11.784,
+          "performance": 0.9504,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 11.8 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 10.8,
+          "expectedKwh": 11.228,
+          "performance": 0.9619,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.2 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 11.23,
+          "expectedKwh": 11.865,
+          "performance": 0.9465,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 11.9 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 10.93,
+          "expectedKwh": 11.615,
+          "performance": 0.941,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.6 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 10.84,
+          "expectedKwh": 11.573,
+          "performance": 0.9366,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.6 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 10.62,
+          "expectedKwh": 11.275,
+          "performance": 0.9419,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.3 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 10.61,
+          "expectedKwh": 11.641,
+          "performance": 0.9115,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.6 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 10.53,
+          "expectedKwh": 11.625,
+          "performance": 0.9058,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.5 of 11.6 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 10.39,
+          "expectedKwh": 11.238,
+          "performance": 0.9245,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.4 of 11.2 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 10.43,
+          "expectedKwh": 11.36,
+          "performance": 0.9182,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.4 of 11.4 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 10.17,
+          "expectedKwh": 11.54,
+          "performance": 0.8813,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001005-20260926 filed to Vendor VND-DL-0451: free cleaning under 5-year O&M. Deadline 29 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 11.34,
+          "expectedKwh": 11.432,
+          "performance": 0.9919,
+          "rained": true,
+          "diagnosis": null,
+          "action": "close_case",
+          "reasons": [
+            {
+              "text": "Rain cleaned the panels before the visit. Case SS-DL-001005-20260926 closed, no visit needed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 11.15,
+          "expectedKwh": 11.507,
+          "performance": 0.9689,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 11.5 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 11.46,
+          "expectedKwh": 11.945,
+          "performance": 0.9594,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.5 of 11.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 11.5,
+          "expectedKwh": 11.609,
+          "performance": 0.9907,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.5 of 11.6 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 11.45,
+          "expectedKwh": 11.782,
+          "performance": 0.9718,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.5 of 11.8 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 10.7,
+          "expectedKwh": 11.27,
+          "performance": 0.9494,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.7 of 11.3 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 3.59,
+          "expectedKwh": 11.563,
+          "performance": 0.3105,
+          "rained": false,
+          "diagnosis": "fault",
+          "action": "open_case",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001005-20261003 filed to Vendor VND-DL-0451: free repair under 5-year O&M. Deadline 6 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 3.59,
+          "expectedKwh": 11.931,
+          "performance": 0.3009,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0451: 2 days left. Reading 30%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 3.58,
+          "expectedKwh": 11.681,
+          "performance": 0.3065,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0451: 1 day left. Reading 31%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 3.45,
+          "expectedKwh": 11.574,
+          "performance": 0.2981,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001005-20261003 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 3.65,
+          "expectedKwh": 12.125,
+          "performance": 0.301,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "DISCOM has the case. Reading 30%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 3.63,
+          "expectedKwh": 12.099,
+          "performance": 0.3,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "After DISCOM escalation, Vendor VND-DL-0451 repaired the inverter.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 10.66,
+          "expectedKwh": 11.808,
+          "performance": 0.9028,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Still 90% after the fix. Asking Vendor VND-DL-0451 to recheck.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 10.27,
+          "expectedKwh": 11.107,
+          "performance": 0.9247,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Still 92% after the fix. Asking Vendor VND-DL-0451 to recheck.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001006",
+      "dsain": "DSAIN-DL-0240185",
+      "vendorId": "VND-DL-0560",
+      "dataSource": "data_logger",
+      "consent": true,
+      "consentRecordedAt": "2026-08-05T10:00:00Z",
+      "capacityKw": 3,
+      "location": {
+        "lat": 28.6593,
+        "lon": 77.2078,
+        "zone": "Karol Bagh"
+      },
+      "installedOn": "2026-01-08",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 11.77,
+          "expectedKwh": 12.016,
+          "performance": 0.9795,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.8 of 12.0 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 10.87,
+          "expectedKwh": 11.222,
+          "performance": 0.9686,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.2 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 11.09,
+          "expectedKwh": 11.124,
+          "performance": 0.9969,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.1 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 11.09,
+          "expectedKwh": 11.215,
+          "performance": 0.9888,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.2 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 10.88,
+          "expectedKwh": 11.112,
+          "performance": 0.9791,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.1 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 11.28,
+          "expectedKwh": 11.802,
+          "performance": 0.9558,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 11.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 11.11,
+          "expectedKwh": 11.821,
+          "performance": 0.9399,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.8 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 11.48,
+          "expectedKwh": 11.91,
+          "performance": 0.9639,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.5 of 11.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 10.55,
+          "expectedKwh": 11.243,
+          "performance": 0.9384,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.5 of 11.2 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 10.92,
+          "expectedKwh": 11.802,
+          "performance": 0.9253,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.8 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 11.19,
+          "expectedKwh": 11.844,
+          "performance": 0.9448,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 11.8 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 10.89,
+          "expectedKwh": 11.904,
+          "performance": 0.9148,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.9 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 11.63,
+          "expectedKwh": 11.528,
+          "performance": 1.0089,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 11.5 kWh (101%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 11.07,
+          "expectedKwh": 11.22,
+          "performance": 0.9866,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.2 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 11.42,
+          "expectedKwh": 11.705,
+          "performance": 0.9757,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.4 of 11.7 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 11.63,
+          "expectedKwh": 12.098,
+          "performance": 0.9613,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 12.1 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 11.69,
+          "expectedKwh": 12.05,
+          "performance": 0.9702,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.7 of 12.0 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 10.84,
+          "expectedKwh": 11.544,
+          "performance": 0.939,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.5 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 11.05,
+          "expectedKwh": 11.801,
+          "performance": 0.9364,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.8 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 10.92,
+          "expectedKwh": 11.503,
+          "performance": 0.9493,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.5 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 10.81,
+          "expectedKwh": 11.379,
+          "performance": 0.95,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.4 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 10.38,
+          "expectedKwh": 11.257,
+          "performance": 0.9221,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.4 of 11.3 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 10.22,
+          "expectedKwh": 11.2,
+          "performance": 0.9125,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.2 of 11.2 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 10.87,
+          "expectedKwh": 11.771,
+          "performance": 0.9235,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.8 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 10.92,
+          "expectedKwh": 11.937,
+          "performance": 0.9148,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.9 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 3.51,
+          "expectedKwh": 11.855,
+          "performance": 0.2961,
+          "rained": false,
+          "diagnosis": "fault",
+          "action": "open_case",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001006-20261006 filed to Vendor VND-DL-0560: free repair under 5-year O&M. Deadline 9 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 3.46,
+          "expectedKwh": 11.835,
+          "performance": 0.2923,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0560: 2 days left. Reading 29%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 3.3,
+          "expectedKwh": 11.312,
+          "performance": 0.2917,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0560 repaired the inverter on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 10.24,
+          "expectedKwh": 11.615,
+          "performance": 0.8817,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Still 88% after the fix. Asking Vendor VND-DL-0560 to recheck.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 10.04,
+          "expectedKwh": 11.564,
+          "performance": 0.8682,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Still 87% after the fix. Asking Vendor VND-DL-0560 to recheck.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001007",
+      "dsain": "DSAIN-DL-0240222",
+      "vendorId": "VND-DL-0117",
+      "dataSource": "inverter_cloud",
+      "consent": true,
+      "consentRecordedAt": "2026-03-22T10:00:00Z",
+      "capacityKw": 5,
+      "location": {
+        "lat": 28.5959,
+        "lon": 77.0646,
+        "zone": "Dwarka"
+      },
+      "installedOn": "2025-08-18",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 20.12,
+          "expectedKwh": 19.918,
+          "performance": 1.0102,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 20.1 of 19.9 kWh (101%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 19.49,
+          "expectedKwh": 19.424,
+          "performance": 1.0034,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.5 of 19.4 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 18.62,
+          "expectedKwh": 19.374,
+          "performance": 0.9611,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.4 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 18.23,
+          "expectedKwh": 18.834,
+          "performance": 0.9679,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.2 of 18.8 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 17.82,
+          "expectedKwh": 18.613,
+          "performance": 0.9574,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.8 of 18.6 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 12.89,
+          "expectedKwh": 13.33,
+          "performance": 0.967,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 13.3 kWh. System healthy at 97%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 18.62,
+          "expectedKwh": 19.618,
+          "performance": 0.9491,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.6 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 19.23,
+          "expectedKwh": 20.203,
+          "performance": 0.9518,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.2 of 20.2 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 17.17,
+          "expectedKwh": 18.634,
+          "performance": 0.9214,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.2 of 18.6 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 17.74,
+          "expectedKwh": 18.664,
+          "performance": 0.9505,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.7 of 18.7 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 18.7,
+          "expectedKwh": 19.801,
+          "performance": 0.9444,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.7 of 19.8 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 17.35,
+          "expectedKwh": 18.844,
+          "performance": 0.9207,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.4 of 18.8 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 17.63,
+          "expectedKwh": 19.145,
+          "performance": 0.9209,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.6 of 19.1 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 17.55,
+          "expectedKwh": 19.366,
+          "performance": 0.9062,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.5 of 19.4 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 17.85,
+          "expectedKwh": 20.129,
+          "performance": 0.8868,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001007-20260925 filed to Vendor VND-DL-0117: free cleaning under 5-year O&M. Deadline 28 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 16.66,
+          "expectedKwh": 18.56,
+          "performance": 0.8977,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0117: 2 days left. Reading 90%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 17.44,
+          "expectedKwh": 19.269,
+          "performance": 0.9051,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0117: 1 day left. Reading 90%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 16.92,
+          "expectedKwh": 18.88,
+          "performance": 0.8962,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001007-20260925 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 16.96,
+          "expectedKwh": 19.287,
+          "performance": 0.8794,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "DISCOM has the case. Reading 88%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 11.65,
+          "expectedKwh": 13.33,
+          "performance": 0.874,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "After DISCOM escalation, Vendor VND-DL-0117 cleaned the panels.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 19.17,
+          "expectedKwh": 19.759,
+          "performance": 0.9702,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 97%. Case SS-DL-001007-20260925 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 18.84,
+          "expectedKwh": 18.771,
+          "performance": 1.0037,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.8 of 18.8 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 19.71,
+          "expectedKwh": 19.921,
+          "performance": 0.9894,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.7 of 19.9 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 19.07,
+          "expectedKwh": 19.775,
+          "performance": 0.9643,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.1 of 19.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 18.35,
+          "expectedKwh": 19.228,
+          "performance": 0.9543,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.3 of 19.2 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 12.58,
+          "expectedKwh": 13.33,
+          "performance": 0.9437,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 13.3 kWh. System healthy at 94%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 18.62,
+          "expectedKwh": 19.465,
+          "performance": 0.9566,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.5 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 18.53,
+          "expectedKwh": 19.217,
+          "performance": 0.9642,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.5 of 19.2 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 18.08,
+          "expectedKwh": 18.88,
+          "performance": 0.9576,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.1 of 18.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 18,
+          "expectedKwh": 19.608,
+          "performance": 0.918,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.0 of 19.6 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001008",
+      "dsain": "DSAIN-DL-0240259",
+      "vendorId": "VND-DL-0203",
+      "dataSource": "camera_clip",
+      "consent": true,
+      "consentRecordedAt": "2026-02-26T10:00:00Z",
+      "capacityKw": 3,
+      "location": {
+        "lat": 28.7406,
+        "lon": 77.0951,
+        "zone": "Rohini"
+      },
+      "installedOn": "2026-02-17",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 11.24,
+          "expectedKwh": 11.588,
+          "performance": 0.97,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.2 of 11.6 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 11.99,
+          "expectedKwh": 11.947,
+          "performance": 1.0036,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 12.0 of 11.9 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 10.71,
+          "expectedKwh": 11.16,
+          "performance": 0.9597,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.7 of 11.2 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 7.92,
+          "expectedKwh": 7.998,
+          "performance": 0.9902,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 8.0 kWh. System healthy at 99%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 11.14,
+          "expectedKwh": 11.69,
+          "performance": 0.953,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.7 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 11.43,
+          "expectedKwh": 11.949,
+          "performance": 0.9566,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.4 of 11.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 10.86,
+          "expectedKwh": 11.392,
+          "performance": 0.9533,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.4 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 11.28,
+          "expectedKwh": 11.726,
+          "performance": 0.962,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.3 of 11.7 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 10.82,
+          "expectedKwh": 11.481,
+          "performance": 0.9424,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.8 of 11.5 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 11.06,
+          "expectedKwh": 11.626,
+          "performance": 0.9513,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.1 of 11.6 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 11,
+          "expectedKwh": 11.702,
+          "performance": 0.94,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 10.88,
+          "expectedKwh": 11.598,
+          "performance": 0.9381,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.6 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 10.7,
+          "expectedKwh": 11.669,
+          "performance": 0.917,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.7 of 11.7 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 10.65,
+          "expectedKwh": 11.621,
+          "performance": 0.9165,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.6 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 10.93,
+          "expectedKwh": 12.009,
+          "performance": 0.9102,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 12.0 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 10.16,
+          "expectedKwh": 11.52,
+          "performance": 0.8819,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001008-20260926 filed to Vendor VND-DL-0203: free cleaning under 5-year O&M. Deadline 29 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 10.29,
+          "expectedKwh": 11.478,
+          "performance": 0.8965,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0203: 2 days left. Reading 90%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 10.06,
+          "expectedKwh": 11.285,
+          "performance": 0.8915,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0203: 1 day left. Reading 89%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 10.37,
+          "expectedKwh": 11.626,
+          "performance": 0.8919,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001008-20260926 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 10.17,
+          "expectedKwh": 11.56,
+          "performance": 0.8798,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "DISCOM has the case. Reading 88%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 11.39,
+          "expectedKwh": 11.64,
+          "performance": 0.9785,
+          "rained": true,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "After DISCOM escalation, Vendor VND-DL-0203 cleaned the panels.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 11.14,
+          "expectedKwh": 11.267,
+          "performance": 0.9888,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 99%. Case SS-DL-001008-20260926 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 11.98,
+          "expectedKwh": 11.939,
+          "performance": 1.0034,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 12.0 of 11.9 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 7.68,
+          "expectedKwh": 7.998,
+          "performance": 0.9602,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 8.0 kWh. System healthy at 96%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 10.87,
+          "expectedKwh": 11.402,
+          "performance": 0.9533,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.4 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 11.01,
+          "expectedKwh": 11.247,
+          "performance": 0.979,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.2 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 11.02,
+          "expectedKwh": 11.281,
+          "performance": 0.9768,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.0 of 11.3 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 10.64,
+          "expectedKwh": 11.164,
+          "performance": 0.9531,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.6 of 11.2 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 10.92,
+          "expectedKwh": 11.434,
+          "performance": 0.955,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 10.9 of 11.4 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 11.6,
+          "expectedKwh": 12.112,
+          "performance": 0.9578,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 11.6 of 12.1 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001009",
+      "dsain": "DSAIN-DL-0240296",
+      "vendorId": "VND-DL-0318",
+      "dataSource": "data_logger",
+      "consent": true,
+      "consentRecordedAt": "2026-03-23T10:00:00Z",
+      "capacityKw": 2,
+      "location": {
+        "lat": 28.5297,
+        "lon": 77.1872,
+        "zone": "Saket"
+      },
+      "installedOn": "2025-12-14",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 7.36,
+          "expectedKwh": 7.42,
+          "performance": 0.9919,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.4 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 7.5,
+          "expectedKwh": 7.618,
+          "performance": 0.9845,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.5 of 7.6 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 7.62,
+          "expectedKwh": 7.644,
+          "performance": 0.9969,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.6 of 7.6 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 7.92,
+          "expectedKwh": 8.01,
+          "performance": 0.9888,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.9 of 8.0 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 7.75,
+          "expectedKwh": 7.874,
+          "performance": 0.9843,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.7 of 7.9 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 7.43,
+          "expectedKwh": 7.804,
+          "performance": 0.9521,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.8 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 7.11,
+          "expectedKwh": 7.498,
+          "performance": 0.9482,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.1 of 7.5 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 7.24,
+          "expectedKwh": 7.549,
+          "performance": 0.9591,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.2 of 7.5 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 7.5,
+          "expectedKwh": 7.833,
+          "performance": 0.9575,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.5 of 7.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 7.31,
+          "expectedKwh": 7.865,
+          "performance": 0.9294,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.3 of 7.9 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 7.55,
+          "expectedKwh": 7.476,
+          "performance": 1.0098,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.6 of 7.5 kWh (101%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 8.08,
+          "expectedKwh": 8.049,
+          "performance": 1.0039,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 8.1 of 8.0 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 7.28,
+          "expectedKwh": 7.588,
+          "performance": 0.9594,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.3 of 7.6 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 7.22,
+          "expectedKwh": 7.584,
+          "performance": 0.952,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.2 of 7.6 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 7.41,
+          "expectedKwh": 7.536,
+          "performance": 0.9833,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.5 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 7.38,
+          "expectedKwh": 7.691,
+          "performance": 0.9595,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.4 of 7.7 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 5.09,
+          "expectedKwh": 5.332,
+          "performance": 0.9546,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 5.3 kWh. System healthy at 95%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 7.63,
+          "expectedKwh": 8.059,
+          "performance": 0.9467,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.6 of 8.1 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 7.2,
+          "expectedKwh": 7.648,
+          "performance": 0.9414,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.2 of 7.6 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 7.21,
+          "expectedKwh": 7.807,
+          "performance": 0.9236,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.2 of 7.8 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 7.24,
+          "expectedKwh": 7.699,
+          "performance": 0.9404,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.2 of 7.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 4.86,
+          "expectedKwh": 5.332,
+          "performance": 0.9115,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 5.3 kWh. System healthy at 91%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 6.9,
+          "expectedKwh": 7.406,
+          "performance": 0.9317,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 6.9 of 7.4 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 7.01,
+          "expectedKwh": 7.582,
+          "performance": 0.9245,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.0 of 7.6 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 7,
+          "expectedKwh": 7.938,
+          "performance": 0.8818,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 7.0 of 7.9 kWh (88%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 7.01,
+          "expectedKwh": 7.85,
+          "performance": 0.893,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001009-20261006 filed to Vendor VND-DL-0318: free cleaning under 5-year O&M. Deadline 9 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 6.64,
+          "expectedKwh": 7.591,
+          "performance": 0.8747,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0318: 2 days left. Reading 87%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 6.88,
+          "expectedKwh": 7.84,
+          "performance": 0.8776,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0318: 1 day left. Reading 88%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 7.08,
+          "expectedKwh": 8.077,
+          "performance": 0.8766,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001009-20261006 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 6.52,
+          "expectedKwh": 7.514,
+          "performance": 0.8678,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "DISCOM has the case. Reading 87%.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001010",
+      "dsain": "DSAIN-DL-0240333",
+      "vendorId": "VND-DL-0451",
+      "dataSource": "data_logger",
+      "consent": true,
+      "consentRecordedAt": "2026-03-24T10:00:00Z",
+      "capacityKw": 4,
+      "location": {
+        "lat": 28.6075,
+        "lon": 77.1076,
+        "zone": "Janakpuri"
+      },
+      "installedOn": "2026-01-22",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 15.89,
+          "expectedKwh": 15.909,
+          "performance": 0.9988,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.9 of 15.9 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 15.29,
+          "expectedKwh": 15.493,
+          "performance": 0.9869,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.3 of 15.5 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 14.56,
+          "expectedKwh": 14.881,
+          "performance": 0.9784,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.6 of 14.9 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 14.8,
+          "expectedKwh": 15.175,
+          "performance": 0.9753,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.8 of 15.2 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 14.97,
+          "expectedKwh": 15.65,
+          "performance": 0.9565,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.0 of 15.7 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 15.03,
+          "expectedKwh": 15.407,
+          "performance": 0.9755,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.0 of 15.4 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 15.04,
+          "expectedKwh": 15.988,
+          "performance": 0.9407,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.0 of 16.0 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 15.2,
+          "expectedKwh": 15.766,
+          "performance": 0.9641,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.2 of 15.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 14.47,
+          "expectedKwh": 15.292,
+          "performance": 0.9462,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.5 of 15.3 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 14.25,
+          "expectedKwh": 15.45,
+          "performance": 0.9223,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.3 of 15.5 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 14.78,
+          "expectedKwh": 16.04,
+          "performance": 0.9214,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.8 of 16.0 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 13.78,
+          "expectedKwh": 14.849,
+          "performance": 0.928,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 13.8 of 14.8 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 14.46,
+          "expectedKwh": 15.642,
+          "performance": 0.9244,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.5 of 15.6 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 13.35,
+          "expectedKwh": 14.844,
+          "performance": 0.8994,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 13.3 of 14.8 kWh (90%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 13.75,
+          "expectedKwh": 15.09,
+          "performance": 0.9112,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 13.7 of 15.1 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 13.87,
+          "expectedKwh": 15.848,
+          "performance": 0.8752,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001010-20260926 filed to Vendor VND-DL-0451: free cleaning under 5-year O&M. Deadline 29 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 13.28,
+          "expectedKwh": 15.075,
+          "performance": 0.8809,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0451: 2 days left. Reading 88%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 14.16,
+          "expectedKwh": 15.961,
+          "performance": 0.8872,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0451: 1 day left. Reading 89%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 13.84,
+          "expectedKwh": 16.082,
+          "performance": 0.8606,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001010-20260926 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 12.69,
+          "expectedKwh": 14.893,
+          "performance": 0.8521,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "DISCOM has the case. Reading 85%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 9.37,
+          "expectedKwh": 10.664,
+          "performance": 0.8787,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "After DISCOM escalation, Vendor VND-DL-0451 cleaned the panels.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 15.35,
+          "expectedKwh": 15.199,
+          "performance": 1.01,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 101%. Case SS-DL-001010-20260926 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 16.03,
+          "expectedKwh": 15.971,
+          "performance": 1.0037,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 16.0 of 16.0 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 15.62,
+          "expectedKwh": 15.978,
+          "performance": 0.9776,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.6 of 16.0 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 15.15,
+          "expectedKwh": 15.68,
+          "performance": 0.9662,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.2 of 15.7 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 15.2,
+          "expectedKwh": 15.867,
+          "performance": 0.958,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.2 of 15.9 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 4.72,
+          "expectedKwh": 15.456,
+          "performance": 0.3054,
+          "rained": false,
+          "diagnosis": "fault",
+          "action": "open_case",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001010-20261007 filed to Vendor VND-DL-0451: free repair under 5-year O&M. Deadline 10 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 3.31,
+          "expectedKwh": 10.664,
+          "performance": 0.3104,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0451: 2 days left. Reading 31%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 4.72,
+          "expectedKwh": 15.839,
+          "performance": 0.298,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0451: 1 day left. Reading 30%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 4.49,
+          "expectedKwh": 15.147,
+          "performance": 0.2964,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Deadline passed. Case SS-DL-001010-20261007 escalated to the DISCOM with readings, chart and photos.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001011",
+      "dsain": "DSAIN-DL-0240370",
+      "vendorId": "VND-DL-0560",
+      "dataSource": "inverter_cloud",
+      "consent": true,
+      "consentRecordedAt": "2026-02-24T10:00:00Z",
+      "capacityKw": 4,
+      "location": {
+        "lat": 28.6121,
+        "lon": 77.3029,
+        "zone": "Mayur Vihar"
+      },
+      "installedOn": "2025-08-22",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 15.35,
+          "expectedKwh": 15.761,
+          "performance": 0.9739,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.4 of 15.8 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 15.01,
+          "expectedKwh": 15.548,
+          "performance": 0.9654,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.0 of 15.5 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 15.36,
+          "expectedKwh": 15.629,
+          "performance": 0.9828,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.4 of 15.6 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 14.86,
+          "expectedKwh": 15.243,
+          "performance": 0.9749,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.9 of 15.2 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 14.25,
+          "expectedKwh": 14.829,
+          "performance": 0.961,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.3 of 14.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 14.79,
+          "expectedKwh": 15.674,
+          "performance": 0.9436,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.8 of 15.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 14.07,
+          "expectedKwh": 15.079,
+          "performance": 0.9331,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.1 of 15.1 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 9.97,
+          "expectedKwh": 10.664,
+          "performance": 0.9349,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 10.7 kWh. System healthy at 93%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 14.41,
+          "expectedKwh": 15.145,
+          "performance": 0.9515,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.4 of 15.1 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 14.49,
+          "expectedKwh": 15.428,
+          "performance": 0.9392,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.5 of 15.4 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 14.56,
+          "expectedKwh": 15.99,
+          "performance": 0.9106,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.6 of 16.0 kWh (91%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 14.32,
+          "expectedKwh": 15.387,
+          "performance": 0.9307,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.3 of 15.4 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 9.72,
+          "expectedKwh": 10.664,
+          "performance": 0.9115,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 10.7 kWh. System healthy at 91%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 14.29,
+          "expectedKwh": 15.528,
+          "performance": 0.9202,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.3 of 15.5 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 13.93,
+          "expectedKwh": 15.567,
+          "performance": 0.8948,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001011-20260925 filed to Vendor VND-DL-0560: free cleaning under 5-year O&M. Deadline 28 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 14.16,
+          "expectedKwh": 16.098,
+          "performance": 0.8796,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0560: 2 days left. Reading 88%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 14.12,
+          "expectedKwh": 15.599,
+          "performance": 0.9052,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0560 cleaned the panels on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 14.65,
+          "expectedKwh": 14.89,
+          "performance": 0.9839,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 98%. Case SS-DL-001011-20260925 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 15.39,
+          "expectedKwh": 15.586,
+          "performance": 0.9874,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.4 of 15.6 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 15.16,
+          "expectedKwh": 15.21,
+          "performance": 0.9967,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.2 of 15.2 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 15.92,
+          "expectedKwh": 16.074,
+          "performance": 0.9904,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.9 of 16.1 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 15.55,
+          "expectedKwh": 15.943,
+          "performance": 0.9754,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 15.5 of 15.9 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 14.91,
+          "expectedKwh": 15.294,
+          "performance": 0.9749,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 14.9 of 15.3 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 4.58,
+          "expectedKwh": 15.254,
+          "performance": 0.3003,
+          "rained": false,
+          "diagnosis": "fault",
+          "action": "open_case",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001011-20261004 filed to Vendor VND-DL-0560: free repair under 5-year O&M. Deadline 7 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 4.78,
+          "expectedKwh": 16.033,
+          "performance": 0.2981,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0560: 2 days left. Reading 30%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 4.45,
+          "expectedKwh": 14.934,
+          "performance": 0.298,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "faultCode": "E-07",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0560 repaired the inverter on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 15.37,
+          "expectedKwh": 16.167,
+          "performance": 0.9507,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 95%. Case SS-DL-001011-20261004 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 13.8,
+          "expectedKwh": 14.798,
+          "performance": 0.9326,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001011-20261008 filed to Vendor VND-DL-0560: free cleaning under 5-year O&M. Deadline 11 Oct.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 14.8,
+          "expectedKwh": 15.777,
+          "performance": 0.938,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0560: 2 days left. Reading 94%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 13.95,
+          "expectedKwh": 15.143,
+          "performance": 0.9212,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0560 cleaned the panels on time.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "systemId": "SS-DL-001012",
+      "dsain": "DSAIN-DL-0240407",
+      "vendorId": "VND-DL-0042",
+      "dataSource": "camera_clip",
+      "consent": true,
+      "consentRecordedAt": "2026-05-10T10:00:00Z",
+      "capacityKw": 5,
+      "location": {
+        "lat": 28.651,
+        "lon": 77.1919,
+        "zone": "Karol Bagh"
+      },
+      "installedOn": "2026-05-13",
+      "simulated": true,
+      "readings": [
+        {
+          "date": "2026-09-11",
+          "energyKwh": 18.6,
+          "expectedKwh": 18.686,
+          "performance": 0.9954,
+          "rained": true,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 18.7 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-12",
+          "energyKwh": 18.81,
+          "expectedKwh": 18.959,
+          "performance": 0.9921,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.8 of 19.0 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "energyKwh": 19.83,
+          "expectedKwh": 19.889,
+          "performance": 0.997,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.8 of 19.9 kWh (100%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "energyKwh": 18.9,
+          "expectedKwh": 19.088,
+          "performance": 0.9902,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.9 of 19.1 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "energyKwh": 19.45,
+          "expectedKwh": 20.056,
+          "performance": 0.9698,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.4 of 20.1 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "energyKwh": 19.48,
+          "expectedKwh": 19.945,
+          "performance": 0.9767,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.5 of 19.9 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "energyKwh": 18.06,
+          "expectedKwh": 18.609,
+          "performance": 0.9705,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.1 of 18.6 kWh (97%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "energyKwh": 17.8,
+          "expectedKwh": 19.063,
+          "performance": 0.9337,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.8 of 19.1 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "energyKwh": 12.33,
+          "expectedKwh": 13.33,
+          "performance": 0.925,
+          "rained": false,
+          "diagnosis": "smog",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Smog cut the sunlight: expected only 13.3 kWh. System healthy at 92%. No complaint.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "energyKwh": 18.25,
+          "expectedKwh": 19.83,
+          "performance": 0.9203,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.2 of 19.8 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-21",
+          "energyKwh": 18.58,
+          "expectedKwh": 19.679,
+          "performance": 0.9441,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.6 of 19.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-22",
+          "energyKwh": 17.49,
+          "expectedKwh": 18.695,
+          "performance": 0.9355,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.5 of 18.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-23",
+          "energyKwh": 17.33,
+          "expectedKwh": 18.856,
+          "performance": 0.9191,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.3 of 18.9 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-24",
+          "energyKwh": 17.68,
+          "expectedKwh": 19.223,
+          "performance": 0.9197,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.7 of 19.2 kWh (92%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-25",
+          "energyKwh": 17.66,
+          "expectedKwh": 19.834,
+          "performance": 0.8904,
+          "rained": false,
+          "diagnosis": "dust",
+          "action": "open_case",
+          "reasons": [
+            {
+              "text": "Case SS-DL-001012-20260925 filed to Vendor VND-DL-0042: free cleaning under 5-year O&M. Deadline 28 Sep.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-26",
+          "energyKwh": 16.99,
+          "expectedKwh": 19.355,
+          "performance": 0.8778,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Waiting for Vendor VND-DL-0042: 2 days left. Reading 88%.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-27",
+          "energyKwh": 17.77,
+          "expectedKwh": 19.749,
+          "performance": 0.8998,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Vendor VND-DL-0042 cleaned the panels on time.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-28",
+          "energyKwh": 18.84,
+          "expectedKwh": 18.898,
+          "performance": 0.9969,
+          "rained": false,
+          "diagnosis": null,
+          "action": "wait",
+          "reasons": [
+            {
+              "text": "Fix verified: performance back to 100%. Case SS-DL-001012-20260925 closed.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-29",
+          "energyKwh": 19.78,
+          "expectedKwh": 20.123,
+          "performance": 0.9829,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.8 of 20.1 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-30",
+          "energyKwh": 18.81,
+          "expectedKwh": 19.256,
+          "performance": 0.9768,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.8 of 19.3 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-01",
+          "energyKwh": 18.86,
+          "expectedKwh": 19.141,
+          "performance": 0.9853,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.9 of 19.1 kWh (99%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-02",
+          "energyKwh": 18.17,
+          "expectedKwh": 19.207,
+          "performance": 0.946,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.2 of 19.2 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-03",
+          "energyKwh": 18.92,
+          "expectedKwh": 19.362,
+          "performance": 0.9772,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.9 of 19.4 kWh (98%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-04",
+          "energyKwh": 18.91,
+          "expectedKwh": 19.757,
+          "performance": 0.9571,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 18.9 of 19.8 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-05",
+          "energyKwh": 19.45,
+          "expectedKwh": 20.183,
+          "performance": 0.9637,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 19.4 of 20.2 kWh (96%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-06",
+          "energyKwh": 17.63,
+          "expectedKwh": 18.744,
+          "performance": 0.9406,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.6 of 18.7 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-07",
+          "energyKwh": 17.86,
+          "expectedKwh": 18.821,
+          "performance": 0.9489,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.9 of 18.8 kWh (95%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-08",
+          "energyKwh": 17.74,
+          "expectedKwh": 19.043,
+          "performance": 0.9316,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.7 of 19.0 kWh (93%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-09",
+          "energyKwh": 17.73,
+          "expectedKwh": 18.902,
+          "performance": 0.938,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 17.7 of 18.9 kWh (94%). No action.",
+              "source": "rules"
+            }
+          ]
+        },
+        {
+          "date": "2026-10-10",
+          "energyKwh": 16.94,
+          "expectedKwh": 18.87,
+          "performance": 0.8977,
+          "rained": false,
+          "diagnosis": "healthy",
+          "action": "none",
+          "reasons": [
+            {
+              "text": "Reading received: 16.9 of 18.9 kWh (90%). No action.",
+              "source": "rules"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "SS-DL-001001-20260926",
+      "systemId": "SS-DL-001001",
+      "vendorId": "VND-DL-0042",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-26",
+      "deadlineDate": "2026-09-29",
+      "fixedDate": "2026-09-28",
+      "verifiedDate": "2026-09-29",
+      "resolvedBy": "vendor",
+      "reason": "Gap widening every dry day, now 91%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। Output वापस 101% पर है। Case SS-DL-001001-20260926"
+    },
+    {
+      "caseId": "SS-DL-001001-20261007",
+      "systemId": "SS-DL-001001",
+      "vendorId": "VND-DL-0042",
+      "cause": "fault",
+      "status": "verified",
+      "openedDate": "2026-10-07",
+      "deadlineDate": "2026-10-10",
+      "fixedDate": "2026-10-09",
+      "verifiedDate": "2026-10-10",
+      "resolvedBy": "vendor",
+      "reason": "Output collapsed overnight to 30% while sunlight was normal. Diagnosis: inverter or wiring fault.",
+      "familyMessage": "Inverter में खराबी थी। Vendor ने मुफ्त repair कर दिया। Output वापस 93% पर है। Case SS-DL-001001-20261007"
+    },
+    {
+      "caseId": "SS-DL-001002-20260924",
+      "systemId": "SS-DL-001002",
+      "vendorId": "VND-DL-0117",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-24",
+      "deadlineDate": "2026-09-27",
+      "fixedDate": "2026-09-26",
+      "verifiedDate": "2026-09-27",
+      "resolvedBy": "vendor",
+      "reason": "Gap widening every dry day, now 91%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। Output वापस 100% पर है। Case SS-DL-001002-20260924"
+    },
+    {
+      "caseId": "SS-DL-001003-20261009",
+      "systemId": "SS-DL-001003",
+      "vendorId": "VND-DL-0203",
+      "cause": "dust",
+      "status": "filed",
+      "openedDate": "2026-10-09",
+      "deadlineDate": "2026-10-12",
+      "reason": "Gap widening every dry day, now 88%. Haze already counted. Diagnosis: dust on panels."
+    },
+    {
+      "caseId": "SS-DL-001004-20260926",
+      "systemId": "SS-DL-001004",
+      "vendorId": "VND-DL-0318",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-26",
+      "deadlineDate": "2026-09-29",
+      "escalatedDate": "2026-09-29",
+      "fixedDate": "2026-10-01",
+      "verifiedDate": "2026-10-02",
+      "resolvedBy": "discom",
+      "reason": "Gap widening every dry day, now 89%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। (Vendor देर कर रहा था, इसलिए DISCOM से करवाया।) Output वापस 101% पर है। Case SS-DL-001004-20260926"
+    },
+    {
+      "caseId": "SS-DL-001005-20260926",
+      "systemId": "SS-DL-001005",
+      "vendorId": "VND-DL-0451",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-26",
+      "deadlineDate": "2026-09-29",
+      "verifiedDate": "2026-09-27",
+      "resolvedBy": "rain",
+      "reason": "Gap widening every dry day, now 88%. Haze already counted. Diagnosis: dust on panels."
+    },
+    {
+      "caseId": "SS-DL-001005-20261003",
+      "systemId": "SS-DL-001005",
+      "vendorId": "VND-DL-0451",
+      "cause": "fault",
+      "status": "fixed",
+      "openedDate": "2026-10-03",
+      "deadlineDate": "2026-10-06",
+      "escalatedDate": "2026-10-06",
+      "fixedDate": "2026-10-08",
+      "resolvedBy": "discom",
+      "reason": "Output collapsed overnight to 31% while sunlight was normal. Diagnosis: inverter or wiring fault."
+    },
+    {
+      "caseId": "SS-DL-001006-20261006",
+      "systemId": "SS-DL-001006",
+      "vendorId": "VND-DL-0560",
+      "cause": "fault",
+      "status": "fixed",
+      "openedDate": "2026-10-06",
+      "deadlineDate": "2026-10-09",
+      "fixedDate": "2026-10-08",
+      "resolvedBy": "vendor",
+      "reason": "Output collapsed overnight to 30% while sunlight was normal. Diagnosis: inverter or wiring fault."
+    },
+    {
+      "caseId": "SS-DL-001007-20260925",
+      "systemId": "SS-DL-001007",
+      "vendorId": "VND-DL-0117",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-25",
+      "deadlineDate": "2026-09-28",
+      "escalatedDate": "2026-09-28",
+      "fixedDate": "2026-09-30",
+      "verifiedDate": "2026-10-01",
+      "resolvedBy": "discom",
+      "reason": "Gap widening every dry day, now 89%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। (Vendor देर कर रहा था, इसलिए DISCOM से करवाया।) Output वापस 97% पर है। Case SS-DL-001007-20260925"
+    },
+    {
+      "caseId": "SS-DL-001008-20260926",
+      "systemId": "SS-DL-001008",
+      "vendorId": "VND-DL-0203",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-26",
+      "deadlineDate": "2026-09-29",
+      "escalatedDate": "2026-09-29",
+      "fixedDate": "2026-10-01",
+      "verifiedDate": "2026-10-02",
+      "resolvedBy": "discom",
+      "reason": "Gap widening every dry day, now 88%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। (Vendor देर कर रहा था, इसलिए DISCOM से करवाया।) Output वापस 99% पर है। Case SS-DL-001008-20260926"
+    },
+    {
+      "caseId": "SS-DL-001009-20261006",
+      "systemId": "SS-DL-001009",
+      "vendorId": "VND-DL-0318",
+      "cause": "dust",
+      "status": "escalated",
+      "openedDate": "2026-10-06",
+      "deadlineDate": "2026-10-09",
+      "escalatedDate": "2026-10-09",
+      "reason": "Gap widening every dry day, now 89%. Haze already counted. Diagnosis: dust on panels."
+    },
+    {
+      "caseId": "SS-DL-001010-20260926",
+      "systemId": "SS-DL-001010",
+      "vendorId": "VND-DL-0451",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-26",
+      "deadlineDate": "2026-09-29",
+      "escalatedDate": "2026-09-29",
+      "fixedDate": "2026-10-01",
+      "verifiedDate": "2026-10-02",
+      "resolvedBy": "discom",
+      "reason": "Gap widening every dry day, now 88%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। (Vendor देर कर रहा था, इसलिए DISCOM से करवाया।) Output वापस 101% पर है। Case SS-DL-001010-20260926"
+    },
+    {
+      "caseId": "SS-DL-001010-20261007",
+      "systemId": "SS-DL-001010",
+      "vendorId": "VND-DL-0451",
+      "cause": "fault",
+      "status": "escalated",
+      "openedDate": "2026-10-07",
+      "deadlineDate": "2026-10-10",
+      "escalatedDate": "2026-10-10",
+      "reason": "Output collapsed overnight to 31% while sunlight was normal. Diagnosis: inverter or wiring fault."
+    },
+    {
+      "caseId": "SS-DL-001011-20260925",
+      "systemId": "SS-DL-001011",
+      "vendorId": "VND-DL-0560",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-25",
+      "deadlineDate": "2026-09-28",
+      "fixedDate": "2026-09-27",
+      "verifiedDate": "2026-09-28",
+      "resolvedBy": "vendor",
+      "reason": "Gap widening every dry day, now 89%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। Output वापस 98% पर है। Case SS-DL-001011-20260925"
+    },
+    {
+      "caseId": "SS-DL-001011-20261004",
+      "systemId": "SS-DL-001011",
+      "vendorId": "VND-DL-0560",
+      "cause": "fault",
+      "status": "verified",
+      "openedDate": "2026-10-04",
+      "deadlineDate": "2026-10-07",
+      "fixedDate": "2026-10-06",
+      "verifiedDate": "2026-10-07",
+      "resolvedBy": "vendor",
+      "reason": "Output collapsed overnight to 30% while sunlight was normal. Diagnosis: inverter or wiring fault.",
+      "familyMessage": "Inverter में खराबी थी। Vendor ने मुफ्त repair कर दिया। Output वापस 95% पर है। Case SS-DL-001011-20261004"
+    },
+    {
+      "caseId": "SS-DL-001011-20261008",
+      "systemId": "SS-DL-001011",
+      "vendorId": "VND-DL-0560",
+      "cause": "dust",
+      "status": "fixed",
+      "openedDate": "2026-10-08",
+      "deadlineDate": "2026-10-11",
+      "fixedDate": "2026-10-10",
+      "resolvedBy": "vendor",
+      "reason": "Gap widening every dry day, now 93%. Haze already counted. Diagnosis: dust on panels."
+    },
+    {
+      "caseId": "SS-DL-001012-20260925",
+      "systemId": "SS-DL-001012",
+      "vendorId": "VND-DL-0042",
+      "cause": "dust",
+      "status": "verified",
+      "openedDate": "2026-09-25",
+      "deadlineDate": "2026-09-28",
+      "fixedDate": "2026-09-27",
+      "verifiedDate": "2026-09-28",
+      "resolvedBy": "vendor",
+      "reason": "Gap widening every dry day, now 89%. Haze already counted. Diagnosis: dust on panels.",
+      "familyMessage": "आपके panels पर धूल थी। हमने vendor से मुफ्त सफाई करवा दी। Output वापस 100% पर है। Case SS-DL-001012-20260925"
+    }
+  ]
+}

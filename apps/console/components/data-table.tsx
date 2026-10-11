@@ -1,6 +1,6 @@
 "use client";
 
-import { Table } from "@heroui/react";
+import { Card, Table } from "@heroui/react";
 import { useMemo, useState, type ReactNode } from "react";
 import type { SortDescriptor } from "react-aria-components";
 
@@ -49,7 +49,11 @@ export function DataTable<T>({
   }, [rows, columns, sort]);
 
   if (rows.length === 0) {
-    return <p className="rounded-2xl bg-surface p-6 text-sm text-muted shadow-sm">{empty}</p>;
+    return (
+      <Card>
+        <Card.Content className="text-sm text-muted">{empty}</Card.Content>
+      </Card>
+    );
   }
 
   return (

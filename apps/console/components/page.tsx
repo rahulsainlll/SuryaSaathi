@@ -1,7 +1,14 @@
-import { Alert, Skeleton } from "@heroui/react";
+"use client";
+
+import { Alert, Breadcrumbs, Card, Skeleton } from "@heroui/react";
 import type { ReactNode } from "react";
 import { dayYear } from "../lib/format";
 import { SimulatedBadge } from "./badges";
+
+export interface Crumb {
+  label: string;
+  href: string;
+}
 
 export function PageHeader({
   title,
@@ -9,21 +16,31 @@ export function PageHeader({
   asOf,
   simulated,
   actions,
-  eyebrow,
+  crumbs,
 }: {
   title: ReactNode;
   subtitle?: ReactNode;
   asOf?: string;
   simulated?: boolean;
   actions?: ReactNode;
-  eyebrow?: ReactNode;
+  /** Parent pages, shown as HeroUI breadcrumbs above the title. */
+  crumbs?: Crumb[];
 }) {
   return (
     <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
       <div className="min-w-0">
-        {eyebrow && <div className="mb-1 text-sm text-muted">{eyebrow}</div>}
+        {crumbs && (
+          <Breadcrumbs className="mb-2">
+            {crumbs.map((c) => (
+              <Breadcrumbs.Item key={c.href} href={c.href}>
+                {c.label}
+              </Breadcrumbs.Item>
+            ))}
+            <Breadcrumbs.Item>{title}</Breadcrumbs.Item>
+          </Breadcrumbs>
+        )}
         <h1 className="text-2xl font-bold tracking-tight break-words sm:text-3xl">{title}</h1>
-        {subtitle && <p className="mt-1 max-w-[70ch] text-muted">{subtitle}</p>}
+        {subtitle && <div className="mt-1 max-w-[70ch] text-muted">{subtitle}</div>}
         <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted">
           {simulated !== undefined && <SimulatedBadge simulated={simulated} />}
           {asOf && <span>As of {dayYear(asOf)}</span>}
@@ -34,6 +51,7 @@ export function PageHeader({
   );
 }
 
+/** A KPI as a HeroUI card. */
 export function Stat({
   label,
   value,
@@ -47,13 +65,40 @@ export function Stat({
 }) {
   const toneClass = tone === "danger" ? "text-danger" : tone === "warning" ? "text-warning" : "";
   return (
-    <div className="rounded-2xl bg-surface p-4 shadow-sm">
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className={`mt-1 text-2xl font-semibold tracking-tight tabular-nums ${toneClass}`}>
-        {value}
-      </dd>
-      {hint && <dd className="mt-0.5 text-xs text-muted">{hint}</dd>}
-    </div>
+    <Card>
+      <Card.Header>
+        <Card.Description>{label}</Card.Description>
+        <Card.Title className={`text-2xl tracking-tight tabular-nums ${toneClass}`}>
+          {value}
+        </Card.Title>
+      </Card.Header>
+      {hint && <Card.Footer className="text-xs text-muted">{hint}</Card.Footer>}
+    </Card>
+  );
+}
+
+/** A titled HeroUI card for a block of content. */
+export function Panel({
+  title,
+  description,
+  children,
+  className,
+}: {
+  title?: ReactNode;
+  description?: ReactNode;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <Card className={`min-w-0 ${className ?? ""}`}>
+      {(title || description) && (
+        <Card.Header>
+          {title && <Card.Title>{title}</Card.Title>}
+          {description && <Card.Description>{description}</Card.Description>}
+        </Card.Header>
+      )}
+      <Card.Content>{children}</Card.Content>
+    </Card>
   );
 }
 

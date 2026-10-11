@@ -1,12 +1,12 @@
 "use client";
 
 import type { VendorRow } from "@suryasaathi/console-data";
-import Link from "next/link";
 import { DataTable } from "../../components/data-table";
 import { EscalateButton } from "../../components/escalate-dialog";
 import { LoadError, Loading, PageHeader } from "../../components/page";
 import { useQuery } from "../../lib/data";
 import { kwh, pctValue } from "../../lib/format";
+import { AppLink } from "../../components/links";
 
 export default function VendorsPage() {
   const vendors = useQuery("vendors", (d) => d.vendors());
@@ -35,14 +35,7 @@ export default function VendorsPage() {
             label: "Vendor",
             rowHeader: true,
             sortValue: (v) => v.name,
-            render: (v) => (
-              <Link
-                className="font-medium underline-offset-2 hover:underline"
-                href={`/vendors/${v.vendorId}`}
-              >
-                {v.name}
-              </Link>
-            ),
+            render: (v) => <AppLink href={`/vendors/${v.vendorId}`}>{v.name}</AppLink>,
           },
           {
             id: "systems",

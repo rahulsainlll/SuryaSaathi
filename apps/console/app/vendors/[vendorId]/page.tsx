@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { PerformanceChart } from "../../../components/charts";
 import { EscalateButton } from "../../../components/escalate-dialog";
@@ -22,11 +21,7 @@ export default function VendorPage() {
   return (
     <>
       <PageHeader
-        eyebrow={
-          <Link href="/vendors" className="underline-offset-2 hover:underline">
-            Vendors
-          </Link>
-        }
+        crumbs={[{ label: "Vendors", href: "/vendors" }]}
         title={v.name}
         subtitle={`${v.vendorId} · maintains ${v.systems} systems under the 5-year O&M obligation`}
         asOf={q.data.asOf}

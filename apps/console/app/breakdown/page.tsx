@@ -1,17 +1,18 @@
 "use client";
 
+import { Label, Meter } from "@heroui/react";
 import type { CauseRow, ZoneRow } from "@suryasaathi/console-data";
-import Link from "next/link";
 import { CauseLabel } from "../../components/badges";
 import { DataTable } from "../../components/data-table";
-import { LoadError, Loading, PageHeader, Section } from "../../components/page";
+import { LoadError, Loading, PageHeader, Panel, Section } from "../../components/page";
 import { useQuery } from "../../lib/data";
 import { kwh } from "../../lib/format";
+import { AppLink } from "../../components/links";
 
-const BAR: Record<CauseRow["cause"], string> = {
-  dust: "bg-dust",
-  fault: "bg-fault",
-  other: "bg-smog",
+const METER: Record<CauseRow["cause"], "warning" | "danger" | "default"> = {
+  dust: "warning",
+  fault: "danger",
+  other: "default",
 };
 const DESCRIPTION: Record<CauseRow["cause"], string> = {
   dust: "Shortfall while a dust case was open.",
@@ -35,33 +36,35 @@ export default function BreakdownPage() {
         simulated={q.data.simulated}
       />
       <Section title="Energy lost by cause">
-        <ul className="flex flex-col gap-4 rounded-2xl bg-surface p-4 shadow-sm">
-          {causes.map((c) => (
-            <li key={c.cause}>
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <span className="font-medium">
-                  <CauseLabel cause={c.cause} />
-                </span>
-                <span className="text-sm tabular-nums">
-                  <strong>{kwh(c.energyLostKwh)}</strong>
-                  {c.cause !== "other" && (
-                    <span className="text-muted">
-                      {" "}
-                      · {c.cases} cases, {c.openCases} open
-                    </span>
-                  )}
-                </span>
-              </div>
-              <div className="mt-1.5 h-2.5 rounded-full bg-default" aria-hidden="true">
-                <div
-                  className={`h-full rounded-full ${BAR[c.cause]}`}
-                  style={{ width: `${(100 * c.energyLostKwh) / max}%` }}
-                />
-              </div>
-              <p className="mt-1 text-xs text-muted">{DESCRIPTION[c.cause]}</p>
-            </li>
-          ))}
-        </ul>
+        <Panel description="Every kWh the fleet should have made but didn’t, by what was wrong at the time.">
+          <ul className="flex flex-col gap-5">
+            {causes.map((c) => (
+              <li key={c.cause}>
+                <Meter
+                  value={c.energyLostKwh}
+                  maxValue={max}
+                  valueLabel={kwh(c.energyLostKwh)}
+                  color={METER[c.cause]}
+                >
+                  <Label>
+                    <CauseLabel cause={c.cause} />
+                    {c.cause !== "other" && (
+                      <span className="font-normal text-muted">
+                        {" "}
+                        · {c.cases} cases, {c.openCases} open
+                      </span>
+                    )}
+                  </Label>
+                  <Meter.Output />
+                  <Meter.Track>
+                    <Meter.Fill />
+                  </Meter.Track>
+                </Meter>
+                <p className="mt-1 text-xs text-muted">{DESCRIPTION[c.cause]}</p>
+              </li>
+            ))}
+          </ul>
+        </Panel>
       </Section>
       <Section title="By zone">
         <DataTable<ZoneRow>
@@ -76,12 +79,7 @@ export default function BreakdownPage() {
               rowHeader: true,
               sortValue: (z) => z.zone,
               render: (z) => (
-                <Link
-                  className="font-medium underline-offset-2 hover:underline"
-                  href={`/cases?zone=${encodeURIComponent(z.zone)}`}
-                >
-                  {z.zone}
-                </Link>
+                <AppLink href={`/cases?zone=${encodeURIComponent(z.zone)}`}>{z.zone}</AppLink>
               ),
             },
             {

@@ -1,14 +1,15 @@
 "use client";
 
+import { Card } from "@heroui/react";
 import type { TimelineEvent } from "@suryasaathi/console-data";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CaseStatusChip, CauseLabel, PastDeadlineChip } from "../../../components/badges";
 import { ExpectedActualChart } from "../../../components/charts";
-import { LoadError, Loading, NotFound, PageHeader, Section } from "../../../components/page";
+import { LoadError, Loading, NotFound, PageHeader, Panel, Section } from "../../../components/page";
 import { ReadingsTable } from "../../../components/tables";
 import { useQuery } from "../../../lib/data";
 import { dayYear } from "../../../lib/format";
+import { AppLink } from "../../../components/links";
 
 const DOT: Record<TimelineEvent["kind"], string> = {
   filed: "bg-accent",
@@ -60,16 +61,11 @@ export default function CasePage() {
   if (q.loading) return <Loading />;
   if (!q.data) return <NotFound what="Case" />;
   const { case: c, reason, familyMessage, timeline, readings } = q.data;
-  const link = "underline underline-offset-2";
 
   return (
     <>
       <PageHeader
-        eyebrow={
-          <Link href="/cases" className="underline-offset-2 hover:underline">
-            Cases
-          </Link>
-        }
+        crumbs={[{ label: "Cases", href: "/cases" }]}
         title={c.caseId}
         asOf={q.data.asOf}
         simulated={q.data.simulated}
@@ -79,40 +75,32 @@ export default function CasePage() {
             {c.pastDeadline && <PastDeadlineChip days={c.daysOverdue} />}
             <CauseLabel cause={c.cause} />
             <span>·</span>
-            <Link className={link} href={`/systems/${c.systemId}`}>
-              {c.systemId}
-            </Link>
+            <AppLink href={`/systems/${c.systemId}`}>{c.systemId}</AppLink>
             <span>·</span>
-            <Link className={link} href={`/vendors/${c.vendorId}`}>
-              {c.vendorName}
-            </Link>
+            <AppLink href={`/vendors/${c.vendorId}`}>{c.vendorName}</AppLink>
             <span>· {c.zone}</span>
           </span>
         }
       />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
-        <section aria-labelledby="timeline-h" className="rounded-2xl bg-surface p-4 shadow-sm">
-          <h2 id="timeline-h" className="mb-4 text-lg font-semibold">
-            Timeline
-          </h2>
+        <Panel title="Timeline">
           <Timeline events={timeline} />
-        </section>
+        </Panel>
         <div className="flex min-w-0 flex-col gap-4">
-          <section aria-labelledby="reason-h" className="rounded-2xl bg-surface p-4 shadow-sm">
-            <h2 id="reason-h" className="mb-1 text-lg font-semibold">
-              Why the agent opened it
-            </h2>
+          <Panel title="Why the agent opened it">
             <p>{reason}</p>
-          </section>
+          </Panel>
           {familyMessage && (
-            <section aria-labelledby="family-h" className="rounded-2xl bg-default p-4">
-              <h2 id="family-h" className="mb-2 text-sm text-muted">
-                The WhatsApp message the family got
-              </h2>
-              <p lang="hi" className="rounded-2xl rounded-bl-sm bg-surface px-3 py-2.5 shadow-sm">
-                {familyMessage}
-              </p>
-            </section>
+            <Panel
+              title="The WhatsApp message the family got"
+              description="Sent once the fix was verified."
+            >
+              <Card variant="secondary" className="rounded-bl-sm">
+                <Card.Content>
+                  <p lang="hi">{familyMessage}</p>
+                </Card.Content>
+              </Card>
+            </Panel>
           )}
           <ExpectedActualChart
             readings={readings}

@@ -2,12 +2,10 @@
 
 import { Chip } from "@heroui/react";
 import type { CaseSummary, ReadingRow, SystemSummary } from "@suryasaathi/console-data";
-import Link from "next/link";
+import { AppLink } from "./links";
 import { day, kwh, pct, SOURCE_LABEL } from "../lib/format";
 import { CaseStatusChip, CauseLabel, PastDeadlineChip, SystemStatusChip } from "./badges";
 import { DataTable } from "./data-table";
-
-const link = "font-medium underline-offset-2 hover:underline";
 
 export function CasesTable({ cases, label = "Cases" }: { cases: CaseSummary[]; label?: string }) {
   return (
@@ -22,11 +20,7 @@ export function CasesTable({ cases, label = "Cases" }: { cases: CaseSummary[]; l
           label: "Case",
           rowHeader: true,
           sortValue: (c) => c.caseId,
-          render: (c) => (
-            <Link className={link} href={`/cases/${c.caseId}`}>
-              {c.caseId}
-            </Link>
-          ),
+          render: (c) => <AppLink href={`/cases/${c.caseId}`}>{c.caseId}</AppLink>,
         },
         {
           id: "status",
@@ -49,21 +43,13 @@ export function CasesTable({ cases, label = "Cases" }: { cases: CaseSummary[]; l
           id: "system",
           label: "System",
           sortValue: (c) => c.systemId,
-          render: (c) => (
-            <Link className={link} href={`/systems/${c.systemId}`}>
-              {c.systemId}
-            </Link>
-          ),
+          render: (c) => <AppLink href={`/systems/${c.systemId}`}>{c.systemId}</AppLink>,
         },
         {
           id: "vendor",
           label: "Vendor",
           sortValue: (c) => c.vendorName,
-          render: (c) => (
-            <Link className={link} href={`/vendors/${c.vendorId}`}>
-              {c.vendorName}
-            </Link>
-          ),
+          render: (c) => <AppLink href={`/vendors/${c.vendorId}`}>{c.vendorName}</AppLink>,
         },
         { id: "zone", label: "Zone", sortValue: (c) => c.zone, render: (c) => c.zone },
         {
@@ -109,11 +95,7 @@ export function SystemsTable({
           label: "System",
           rowHeader: true,
           sortValue: (s) => s.systemId,
-          render: (s) => (
-            <Link className={link} href={`/systems/${s.systemId}`}>
-              {s.systemId}
-            </Link>
-          ),
+          render: (s) => <AppLink href={`/systems/${s.systemId}`}>{s.systemId}</AppLink>,
         },
         {
           id: "dsain",
@@ -138,11 +120,7 @@ export function SystemsTable({
           id: "vendor",
           label: "Vendor",
           sortValue: (s) => s.vendorName,
-          render: (s) => (
-            <Link className={link} href={`/vendors/${s.vendorId}`}>
-              {s.vendorName}
-            </Link>
-          ),
+          render: (s) => <AppLink href={`/vendors/${s.vendorId}`}>{s.vendorName}</AppLink>,
         },
         { id: "zone", label: "Zone", sortValue: (s) => s.zone, render: (s) => s.zone },
         {

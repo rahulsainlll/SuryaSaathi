@@ -1,13 +1,13 @@
 "use client";
 
 import type { CaseSummary, VendorRow } from "@suryasaathi/console-data";
-import Link from "next/link";
 import { CaseStatusChip, CauseLabel, PastDeadlineChip } from "../components/badges";
 import { PerformanceChart } from "../components/charts";
 import { DataTable } from "../components/data-table";
 import { LoadError, Loading, PageHeader, Section, Stat } from "../components/page";
 import { useQuery } from "../lib/data";
 import { count, day, kwh, pctValue, rupees } from "../lib/format";
+import { AppLink } from "../components/links";
 
 export default function OverviewPage() {
   const overview = useQuery("overview", (d) => d.overview());
@@ -59,14 +59,7 @@ export default function OverviewPage() {
       </Section>
 
       <div className="grid gap-x-6 xl:grid-cols-2">
-        <Section
-          title="Escalation queue"
-          actions={
-            <Link href="/cases" className="text-sm text-muted underline underline-offset-2">
-              All cases
-            </Link>
-          }
-        >
+        <Section title="Escalation queue" actions={<AppLink href="/cases">All cases</AppLink>}>
           <DataTable<CaseSummary>
             label="Escalation queue"
             rows={queue.slice(0, 6)}
@@ -77,14 +70,7 @@ export default function OverviewPage() {
                 id: "case",
                 label: "Case",
                 rowHeader: true,
-                render: (c) => (
-                  <Link
-                    className="font-medium underline-offset-2 hover:underline"
-                    href={`/cases/${c.caseId}`}
-                  >
-                    {c.caseId}
-                  </Link>
-                ),
+                render: (c) => <AppLink href={`/cases/${c.caseId}`}>{c.caseId}</AppLink>,
               },
               { id: "cause", label: "Cause", render: (c) => <CauseLabel cause={c.cause} /> },
               { id: "vendor", label: "Vendor", render: (c) => c.vendorName },
@@ -104,11 +90,7 @@ export default function OverviewPage() {
         </Section>
         <Section
           title="Vendors with the most underperformance"
-          actions={
-            <Link href="/vendors" className="text-sm text-muted underline underline-offset-2">
-              Leaderboard
-            </Link>
-          }
+          actions={<AppLink href="/vendors">Leaderboard</AppLink>}
         >
           <DataTable<VendorRow>
             label="Vendors"
@@ -119,14 +101,7 @@ export default function OverviewPage() {
                 id: "vendor",
                 label: "Vendor",
                 rowHeader: true,
-                render: (v) => (
-                  <Link
-                    className="font-medium underline-offset-2 hover:underline"
-                    href={`/vendors/${v.vendorId}`}
-                  >
-                    {v.name}
-                  </Link>
-                ),
+                render: (v) => <AppLink href={`/vendors/${v.vendorId}`}>{v.name}</AppLink>,
               },
               {
                 id: "under",

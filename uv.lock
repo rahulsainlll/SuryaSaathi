@@ -22,6 +22,7 @@ members = [
     "suryasaathi-device-sim",
     "suryasaathi-expected-output",
     "suryasaathi-ingest",
+    "suryasaathi-live-api",
     "suryasaathi-rollups",
     "suryasaathi-whatsapp",
 ]
@@ -2493,6 +2494,7 @@ dependencies = [
     { name = "suryasaathi-device-sim" },
     { name = "suryasaathi-expected-output" },
     { name = "suryasaathi-ingest" },
+    { name = "suryasaathi-live-api" },
     { name = "suryasaathi-rollups" },
     { name = "suryasaathi-whatsapp" },
 ]
@@ -2516,6 +2518,7 @@ requires-dist = [
     { name = "suryasaathi-device-sim", editable = "tools/device-sim" },
     { name = "suryasaathi-expected-output", editable = "services/expected-output" },
     { name = "suryasaathi-ingest", editable = "services/ingest" },
+    { name = "suryasaathi-live-api", editable = "services/live-api" },
     { name = "suryasaathi-rollups", editable = "services/rollups" },
     { name = "suryasaathi-whatsapp", editable = "services/whatsapp" },
 ]
@@ -2614,6 +2617,17 @@ requires-dist = [
 name = "suryasaathi-ingest"
 version = "0.0.0"
 source = { editable = "services/ingest" }
+dependencies = [
+    { name = "suryasaathi-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "suryasaathi-core", editable = "services/core" }]
+
+[[package]]
+name = "suryasaathi-live-api"
+version = "0.0.0"
+source = { editable = "services/live-api" }
 dependencies = [
     { name = "suryasaathi-core" },
 ]

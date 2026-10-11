@@ -5,7 +5,7 @@ name = "suryasaathi"
 version = "0.0.0"
 description = "SuryaSaathi Python workspace"
 requires-python = ">=3.12"
-dependencies = ["suryasaathi-core", "suryasaathi-device-sim", "suryasaathi-agents", "suryasaathi-ingest", "suryasaathi-expected-output", "suryasaathi-whatsapp", "suryasaathi-rollups", "suryasaathi-console-api"]
+dependencies = ["suryasaathi-core", "suryasaathi-device-sim", "suryasaathi-agents", "suryasaathi-ingest", "suryasaathi-expected-output", "suryasaathi-whatsapp", "suryasaathi-rollups", "suryasaathi-console-api", "suryasaathi-live-api"]
 
 [dependency-groups]
 dev = [
@@ -33,6 +33,7 @@ suryasaathi-expected-output = { workspace = true }
 suryasaathi-whatsapp = { workspace = true }
 suryasaathi-rollups = { workspace = true }
 suryasaathi-console-api = { workspace = true }
+suryasaathi-live-api = { workspace = true }
 
 [tool.ruff]
 line-length = 100
@@ -48,7 +49,7 @@ python_version = "3.12"
 strict = true
 files = ["services", "tools/device-sim"]
 explicit_package_bases = true
-mypy_path = "tools/device-sim/src:services/core/src:services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src:services/console-api/src"
+mypy_path = "tools/device-sim/src:services/core/src:services/agents/src:services/ingest/src:services/expected-output/src:services/whatsapp/src:services/rollups/src:services/console-api/src:services/live-api/src"
 
 [[tool.mypy.overrides]]
 # pvlib ships no type information.

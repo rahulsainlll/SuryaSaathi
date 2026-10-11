@@ -24,6 +24,13 @@ def default_as_of(now: datetime | None = None) -> str:
     return ((now or datetime.now(UTC)) - timedelta(days=1)).date().isoformat()
 
 
+def latest_as_of(store: Store) -> str:
+    """The newest reading date across the fleet: for demo runs, where simulated readings
+    carry the scenario's dates rather than yesterday's."""
+    dates = [store.latest_reading_date(str(s["systemId"])) for s in store.list_systems()]
+    return max((d for d in dates if d), default=default_as_of())
+
+
 def load_fleet(store: Store, settings: Settings, as_of: str) -> Row:
     """The fleet as of ``as_of``, in the shape of the TypeScript ``Fleet``."""
     first = c.window_start(as_of, settings.window_days)

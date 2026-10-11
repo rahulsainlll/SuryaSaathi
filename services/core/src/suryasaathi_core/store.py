@@ -99,6 +99,18 @@ class Store:
                 return items
             kwargs["ExclusiveStartKey"] = page["LastEvaluatedKey"]
 
+    def latest_reading_date(self, system_id: str) -> str | None:
+        """Date of the system's newest reading (one item read by key)."""
+        page = self.readings.query(
+            KeyConditionExpression=Key("systemId").eq(system_id),
+            ScanIndexForward=False,
+            Limit=1,
+            ProjectionExpression="#d",
+            ExpressionAttributeNames={"#d": "date"},
+        )
+        items = page.get("Items", [])
+        return str(items[0]["date"]) if items else None
+
     def recent_readings(self, system_id: str, day: str, days: int) -> list[dict[str, Any]]:
         """The ``days`` days up to and including ``day``."""
         first = (date.fromisoformat(day) - timedelta(days=days - 1)).isoformat()

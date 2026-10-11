@@ -85,7 +85,7 @@ def test_handler_reads_settings_from_the_environment(
         invoked_function_arn = "arn:aws:lambda:ap-south-1:123456789012:function:rollups"
         aws_request_id = "test"
 
-    result = handler({"asOf": AS_OF}, Context())
+    result = handler({"asOf": "latest"}, Context())
     assert result["asOf"] == AS_OF
     assert result["systems"] == 12
     assert len(loaded[1].days(FLEET, "2026-09-01", AS_OF)) == 7

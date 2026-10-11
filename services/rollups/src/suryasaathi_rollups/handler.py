@@ -1,7 +1,8 @@
 """AWS Lambda entry point: the nightly EventBridge rule runs the console rollup.
 
-The event may carry ``{"asOf": "YYYY-MM-DD"}`` to rebuild a past day; otherwise the rollup
-is as of yesterday (UTC).
+The event may carry ``{"asOf": "YYYY-MM-DD"}`` to rebuild a past day, or ``{"asOf":
+"latest"}`` to roll up to the newest reading (demo mode does, every few minutes, since the
+simulator sends scenario dates). Otherwise the rollup is as of yesterday (UTC).
 """
 
 from __future__ import annotations
@@ -13,7 +14,7 @@ from suryasaathi_core.logs import log_event, logger
 from suryasaathi_core.store import Store
 from suryasaathi_core.summaries import Summaries
 
-from .rollup import default_as_of, load_fleet, summary_items
+from .rollup import default_as_of, latest_as_of, load_fleet, summary_items
 
 SERVICE_NAME = "rollups"
 
@@ -34,5 +35,7 @@ def run(store: Store, summaries: Summaries, settings: Settings, as_of: str) -> d
 @logger.inject_lambda_context(clear_state=True)
 def handler(event: dict[str, Any], context: Any) -> dict[str, Any]:
     settings = Settings.from_env()
-    as_of = str(event.get("asOf") or default_as_of())
-    return run(Store(settings), Summaries(settings), settings, as_of)
+    store = Store(settings)
+    requested = str(event.get("asOf") or "")
+    as_of = latest_as_of(store) if requested == "latest" else requested or default_as_of()
+    return run(store, Summaries(settings), settings, as_of)

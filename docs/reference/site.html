@@ -289,7 +289,7 @@ svg.sig{display:block;width:100%;height:auto}
       <p class="lead fade" style="max-width:640px;--d:250ms">SuryaSaathi checks every roof every day, tells smog, dust and faults apart, and makes the vendor fix what they owe. Families just get one WhatsApp message.</p>
       <div class="fade" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;--d:400ms">
         <a class="btn btn-p" href="https://web-xi-snowy-99.vercel.app/demo">Try the live demo</a>
-        <button class="btn btn-g" data-scroll="film"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>Watch the film · 70 s</button>
+        <button class="btn btn-g" data-scroll="film"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>Watch the film</button>
       </div>
     </div>
   </section>
@@ -304,10 +304,10 @@ svg.sig{display:block;width:100%;height:auto}
           <rect x="0" y="640" width="260" height="260" fill="#221E35"/><rect x="268" y="560" width="300" height="340" fill="#1B1830"/><rect x="576" y="610" width="240" height="290" fill="#221E35"/><rect x="824" y="520" width="330" height="380" fill="#1B1830"/><rect x="1162" y="590" width="250" height="310" fill="#221E35"/><rect x="1420" y="540" width="180" height="360" fill="#1B1830"/>
           <g fill="#4B3F96" stroke="#A99BFF" stroke-width="3"><polygon points="290,556 340,556 332,528 282,528"/><polygon points="350,556 400,556 392,528 342,528"/><polygon points="410,556 460,556 452,528 402,528"/><polygon points="846,516 896,516 888,488 838,488"/><polygon points="906,516 956,516 948,488 898,488"/><polygon points="966,516 1016,516 1008,488 958,488"/><polygon points="1026,516 1076,516 1068,488 1018,488"/><polygon points="1440,536 1490,536 1482,508 1432,508"/><polygon points="1500,536 1550,536 1542,508 1492,508"/></g>
         </svg>
-        <button class="play" data-film aria-label="Play the 70-second SuryaSaathi film">
+        <button class="play" data-film aria-label="Play the SuryaSaathi film">
           <span class="pb"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="#111"><polygon points="7 4 21 12 7 20"/></svg></span>
         </button>
-        <div class="film-bar" aria-hidden="true"><span>SuryaSaathi in 70 seconds</span><span>Sound on · 1:10</span></div>
+        <div class="film-bar" aria-hidden="true"><span>The SuryaSaathi film</span><span>With voiceover · sound on</span></div>
       </div>
     </div>
   </section>
@@ -567,7 +567,7 @@ svg.sig{display:block;width:100%;height:auto}
 
 <dialog class="vid" id="filmDlg" aria-label="SuryaSaathi film">
   <div class="vid-frame" id="vidFrame"></div>
-  <div class="vid-bar"><span>Not loading? <a href="https://www.youtube.com/watch?v=m6HiN65kmdo" target="_blank" rel="noopener">Watch on YouTube</a></span><button class="vid-close" id="vidClose">Close</button></div>
+  <div class="vid-bar"><span>Not loading? <a href="https://www.youtube.com/watch?v=bkJ0GL8D9BI" target="_blank" rel="noopener">Watch on YouTube</a></span><button class="vid-close" id="vidClose">Close</button></div>
 </dialog>
 
 <!-- ============ FOOTER ============ -->
@@ -587,7 +587,7 @@ svg.sig{display:block;width:100%;height:auto}
     <div class="fcols">
       <div class="stack g12"><a class="logo" href="#/" aria-label="SuryaSaathi home"><span>Surya<span class="hl">Saathi</span></span></a><p class="muted small" style="max-width:320px">An AI agent that keeps India's rooftop solar working. Built by Team Mythos for Environmental Hacks 2026.</p></div>
       <div><h4>Product</h4><ul><li><a href="#/how-it-works">How it works</a></li><li><a href="#/technology">Technology</a></li><li><a href="#/impact">Impact</a></li><li><a href="https://web-xi-snowy-99.vercel.app/demo">Live demo</a></li></ul></div>
-      <div><h4>Resources</h4><ul><li><a href="https://www.youtube.com/watch?v=m6HiN65kmdo">The film</a></li><li><a href="https://web-xi-snowy-99.vercel.app/blog">Blog</a></li><li><a href="https://github.com/rahulsainlll/SuryaSaathi">GitHub</a></li><li><a href="https://github.com/rahulsainlll/SuryaSaathi/blob/main/LICENSE">MIT licence</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="https://www.youtube.com/watch?v=bkJ0GL8D9BI">The film</a></li><li><a href="https://web-xi-snowy-99.vercel.app/blog">Blog</a></li><li><a href="https://github.com/rahulsainlll/SuryaSaathi">GitHub</a></li><li><a href="https://github.com/rahulsainlll/SuryaSaathi/blob/main/LICENSE">MIT licence</a></li></ul></div>
       <div><h4>Team Mythos</h4><ul><li><a href="https://github.com/rahulsainlll">Rahul Sain</a></li><li><a href="https://github.com/Kiarstein">Yukti</a></li><li><a href="https://github.com/mayankdhokal">Mayank Dhokal</a></li></ul></div>
     </div>
     <div class="legal"><span>Environmental Hacks · Waste and Energy track · Bharat Builds Tour by WeMakeDevs × AWS, October 2026</span><span>All systems shown are simulated.</span></div>
@@ -709,7 +709,7 @@ svg.sig{display:block;width:100%;height:auto}
 
   // ---- film dialog ----
   const dlg=document.getElementById('filmDlg'), frame=document.getElementById('vidFrame');
-  function openFilm(){ frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/m6HiN65kmdo?autoplay=1&rel=0" title="SuryaSaathi film" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'; if(dlg.showModal) dlg.showModal(); else location.href='https://www.youtube.com/watch?v=m6HiN65kmdo'; }
+  function openFilm(){ frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/bkJ0GL8D9BI?autoplay=1&rel=0" title="SuryaSaathi film" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'; if(dlg.showModal) dlg.showModal(); else location.href='https://www.youtube.com/watch?v=bkJ0GL8D9BI'; }
   function closeFilm(){ dlg.close(); }
   dlg.addEventListener('close',()=>{ frame.innerHTML=''; });
   dlg.addEventListener('click',e=>{ if(e.target===dlg) closeFilm(); });

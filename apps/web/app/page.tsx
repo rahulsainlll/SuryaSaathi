@@ -1,6 +1,6 @@
 import { Card, Chip } from "@heroui/react";
 import { buttonVariants } from "@heroui/styles";
-import { BrandMark, DiagnosisChip, brand } from "@suryasaathi/ui";
+import { DiagnosisChip, Logo, brand } from "@suryasaathi/ui";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <>
       <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
-        <BrandMark className="text-lg" />
+        <Logo height={32} />
         <nav aria-label="Main" className="flex items-center gap-1 text-sm sm:gap-4">
           <a href="#how-it-works" className="hidden rounded-lg px-2 py-1 text-muted sm:inline">
             How it works

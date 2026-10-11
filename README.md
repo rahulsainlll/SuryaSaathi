@@ -1,6 +1,11 @@
 <div align="center">
 
-# SuryaSaathi
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="packages/ui/brand/suryasaathi-logo-dark.svg">
+    <img src="packages/ui/brand/suryasaathi-logo.svg" alt="SuryaSaathi" width="360">
+  </picture>
+</h1>
 
 **An AI agent that keeps India's rooftop solar working.**
 

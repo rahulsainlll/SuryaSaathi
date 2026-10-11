@@ -20,9 +20,14 @@ The console reads everything through `@suryasaathi/console-data`:
 
 - `NEXT_PUBLIC_CONSOLE_DATA=mock` (default): a 48-system fleet generated in the browser from
   `@suryasaathi/engine`. No AWS needed.
-- `NEXT_PUBLIC_CONSOLE_DATA=api`: the deployed console API. Set the Console stack outputs as
-  `NEXT_PUBLIC_CONSOLE_API_URL`, `NEXT_PUBLIC_COGNITO_DOMAIN`, `NEXT_PUBLIC_COGNITO_CLIENT_ID`
-  and `NEXT_PUBLIC_COGNITO_REDIRECT_URI` (see `docs/runbook.md`).
+- `NEXT_PUBLIC_CONSOLE_DATA=api`: the deployed console API (`services/console-api`). Set the
+  Console stack outputs as `NEXT_PUBLIC_CONSOLE_API_URL`, `NEXT_PUBLIC_COGNITO_DOMAIN`,
+  `NEXT_PUBLIC_COGNITO_CLIENT_ID` and `NEXT_PUBLIC_COGNITO_REDIRECT_URI` (the runbook's
+  section 10 writes them to `.env.local`).
+
+In API mode the console signs in with Cognito's hosted page (authorization code with PKCE,
+`lib/auth.ts`); Cognito returns to `/auth/callback`. Tokens are kept in `sessionStorage`
+for the tab, and only users in the `admin` group can read the API.
 
 ```bash
 pnpm dev --filter console   # http://localhost:3001

@@ -1,7 +1,7 @@
 import type { CaseFilters, ConsoleData } from "./types.js";
 
 export interface ApiAdapterOptions {
-  /** The HTTP API's base URL (Console stack output ConsoleApiUrl). */
+  /** The HTTP API's base URL (Console stack output NEXTPUBLICCONSOLEAPIURL). */
   baseUrl: string;
   /** A Cognito access or ID token for a user in the admin group. */
   getToken: () => Promise<string | null>;

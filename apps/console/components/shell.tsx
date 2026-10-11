@@ -5,7 +5,9 @@ import { BrandMark } from "@suryasaathi/ui";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { RouterProvider } from "react-aria-components";
-import { useState, type ReactNode } from "react";
+import { useState, useSyncExternalStore, type ReactNode } from "react";
+import { currentUser, signOut } from "../lib/auth";
+import { config } from "../lib/config";
 import { useQuery } from "../lib/data";
 import { SimulatedBadge } from "./badges";
 import { CommandPalette } from "./command-palette";
@@ -56,8 +58,37 @@ function SearchButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+const noSubscription = () => () => {};
+
+/** In API mode: who is signed in, and a way out. */
+function UserMenu() {
+  // Tokens live in sessionStorage: read on the client only (null while prerendering).
+  const email = useSyncExternalStore(
+    noSubscription,
+    () => currentUser()?.email ?? null,
+    () => null,
+  );
+  if (config.dataSource !== "api" || email === null) return null;
+  return (
+    <div className="flex items-center gap-2">
+      <span className="hidden max-w-48 truncate text-sm text-muted md:inline">{email}</span>
+      <Button variant="ghost" size="sm" onPress={signOut}>
+        Sign out
+      </Button>
+    </div>
+  );
+}
+
 /** Sidebar on wide screens, a top bar with a drawer on phones; ⌘K everywhere. */
 export function Shell({ children }: { children: ReactNode }) {
+  // The sign-in callback must not load data: that would start another sign-in.
+  if (usePathname().startsWith("/auth/")) {
+    return <main className="mx-auto max-w-xl px-4 py-16">{children}</main>;
+  }
+  return <ConsoleShell>{children}</ConsoleShell>;
+}
+
+function ConsoleShell({ children }: { children: ReactNode }) {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data } = useQuery("search", (d) => d.search());
@@ -134,6 +165,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 <SimulatedBadge simulated={simulated} />
               </span>
               <SearchButton onPress={() => setPaletteOpen(true)} />
+              <UserMenu />
             </div>
           </header>
           <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">{children}</main>

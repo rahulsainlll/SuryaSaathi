@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      Thumbnails for the film and the blog, rendered at 1280×720 with a headless browser:
+        #film        the README thumbnail (play button and tags)
+        #film-clean  the site's film card (the page draws its own play button)
+        #blog        the first blog post's cover
+    -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Geist:wght@500;600&display=swap"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #100e18;
+        font-family: Geist, sans-serif;
+      }
+      .f {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background:
+          radial-gradient(70% 90% at 78% 30%, rgba(139, 124, 246, 0.3), transparent 60%),
+          radial-gradient(60% 60% at 10% 110%, rgba(91, 74, 180, 0.35), transparent 60%),
+          linear-gradient(180deg, #14121c, #18142a);
+      }
+      .logo {
+        position: absolute;
+        left: 80px;
+        top: 70px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "Baloo 2";
+        font-weight: 800;
+        font-size: 34px;
+        color: #eceaf5;
+        line-height: 1;
+      }
+      .logo b {
+        color: #f5a524;
+        font-weight: 800;
+      }
+      .kicker {
+        font-size: 20px;
+        font-weight: 600;
+        color: #a99bff;
+        letter-spacing: 0.02em;
+      }
+      .left {
+        position: absolute;
+        left: 80px;
+        top: 168px;
+        width: 540px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      h1 {
+        font-family: "Baloo 2";
+        font-weight: 800;
+        font-size: 72px;
+        line-height: 0.98;
+        letter-spacing: -0.01em;
+        color: #eceaf5;
+      }
+      h1 span {
+        color: #f5a524;
+        display: block;
+        margin-top: 10px;
+      }
+      .sub {
+        font-size: 24px;
+        line-height: 1.35;
+        color: #b9b4d4;
+        font-weight: 500;
+        max-width: 500px;
+      }
+      .grid {
+        position: absolute;
+        right: 70px;
+        top: 120px;
+        display: grid;
+        grid-template-columns: repeat(8, 48px);
+        gap: 11px;
+      }
+      .grid i {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        background: #5b4cc4;
+        box-shadow: inset 0 0 0 2px rgba(169, 155, 255, 0.55);
+      }
+      .grid i.d {
+        background: #2a2450;
+        box-shadow: inset 0 0 0 2px rgba(169, 155, 255, 0.18);
+      }
+      .grid i.x {
+        background: #221d3e;
+        box-shadow: none;
+      }
+      .sun {
+        position: absolute;
+        z-index: 2;
+        right: 40px;
+        top: 52px;
+        width: 104px;
+        height: 104px;
+        border-radius: 50%;
+        background: #f5a524;
+        box-shadow:
+          0 0 0 22px rgba(245, 165, 36, 0.16),
+          0 0 90px 30px rgba(245, 165, 36, 0.35);
+      }
+      .tag {
+        position: absolute;
+        left: 80px;
+        bottom: 64px;
+        display: flex;
+        gap: 12px;
+      }
+      .tag span {
+        font-size: 20px;
+        font-weight: 600;
+        color: #eceaf5;
+        padding: 9px 18px;
+        border-radius: 999px;
+        background: rgba(236, 234, 245, 0.1);
+        border: 1px solid rgba(236, 234, 245, 0.18);
+      }
+      .tag span.a {
+        background: #f5a524;
+        color: #14121c;
+        border-color: transparent;
+      }
+      .play {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 132px;
+        height: 132px;
+        margin: -66px 0 0 -66px;
+        border-radius: 50%;
+        background: #fff;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+      }
+      .sigs {
+        position: absolute;
+        right: 70px;
+        top: 96px;
+        width: 470px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .sig {
+        border-radius: 22px;
+        padding: 18px 22px 14px;
+        background: rgba(236, 234, 245, 0.05);
+        border: 2px solid rgba(236, 234, 245, 0.12);
+      }
+      .sig.hot {
+        border-color: #f5a524;
+        background: rgba(245, 165, 36, 0.07);
+      }
+      .sig b {
+        display: flex;
+        justify-content: space-between;
+        font-family: "Baloo 2";
+        font-weight: 800;
+        font-size: 30px;
+        color: #eceaf5;
+        line-height: 1;
+      }
+      .sig b small {
+        font-family: Geist;
+        font-weight: 500;
+        font-size: 17px;
+        color: #b9b4d4;
+      }
+      .sig.hot b {
+        color: #f5a524;
+      }
+      .sig svg {
+        display: block;
+        width: 100%;
+        height: 86px;
+        margin-top: 6px;
+      }
+      .v-blog .grid,
+      .v-blog .play,
+      .v-blog .tag.film,
+      .v-blog .sun,
+      .v-film .sigs,
+      .v-film .tag.blog,
+      .v-film-clean .sigs,
+      .v-film-clean .play,
+      .v-film-clean .tag {
+        display: none;
+      }
+      .v-film .k-blog,
+      .v-film-clean .k-blog,
+      .v-blog .k-film {
+        display: none;
+      }
+      .k-film {
+        width: 500px;
+      }
+      .k-film h1 {
+        font-size: 64px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="f" id="f">
+      <div class="logo">
+        <svg width="46" height="46" viewBox="0 0 120 120">
+          <g stroke="#F5A524" stroke-width="7" stroke-linecap="round">
+            <line x1="92" y1="62" x2="103" y2="62" />
+            <line x1="56" y1="98" x2="56" y2="109" />
+            <line x1="20" y1="62" x2="9" y2="62" />
+            <line x1="56" y1="26" x2="56" y2="15" />
+            <line x1="81.5" y1="87.5" x2="89.2" y2="95.2" />
+            <line x1="30.5" y1="87.5" x2="22.8" y2="95.2" />
+            <line x1="30.5" y1="36.5" x2="22.8" y2="28.8" />
+          </g>
+          <circle cx="56" cy="62" r="26" fill="#F5A524" />
+          <path
+            d="M42 62 L54 74 L96 30"
+            fill="none"
+            stroke="#ECEAF5"
+            stroke-width="9"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span>Surya<b>Saathi</b></span>
+      </div>
+      <div class="left k-film">
+        <span class="kicker">The film · 70 seconds</span>
+        <h1>Smog, dust or a fault? <span>One agent tells them apart.</span></h1>
+        <p class="sub">Why rooftop output drops, and who owes the fix.</p>
+      </div>
+      <div class="left k-blog">
+        <span class="kicker">Blog · How it works</span>
+        <h1>&ldquo;It&rsquo;s the pollution.&rdquo; <span>Usually, it isn&rsquo;t.</span></h1>
+        <p class="sub">
+          One number, three signatures and the AWS services that turn a winter excuse into a free
+          cleaning.
+        </p>
+      </div>
+      <div class="sun"></div>
+      <div class="grid" id="g"></div>
+      <div class="sigs">
+        <div class="sig">
+          <b>Smog <small>Nobody's problem</small></b>
+          <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+            <polyline
+              points="10,18 80,20 120,52 170,56 210,22 290,18"
+              fill="none"
+              stroke="#A99BFF"
+              stroke-width="3"
+              stroke-dasharray="8 6"
+              stroke-linecap="round"
+            />
+            <polyline
+              points="10,26 80,28 120,60 170,64 210,30 290,26"
+              fill="none"
+              stroke="#F5A524"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div class="sig hot">
+          <b>Dust <small>Free cleaning, owed</small></b>
+          <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+            <polyline
+              points="10,16 290,16"
+              fill="none"
+              stroke="#A99BFF"
+              stroke-width="3"
+              stroke-dasharray="8 6"
+              stroke-linecap="round"
+            />
+            <polyline
+              points="10,22 180,62 190,22 290,44"
+              fill="none"
+              stroke="#F5A524"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div class="sig">
+          <b>Fault <small>Free repair, owed</small></b>
+          <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+            <polyline
+              points="10,16 290,16"
+              fill="none"
+              stroke="#A99BFF"
+              stroke-width="3"
+              stroke-dasharray="8 6"
+              stroke-linecap="round"
+            />
+            <polyline
+              points="10,22 170,23 186,66 290,68"
+              fill="none"
+              stroke="#F5A524"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="play">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="#111">
+          <polygon points="7 4 21 12 7 20" />
+        </svg>
+      </div>
+      <div class="tag film">
+        <span class="a">▶ Watch the film</span><span>1:10</span><span>Built on AWS</span>
+      </div>
+      <div class="tag blog"><span>8 min read</span><span>Team Mythos</span></div>
+    </div>
+    <script>
+      // A fixed pattern: most panels working, some dimmed (dust) and a few dark (faults), as in the film.
+      const dim = new Set([3, 12, 19, 22, 27, 34, 38, 41, 45, 52, 57, 60]),
+        off = new Set([9, 30, 47, 62]);
+      const g = document.getElementById("g");
+      for (let i = 0; i < 64; i++) {
+        const e = document.createElement("i");
+        if (off.has(i)) e.className = "x";
+        else if (dim.has(i)) e.className = "d";
+        g.appendChild(e);
+      }
+      document.getElementById("f").classList.add("v-" + (location.hash.slice(1) || "film"));
+    </script>
+  </body>
+</html>

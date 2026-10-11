@@ -21,11 +21,13 @@ Built by **Team Mythos** for Environmental Hacks 2026
 ![UI: HeroUI v3](https://img.shields.io/badge/UI-HeroUI%20v3-111111)
 ![Status: hackathon build](https://img.shields.io/badge/status-hackathon%20build-yellow)
 
-<!--
-  Demo screenshot: hidden until docs/assets/demo.png exists. Add a real screenshot or GIF
-  of the demo at that path, then move the <img> tag below out of this comment.
-  <img src="docs/assets/demo.png" alt="SuryaSaathi demo: expected vs actual output, a maintenance case, and the family's WhatsApp message" width="880">
--->
+<br>
+
+<a href="https://www.youtube.com/watch?v=m6HiN65kmdo" title="Watch the 70-second film on YouTube">
+  <img src="docs/assets/film-thumbnail.jpg" alt="SuryaSaathi film: smog, dust or a fault? One agent tells them apart. Click to watch on YouTube (1:10)" width="720">
+</a>
+
+<sub>▶ <a href="https://www.youtube.com/watch?v=m6HiN65kmdo">Watch the 70-second film on YouTube</a></sub>
 
 </div>
 
@@ -88,6 +90,12 @@ Every day, for every roof:
 The public demo needs no login: **[suryasaathi demo →](#)** <!-- replace with the deployed URL -->
 
 It replays 30 days on one 3 kW rooftop in Dwarka, Delhi:
+
+<p align="center">
+  <img src="docs/assets/demo.gif" alt="The demo playing a month on one roof: readings travel from the roof to the agents, the expected and actual lines split as dust builds and an inverter fails, a case is filed, escalated to the DISCOM and verified, and the family gets one WhatsApp message" width="720">
+  <br>
+  <sub>The live demo playing a whole month (recorded at the fast speed). <a href="docs/assets/demo.mp4">MP4 version</a></sub>
+</p>
 
 - Switch the data source between **Data logger**, **Inverter cloud** and **Camera clip** and watch the device message change.
 - Trigger **rain**, **smog** or an **inverter fault** and see how the agent reacts.

@@ -49,7 +49,7 @@ export function Simulator() {
             }}
           >
             {(Object.keys(SOURCES) as DeviceSource[]).map((key, i) => (
-              <ToggleButton key={key} id={key}>
+              <ToggleButton key={key} id={key} className="max-sm:px-2.5">
                 {i > 0 && <ToggleButtonGroup.Separator />}
                 {SOURCES[key].label}
               </ToggleButton>

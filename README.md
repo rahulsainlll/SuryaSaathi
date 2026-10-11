@@ -1,6 +1,11 @@
 <div align="center">
 
-# SuryaSaathi
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="packages/ui/brand/suryasaathi-logo-dark.svg">
+    <img src="packages/ui/brand/suryasaathi-logo.svg" alt="SuryaSaathi" width="360">
+  </picture>
+</h1>
 
 **An AI agent that keeps India's rooftop solar working.**
 
@@ -8,7 +13,7 @@ It watches every roof, works out why output dropped (smog, dust or a fault), fil
 
 Built by **Team Mythos** for Environmental Hacks 2026
 
-[Live demo](#try-the-demo) · [Video](#) · [Architecture](#architecture) · [Getting started](#getting-started) · [Roadmap](#roadmap)
+[Live demo](#try-the-demo) · [Video](https://www.youtube.com/watch?v=m6HiN65kmdo) · [Architecture](#architecture) · [Getting started](#getting-started) · [Roadmap](#roadmap)
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 ![Built on AWS](https://img.shields.io/badge/built%20on-AWS-FF9900)

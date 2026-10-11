@@ -2,7 +2,7 @@
 
 import { Button, Card, Switch, ToggleButton, ToggleButtonGroup, Label } from "@heroui/react";
 import { formatDay, isFinished, lossInr, type DeviceSource } from "@suryasaathi/engine";
-import { BrandMark } from "@suryasaathi/ui";
+import { Logo } from "@suryasaathi/ui";
 import Link from "next/link";
 import { CasePanel } from "./case-panel";
 import { DecisionLog } from "./decision-log";
@@ -27,7 +27,7 @@ export function Simulator() {
       <header className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <div>
           <Link href="/" className="mb-1.5 inline-block rounded-lg">
-            <BrandMark />
+            <Logo height={26} />
           </Link>
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
             Device and agent simulator
@@ -49,7 +49,7 @@ export function Simulator() {
             }}
           >
             {(Object.keys(SOURCES) as DeviceSource[]).map((key, i) => (
-              <ToggleButton key={key} id={key}>
+              <ToggleButton key={key} id={key} className="max-sm:px-2.5">
                 {i > 0 && <ToggleButtonGroup.Separator />}
                 {SOURCES[key].label}
               </ToggleButton>

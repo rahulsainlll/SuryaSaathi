@@ -48,3 +48,13 @@
   --color-dust: oklch(0.68 0.12 75);
   --color-fault: var(--danger);
 }
+
+/* <Logo>: the light logo by default, the dark one on the dark theme. */
+.dark .ss-logo-light,
+[data-theme="dark"] .ss-logo-light {
+  display: none;
+}
+.dark .ss-logo-dark,
+[data-theme="dark"] .ss-logo-dark {
+  display: block;
+}

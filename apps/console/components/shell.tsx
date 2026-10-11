@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Drawer, Kbd } from "@heroui/react";
-import { BrandMark } from "@suryasaathi/ui";
+import { Logo } from "@suryasaathi/ui";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { RouterProvider } from "react-aria-components";
@@ -101,8 +101,8 @@ function ConsoleShell({ children }: { children: ReactNode }) {
       <div className="min-h-dvh lg:grid lg:grid-cols-[15rem_minmax(0,1fr)]">
         <aside className="sticky top-0 hidden h-dvh flex-col gap-6 border-r border-separator bg-surface px-4 py-5 lg:flex">
           <Link href="/" className="rounded-lg">
-            <BrandMark />
-            <span className="mt-0.5 block text-xs text-muted">DISCOM console</span>
+            <Logo height={30} />
+            <span className="mt-1 block text-xs text-muted">DISCOM console</span>
           </Link>
           <NavLinks />
           <div className="mt-auto flex flex-col gap-2 text-xs text-muted">
@@ -143,7 +143,7 @@ function ConsoleShell({ children }: { children: ReactNode }) {
                       <Drawer.CloseTrigger />
                       <Drawer.Header>
                         <Drawer.Heading>
-                          <BrandMark />
+                          <Logo height={24} />
                         </Drawer.Heading>
                       </Drawer.Header>
                       <Drawer.Body>
@@ -154,7 +154,7 @@ function ConsoleShell({ children }: { children: ReactNode }) {
                 </Drawer.Backdrop>
               </Drawer>
               <Link href="/" className="rounded-lg">
-                <BrandMark />
+                <Logo height={24} />
               </Link>
             </div>
             <div className="hidden text-sm text-muted lg:block">

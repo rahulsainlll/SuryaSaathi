@@ -1155,8 +1155,6 @@ html[data-theme="dark"]:has(.site) {
     position: relative;
     height: 360px;
     overflow: hidden;
-    touch-action: pan-y;
-    cursor: crosshair;
     border-bottom: 1px solid var(--line);
     background: linear-gradient(
       to bottom,

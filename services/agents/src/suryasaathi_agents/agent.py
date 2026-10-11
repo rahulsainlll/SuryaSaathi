@@ -145,7 +145,7 @@ def anthropic_model(settings: Settings) -> Any:
     # effort parameter"), and Converse has no equivalent, so AGENT_EFFORT goes unused on
     # both paths.
     model = AnthropicModel(model_id=settings.anthropic_model_id, max_tokens=4096)
-    model.client = anthropic.AsyncAnthropic(api_key=key)  # type: ignore[assignment]
+    model.client = anthropic.AsyncAnthropic(api_key=key)
     return model
 
 

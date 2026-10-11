@@ -257,45 +257,56 @@ The first URL in `consoleUrls` becomes `NEXT_PUBLIC_COGNITO_REDIRECT_URI`. Pass 
 context flags on every later deploy (or put them in `infra/cdk.json`), or the defaults
 come back.
 
-## 9. Host the website on AWS Amplify
+## 9. Host the website and the console on AWS Amplify
 
-The marketing site, demo and blog (`apps/web`) deploy to Amplify Hosting from the repository.
-`amplify.yml` at the root configures the monorepo build: it installs pnpm, switches to the
-hoisted `node_modules` layout Amplify requires for pnpm workspaces (only inside the build),
-builds the workspace packages the site uses, then the site. The site doesn't need the CDK
-stacks; everything it shows is simulated in the browser.
+Both Next.js apps deploy to Amplify Hosting from this repository, as two Amplify apps:
+
+| Amplify app | Root directory | What it serves                            |
+| ----------- | -------------- | ----------------------------------------- |
+| Website     | `apps/web`     | The marketing site, live demo and blog    |
+| Console     | `apps/console` | The DISCOM console (section 8 wires auth) |
+
+`amplify.yml` at the root has a build for each: it installs pnpm, switches to the hoisted
+`node_modules` layout Amplify requires for pnpm workspaces (only inside the build), builds the
+workspace packages the app uses, then the app. Neither needs the CDK stacks to build: the
+website is simulated in the browser, and the console uses its mock data until it is pointed at
+the console API.
+
+For each app:
 
 1. **Connect the repository.** In the Amplify console choose _Create new app_ → GitHub,
    authorise the Amplify GitHub App for `rahulsainlll/SuryaSaathi`, and pick the branch.
-2. **Mark it as a monorepo.** Tick _My app is a monorepo_ and enter `apps/web` as the root
-   directory. Amplify then reads `amplify.yml` and sets `AMPLIFY_MONOREPO_APP_ROOT=apps/web`;
-   check it under _Hosting → Environment variables_ (it must equal `appRoot` in the file).
+2. **Mark it as a monorepo.** Tick _My app is a monorepo_ and enter the root directory from the
+   table. Amplify reads `amplify.yml` and sets `AMPLIFY_MONOREPO_APP_ROOT` to it; check it under
+   _Hosting → Environment variables_ (it must equal that app's `appRoot`).
 3. **Leave the detected settings.** Amplify detects Next.js and hosts it with server-side
-   rendering (`WEB_COMPUTE`). Keep the build image's default Node.js 20 or later.
-4. **Set the site URL** (optional, for absolute Open Graph links): add the environment
-   variable `SITE_URL=https://main.<app-id>.amplifyapp.com`, or your custom domain.
-5. **Save and deploy.** Each push to the branch rebuilds the site. Add a custom domain under
-   _Hosting → Custom domains_ if you have one.
+   rendering (`WEB_COMPUTE`).
+4. **Environment variables.**
+   - Website (optional): `SITE_URL=https://main.<app-id>.amplifyapp.com` (or your domain), for
+     absolute Open Graph links.
+   - Console: nothing for the mock data. To use the deployed API, add the
+     `AmplifyEnvironmentVariables` from the Console stack (section 8), and redeploy
+     `SuryaSaathi-Console` with `-c consoleUrls=https://main.<console-app-id>.amplifyapp.com` so
+     Cognito and CORS accept the hosted URL.
+5. **Save and deploy.** Each push to the branch rebuilds both apps. Add custom domains under
+   _Hosting → Custom domains_.
 
-The same steps from the CLI, once the app is connected:
+From the CLI, once an app is connected:
 
 ```bash
-APP_ID=$(aws amplify list-apps --query "apps[?name=='SuryaSaathi'].appId" --output text)
+APP_ID=$(aws amplify list-apps --query "apps[?name=='SuryaSaathi-console'].appId" --output text)
 aws amplify update-app --app-id "$APP_ID" \
-  --environment-variables AMPLIFY_MONOREPO_APP_ROOT=apps/web
+  --environment-variables AMPLIFY_MONOREPO_APP_ROOT=apps/console
 aws amplify start-job --app-id "$APP_ID" --branch-name main --job-type RELEASE
 ```
 
-The DISCOM console (`apps/console`) is a separate Amplify app; section 8 covers its settings.
-
 **If a build fails:** `ERR_PNPM_OUTDATED_LOCKFILE` means `pnpm-lock.yaml` wasn't committed with
 a dependency change (run `pnpm install` and commit it); a missing module at build time usually
-means `AMPLIFY_MONOREPO_APP_ROOT` doesn't match `appRoot`.
+means `AMPLIFY_MONOREPO_APP_ROOT` doesn't match the app's `appRoot`.
 
-**The film poster.** The home page's film card uses `apps/web/public/images/film-poster.jpg`
-when it exists: the text-free frame at 0:20 of the film. With the film at
-`apps/web/public/film.mp4`, run `pnpm --filter web film:poster` (needs ffmpeg) and commit the
-image. Without it, the card shows the illustrated poster from the design.
+**Thumbnails.** The film card on the home page, the README's film thumbnail and the first blog
+post's cover are rendered at 1280×720 from `docs/assets/thumbnails.html` (`#film-clean`,
+`#film` and `#blog`). Clicking the film card opens the film on YouTube.
 
 ## 10. Troubleshooting
 

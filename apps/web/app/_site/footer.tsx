@@ -69,7 +69,6 @@ export function SiteFooter() {
           <span>All systems shown are simulated.</span>
         </div>
       </div>
-      <div className="wordmark" aria-hidden="true" />
     </footer>
   );
 }

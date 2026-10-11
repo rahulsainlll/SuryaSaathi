@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { REPO, SOURCES } from "../_site/content";
 import { CtaMini } from "../_site/cta-mini";
-import { Film, ScrollToFilm } from "../_site/film";
+import { Film } from "../_site/film";
 import { FilmPoster } from "../_site/film-poster";
 import { Layers } from "../_site/layers";
+import { ScrollToFilm } from "../_site/scroll-to-film";
 import { delay, RevealHeading, words } from "../_site/words";
 
 const STATS = [

@@ -501,7 +501,9 @@ html[data-theme="dark"]:has(.site) {
   & .film-in > svg,
   & .film-in > img,
   & .film-in > video,
-  & .film-in > iframe {
+  & .film-in > iframe,
+  & .film-in > .film-yt,
+  & .film-yt > iframe {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -531,7 +533,8 @@ html[data-theme="dark"]:has(.site) {
     transition: transform 160ms var(--ease-out);
   }
   & .film-in > video,
-  & .film-in > iframe {
+  & .film-in > .film-yt,
+  & .film-yt > iframe {
     background: #000;
     border: 0;
     object-fit: contain;

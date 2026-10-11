@@ -147,9 +147,10 @@ export function LiveBoard() {
               <div className="stack g16">
                 <h2 className="as-h3">What the agent decided</h2>
                 <p className="muted small">
-                  {state.data.counters.agentDecisions} of {state.data.counters.decisions} reasons on
-                  this page were written by the model; the rest are the rules&apos; own wording, on
-                  days when nothing happened.
+                  The days something happened come first, then the routine ones. Across all{" "}
+                  {state.data.counters.decisions} decisions so far, the model wrote{" "}
+                  {state.data.counters.agentDecisions} of the reasons; the rest use the rules&apos;
+                  own wording, because on a healthy day there is nothing to explain.
                 </p>
                 <DecisionFeed decisions={state.data.decisions} />
               </div>

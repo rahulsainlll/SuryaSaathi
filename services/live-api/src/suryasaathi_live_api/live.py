@@ -23,6 +23,8 @@ from suryasaathi_core.summaries import FLEET, LATEST, SYSTEM, Summaries
 WINDOW_DAYS = 30
 #: How many agent decisions the feed shows.
 DECISION_LIMIT = 15
+#: Diagnoses that mean nothing happened that day.
+ROUTINE = (None, "healthy")
 #: Never query more roofs than this, however many are marked simulated.
 MAX_SYSTEMS = 12
 #: Fields copied straight from a case. Everything else stays out of a public response.
@@ -82,6 +84,11 @@ def _decision(reading: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def _eventful(decision: Mapping[str, Any]) -> bool:
+    """True when the agent found something that day, rather than a routine reading."""
+    return decision.get("diagnosis") not in ROUTINE or decision.get("action") not in (None, "none")
+
+
 def _case(item: Mapping[str, Any]) -> dict[str, Any]:
     out = {k: item.get(k) for k in CASE_FIELDS}
     out["vendorDeadline"] = item.get("deadlineDate") or item.get("vendorDeadline")
@@ -114,6 +121,11 @@ def live(store: Store, summaries: Summaries, settings: Settings) -> dict[str, An
         cases += [_case(c) for c in store.cases_for_system(system_id)]
 
     decisions.sort(key=lambda d: (str(d["date"]), str(d["systemId"])), reverse=True)
+    # Newest first, but a day where something happened outranks a routine one. On a
+    # healthy stretch a strict "most recent 15" is fifteen rows of "No action", which
+    # hides every reason the model actually wrote. Both tiers stay in date order.
+    feed = [d for d in decisions if _eventful(d)][:DECISION_LIMIT]
+    feed += [d for d in decisions if not _eventful(d)][: DECISION_LIMIT - len(feed)]
     cases.sort(key=lambda c: str(c.get("openedAt") or ""), reverse=True)
     agent_written = sum(1 for d in decisions if d["reasonSource"] == "agent")
 
@@ -122,7 +134,7 @@ def live(store: Store, summaries: Summaries, settings: Settings) -> dict[str, An
         "simulated": True,
         "windowDays": WINDOW_DAYS,
         "systems": systems,
-        "decisions": decisions[:DECISION_LIMIT],
+        "decisions": feed,
         "cases": cases,
         "counters": {
             "systems": len(systems),

@@ -13,6 +13,10 @@ It is the only route in this service, and it is deliberately narrow.
 - **No scans.** The fleet row and the per-system rows come from the rollup summaries;
   readings and cases are read with key queries, at most `MAX_SYSTEMS` roofs' worth, so
   the cost does not grow with the fleet. A test replaces `scan` with a failing stub.
+- **Events first.** The feed is the most recent decisions, but a day where something
+  happened outranks a routine one, with each tier in date order. A strict "most recent
+  15" is fifteen rows of "No action" during a healthy stretch, which hides every reason
+  the model wrote. `DECISION_LIMIT` and `_eventful` are the two knobs.
 - **Cached.** The payload is rebuilt at most once every `CACHE_SECONDS` per container
   and the response carries `Cache-Control: public, max-age=15`, so a page left open, or
   a crowd of them, costs almost nothing.

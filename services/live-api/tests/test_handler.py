@@ -92,15 +92,34 @@ def test_a_roof_carries_its_figures_and_a_series(
     assert isinstance(system["series"][0]["actualKwh"], float | int | type(None))
 
 
-def test_the_decision_feed_is_newest_first_and_capped(
+def test_the_decision_feed_leads_with_the_days_something_happened(
     rolled_up: tuple[Store, Summaries], settings: Settings
 ) -> None:
+    """A healthy stretch must not push every interesting decision off the page."""
     body = live(*rolled_up, settings)
     decisions = body["decisions"]
     assert 0 < len(decisions) <= DECISION_LIMIT
-    assert [d["date"] for d in decisions] == sorted((d["date"] for d in decisions), reverse=True)
     assert all(d["diagnosis"] for d in decisions)
     assert all(d["reasonSource"] in (None, "agent", "rules") for d in decisions)
+
+    eventful = [d["diagnosis"] not in (None, "healthy") for d in decisions]
+    # Every eventful decision comes before every routine one...
+    assert eventful == sorted(eventful, reverse=True)
+    # ...and each tier is newest first.
+    for tier in (True, False):
+        dates = [d["date"] for d, e in zip(decisions, eventful, strict=True) if e is tier]
+        assert dates == sorted(dates, reverse=True)
+
+
+def test_routine_days_fill_the_feed_only_when_there_is_room(
+    rolled_up: tuple[Store, Summaries], settings: Settings
+) -> None:
+    store, summaries = rolled_up
+    body = live(store, summaries, settings)
+    interesting = [d for d in body["decisions"] if d["diagnosis"] not in (None, "healthy")]
+    # The console fixture has plenty of smog, dust and fault days; if the feed were a
+    # plain "most recent 15" they would all be crowded out by the healthy tail.
+    assert interesting, "the feed should surface the days the agent found something"
 
 
 def test_counters_match_the_body(rolled_up: tuple[Store, Summaries], settings: Settings) -> None:

@@ -407,6 +407,49 @@ the film card plays it right there, in a plain video player (no YouTube). Prepar
 `pnpm --filter web film:encode path/to/film.mov` (needs ffmpeg) and commit it. Until it's
 there, pressing play embeds the YouTube film in the card, on the page.
 
+## 9b. The public "Live from AWS" page
+
+`/live` on the website reads the deployed backend directly, so visitors see real agent
+decisions rather than a recording. It is served by `GET /public/live` on the console's
+HTTP API — unauthenticated, but narrow: simulated roofs only, no personal data, no table
+scans, a 15-second cache, throttled at 5 requests a second (burst 10) and capped at 2
+concurrent executions. `services/live-api/README.md` has the details.
+
+Deploy it with the Console stack, telling it where the website runs so CORS accepts it:
+
+```bash
+cd infra
+pnpm cdk deploy SuryaSaathi-Console -c demoMode=true \
+  -c siteUrls=https://main.danjquy1xcblp.amplifyapp.com,http://localhost:3000
+```
+
+Then point the website at the endpoint. The URL is a stack output:
+
+```bash
+out SuryaSaathi-Console NEXTPUBLICLIVEAPI
+# https://<api-id>.execute-api.us-east-1.amazonaws.com/public/live
+```
+
+**On Amplify**, set one environment variable on the _website_ app (not the console's):
+
+| Key                    | Value                                |
+| ---------------------- | ------------------------------------ |
+| `NEXT_PUBLIC_LIVE_API` | the `NEXTPUBLICLIVEAPI` output above |
+
+```bash
+WEB_APP=$(aws amplify list-apps --query "apps[?name=='SuryaSaathi-web'].appId" --output text)
+aws amplify update-branch --app-id "$WEB_APP" --branch-name main \
+  --environment-variables "$(out SuryaSaathi-Console WebsiteEnvironmentVariables)"
+aws amplify start-job --app-id "$WEB_APP" --branch-name main --job-type RELEASE
+```
+
+It is read at build time, so the branch has to be rebuilt after setting it. Locally, put
+the same line in `apps/web/.env.local`.
+
+Without the variable the page renders its offline state and says so; the rest of the site
+is unaffected. With the variable but before the first rollup the endpoint answers 503 and
+the page shows its empty state — run the rollups function (section 8) to fill it.
+
 ## 10. Troubleshooting
 
 | Symptom                                             | Likely cause and fix                                                                                                                                                                                                                               |

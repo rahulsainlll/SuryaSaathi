@@ -2,17 +2,18 @@
 
 The model reads the evidence and the rule results through tools, takes the action the
 rules require, and writes the plain-language reason that goes into the decision log.
-Bedrock is reached through the Anthropic SDK's Bedrock client (the Messages API on
-Bedrock), with the model ID and region from the environment.
+Bedrock is reached through Strands' own Bedrock model, which calls the bedrock-runtime
+Converse API, with the model ID and region from the environment. The model ID is a
+cross-region inference profile (the `us.`-prefixed form), which is what Converse expects
+and the only form Claude 4.5+ models are offered under.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-import anthropic
 from strands import Agent, tool
-from strands.models.anthropic import AnthropicModel
+from strands.models import BedrockModel
 from suryasaathi_core.config import Settings
 
 from .toolkit import Toolkit
@@ -96,17 +97,13 @@ def build_tools(kit: Toolkit) -> list[Any]:
     ]
 
 
-def bedrock_model(settings: Settings) -> AnthropicModel:
-    """Claude on Amazon Bedrock through the Anthropic SDK's Bedrock (Mantle) client."""
-    model = AnthropicModel(
+def bedrock_model(settings: Settings) -> BedrockModel:
+    """Claude on Amazon Bedrock, signed with the Lambda's own role."""
+    return BedrockModel(
         model_id=settings.bedrock_model_id,
+        region_name=settings.bedrock_region,
         max_tokens=4096,
-        params={"output_config": {"effort": settings.agent_effort}},
     )
-    # Strands builds a first-party client; swap in the Bedrock one, which has the same
-    # messages API (stream, count_tokens) and signs requests with the Lambda's AWS role.
-    model.client = anthropic.AsyncAnthropicBedrockMantle(aws_region=settings.bedrock_region)  # type: ignore[assignment]
-    return model
 
 
 def build_agent(kit: Toolkit, settings: Settings, model: Any | None = None) -> Agent:

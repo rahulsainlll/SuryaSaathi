@@ -95,7 +95,7 @@ export class IngestStack extends Stack {
     data.readings.grantWriteData(ingest.fn);
 
     const ruleErrors = new logs.LogGroup(this, "RuleErrors", {
-      retention: logs.RetentionDays.ONE_MONTH,
+      retention: props.config.logRetentionDays as logs.RetentionDays,
       removalPolicy: RemovalPolicy.DESTROY,
     });
     const ruleErrorRole = new iam.Role(this, "RuleErrorRole", {

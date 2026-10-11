@@ -25,7 +25,7 @@ class Settings:
     #: Step Functions state machine started for every new case.
     case_workflow_arn: str | None = None
     #: Amazon Bedrock model and region for the diagnosis agent.
-    bedrock_model_id: str = "anthropic.claude-haiku-4-5-20251001-v1:0"
+    bedrock_model_id: str = "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     bedrock_region: str | None = None
     agent_effort: str = "low"
     #: False runs the rules without the LLM (reasons come from the templates).

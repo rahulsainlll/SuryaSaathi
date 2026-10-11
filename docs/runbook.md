@@ -16,10 +16,11 @@ Everything here runs from the repository root unless a step says `cd infra`.
 | AWS CLI v2, signed in   | `aws sts get-caller-identity`                        |
 
 Pick an account, a profile and a region, and pin all three for every command — `cdk`, the
-AWS CLI and `device-sim` alike. Team Mythos deploys to the `anshu` profile in `us-east-1`:
+AWS CLI and `device-sim` alike. Team Mythos deploys to the `personal` profile
+(account 010928189548) in `us-east-1`:
 
 ```bash
-export AWS_PROFILE=anshu
+export AWS_PROFILE=personal
 export AWS_REGION=us-east-1
 export AWS_DEFAULT_REGION=$AWS_REGION
 export CDK_DEFAULT_REGION=$AWS_REGION
@@ -29,7 +30,7 @@ Keep these in a gitignored `.envrc` at the repository root (and in
 `.claude/settings.local.json` under an `env` key, also gitignored, if you use Claude Code).
 Both are gitignored. **Pin the profile explicitly**: `bin/infra.ts` takes the region from
 `AWS_REGION`/`CDK_DEFAULT_REGION`, so a shell where `AWS_PROFILE` is unset silently falls back
-to the *default* profile's region and synthesizes the whole stack — including
+to the _default_ profile's region and synthesizes the whole stack — including
 `BEDROCK_REGION` — for the wrong region, with no error. Check it before deploying:
 
 ```bash
@@ -40,7 +41,7 @@ aws sts get-caller-identity          # must show the account you expect
 Policy can deny the services this stack needs, and no IAM grant or CDK flag can override it.
 `cdk bootstrap` alone needs `cloudformation`, `ecr`, `ssm`, `s3` and `iam`; the stacks also
 need `lambda`, `dynamodb`, `iot`, `states`, `secretsmanager`, `ses`, `sns`, `events`,
-`apigateway`, `cognito-idp` and `bedrock`/`bedrock-mantle`. A denial names the policy:
+`apigateway`, `cognito-idp` and `bedrock`. A denial names the policy:
 
 ```
 is not authorized to perform: cloudformation:ListStacks ... with an explicit deny in a
@@ -51,23 +52,43 @@ Only an administrator of the organization's **management** account can detach or
 `aws organizations describe-organization` shows which account that is.
 
 **Amazon Bedrock model access.** The agent calls Claude Haiku 4.5
-(`anthropic.claude-haiku-4-5-20251001-v1:0`) through Bedrock. Haiku is the default because the
-diagnosis call is small and well-scoped (one to four calls per system across a 30-day run), so
-a larger model costs more without deciding anything differently; pass `-c bedrockModelId=…` to
-use one. In the Bedrock console for the region you will use, open _Model access_ and enable it.
+(`us.anthropic.claude-haiku-4-5-20251001-v1:0`) through Bedrock. Haiku is the default because
+the diagnosis call is small and well scoped (one to four calls per system across a 30-day
+run), so a larger model costs more without deciding anything differently; pass
+`-c bedrockModelId=…` to use one. In the Bedrock console for the region you will use, open
+_Model access_ and enable it. If the model isn't offered in your deployment region, deploy
+anyway and point the agent elsewhere with `-c bedrockRegion=us-east-1`. To run without the
+model at all, add `-c agentEnabled=false`: the rules still decide everything and the reasons
+use the demo's wording.
 
-The agent reaches Bedrock through the Anthropic SDK's Bedrock (Mantle) client
-(`AsyncAnthropicBedrockMantle`), not `bedrock-runtime`, so the model ID is the plain
-foundation-model ID as `aws bedrock list-foundation-models` reports it. Do **not** use a
-`us.`-prefixed cross-region inference profile ID here — that is the `bedrock-runtime` form.
+**The model ID must be a cross-region inference profile** — the `us.`-prefixed form. Claude
+4.5 and newer are offered only as `INFERENCE_PROFILE`, so the bare foundation-model ID that
+`aws bedrock list-foundation-models` prints is rejected. List the valid ones with:
 
-Brand-new AWS accounts cannot invoke any model until AWS finishes verifying them
-(`AccessDeniedException: Your account is currently being verified`, usually under two hours).
-The control plane still answers, so `list-foundation-models` works while invocation does not.
-Deploy anyway and the agent falls back to its rules; see `agent_error` in section 10. If it isn't offered in your deployment region, deploy anyway and point the agent at
-a region that has it with `-c bedrockRegion=us-east-1` in step 4. To run without the model,
-add `-c agentEnabled=false`: the rules still decide everything and the reasons use the
-demo's wording.
+```bash
+aws bedrock list-inference-profiles --query "inferenceProfileSummaries[].inferenceProfileId"
+```
+
+Two gates catch new accounts, and both report themselves badly:
+
+- `AccessDeniedException: Your account is currently being verified` — AWS hasn't finished
+  verifying the account. Usually under two hours.
+- `ResourceNotFoundException: Model use case details have not been submitted for this
+account` — despite saying "not found", this means the **Anthropic use case details form**
+  hasn't been filled in. Do it in the Bedrock console under _Model access_ → the Anthropic
+  models; it's free and takes a minute, then allow ~15 minutes.
+
+The control plane answers throughout, so `list-foundation-models` succeeds while every
+invocation fails. Test invocation itself before blaming the code:
+
+```bash
+aws bedrock-runtime converse --model-id us.anthropic.claude-haiku-4-5-20251001-v1:0 \
+  --messages '[{"role":"user","content":[{"text":"say ok"}]}]' \
+  --inference-config '{"maxTokens":10}' --query 'output.message.content[0].text' --output text
+```
+
+Either way the deploy is safe: the agent falls back to its rules and `reasonSource` stays
+`rules`. See `agent_error` in section 10.
 
 **Lambda architecture.** The images build for arm64 (Graviton) by default, which is native on
 Apple silicon. On an Intel or AMD machine either let Docker Desktop emulate arm64 (slower
@@ -99,20 +120,21 @@ pnpm cdk deploy --all --require-approval never -c demoMode=true
 
 Optional context flags (add any of them to the command above):
 
-| Flag                                                 | Default                     | Effect                                                          |
-| ---------------------------------------------------- | --------------------------- | --------------------------------------------------------------- |
-| `-c demoMode=true`                                   | false                       | 60-second workflow days instead of 24 hours                     |
-| `-c bedrockModelId=…`                                | `anthropic.claude-haiku-4-5-20251001-v1:0` | Model for the diagnosis agent                    |
-| `-c bedrockRegion=…`                                 | stack region                | Region the agent calls Bedrock in                               |
-| `-c agentEnabled=false`                              | true                        | Rules only, no Bedrock calls                                    |
-| `-c agentScope=all`                                  | `actions`                   | Ask the model on every reading, not only when something happens |
-| `-c agentEffort=…`                                   | `low`                       | Claude effort level for the agent                               |
-| `-c senderEmail=… -c vendorEmail=… -c discomEmail=…` | unset                       | Send case emails through SES (see below)                        |
-| `-c vendorName=…`                                    | `[Vendor name] Solar`       | Vendor name in decisions and emails                             |
-| `-c lambdaArchitecture=x86_64`                       | `arm64`                     | Lambda CPU architecture                                         |
-| `-c consoleUrls=https://…,http://localhost:3001`     | `http://localhost:3001`     | Where the console runs: Cognito redirects and API CORS          |
-| `-c cognitoDomainPrefix=…`                           | `suryasaathi-<account id>`  | Hosted sign-in domain prefix (unique per region)                |
-| `-c tariffInr=…`                                     | `7`                         | ₹ per kWh for the console's money-lost figure                   |
+| Flag                                                 | Default                                       | Effect                                                          |
+| ---------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------------- |
+| `-c demoMode=true`                                   | false                                         | 60-second workflow days instead of 24 hours                     |
+| `-c bedrockModelId=…`                                | `us.anthropic.claude-haiku-4-5-20251001-v1:0` | Model for the diagnosis agent (inference profile)               |
+| `-c bedrockRegion=…`                                 | stack region                                  | Region the agent calls Bedrock in                               |
+| `-c agentEnabled=false`                              | true                                          | Rules only, no Bedrock calls                                    |
+| `-c agentScope=all`                                  | `actions`                                     | Ask the model on every reading, not only when something happens |
+| `-c agentEffort=…`                                   | `low`                                         | Kept for compatibility; not applied on the Converse path        |
+| `-c senderEmail=… -c vendorEmail=… -c discomEmail=…` | unset                                         | Send case emails through SES (see below)                        |
+| `-c vendorName=…`                                    | `[Vendor name] Solar`                         | Vendor name in decisions and emails                             |
+| `-c lambdaArchitecture=x86_64`                       | `arm64`                                       | Lambda CPU architecture                                         |
+| `-c consoleUrls=https://…,http://localhost:3001`     | `http://localhost:3001`                       | Where the console runs: Cognito redirects and API CORS          |
+| `-c cognitoDomainPrefix=…`                           | `suryasaathi-<account id>`                    | Hosted sign-in domain prefix (unique per region)                |
+| `-c tariffInr=…`                                     | `7`                                           | ₹ per kWh for the console's money-lost figure                   |
+| `-c logRetentionDays=…`                              | `3`                                           | Days CloudWatch keeps logs                                      |
 
 The first deploy builds the container images (one per Python service) and takes roughly
 15–20 minutes. It creates seven stacks: `SuryaSaathi-Data`, `-Ingest`, `-ExpectedOutput`,
@@ -355,38 +377,80 @@ there, pressing play embeds the YouTube film in the card, on the page.
 
 ## 10. Troubleshooting
 
-| Symptom                                      | Likely cause and fix                                                                                                                                                                                                                               |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `explicit deny in a service control policy`  | An Organization SCP blocks the service; see section 1. Only the management account can lift it — `aws organizations describe-organization` names it. No IAM or CDK change helps                                                                   |
-| `tsx: command not found` from `cdk`          | Dependencies aren't installed: run `pnpm install` at the repository root first                                                                                                                                                                     |
-| Stack synthesized for the wrong region       | `AWS_PROFILE` was unset, so the default profile's region won. Export all four variables from section 1 and re-check with `aws sts get-caller-identity`                                                                                            |
-| Bedrock: `Your account is currently being verified` | A new AWS account cannot invoke models yet; it usually clears within two hours. Deploy anyway — the rules decide and `reasonSource` stays `rules`                                                                                          |
-| `device-sim` can't connect                   | Run `fetch-cert` again; keep `--client-id suryasaathi-sim` (the policy only allows that prefix); check `--endpoint` is the `-ats` data endpoint                                                                                                    |
-| Readings in MQTT but not in DynamoDB         | CloudWatch log group of the ingest function: `reading_rejected` with `unknown_system` means the systems weren't registered (don't use `--no-register` on a fresh deploy); IoT rule errors go to the `RuleErrors` log group in `SuryaSaathi-Ingest` |
-| Decisions all say `reasonSource: rules`      | Look for `agent_error` in the agent's logs: usually Bedrock model access isn't enabled in `bedrockRegion`, or the model ID is wrong. The rules still decide, so cases continue                                                                     |
-| No Step Functions executions                 | The agent only opens cases on dust or fault days; check `agent_decision` lines for `open_case`                                                                                                                                                     |
-| Executions stuck at Recheck → WaitForReading | The deadline day's reading hasn't arrived (simulator stopped or slower than one day per minute in demo mode)                                                                                                                                       |
-| `MessageRejected` from SES                   | The account is in the SES sandbox: verify the recipients too, or leave the email flags off                                                                                                                                                         |
-| Docker build fails with `exec format error`  | Building arm64 images on an x86 machine without emulation: add `-c lambdaArchitecture=x86_64`                                                                                                                                                      |
-| Console: "redirect_mismatch" from Cognito    | The console's URL isn't in `consoleUrls`: redeploy `SuryaSaathi-Console` with it, and set `NEXT_PUBLIC_COGNITO_REDIRECT_URI` to `<url>/auth/callback`                                                                                              |
-| Console: HTTP 403                            | The user isn't in the `admin` group (`admin-add-user-to-group`), then sign out and in again for a fresh token                                                                                                                                      |
-| Console: HTTP 503                            | No rollup yet: invoke the rollups function as above                                                                                                                                                                                                |
-| Console: figures lag the scenario            | Outside demo mode the rollup runs nightly, as of yesterday: invoke it with `{"asOf":"latest"}`                                                                                                                                                     |
+| Symptom                                             | Likely cause and fix                                                                                                                                                                                                                               |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `explicit deny in a service control policy`         | An Organization SCP blocks the service; see section 1. Only the management account can lift it — `aws organizations describe-organization` names it. No IAM or CDK change helps                                                                    |
+| `tsx: command not found` from `cdk`                 | Dependencies aren't installed: run `pnpm install` at the repository root first                                                                                                                                                                     |
+| Stack synthesized for the wrong region              | `AWS_PROFILE` was unset, so the default profile's region won. Export all four variables from section 1 and re-check with `aws sts get-caller-identity`                                                                                             |
+| Bedrock: `Your account is currently being verified` | A new AWS account cannot invoke models yet; it usually clears within two hours. Deploy anyway — the rules decide and `reasonSource` stays `rules`                                                                                                  |
+| `device-sim` can't connect                          | Run `fetch-cert` again; keep `--client-id suryasaathi-sim` (the policy only allows that prefix); check `--endpoint` is the `-ats` data endpoint                                                                                                    |
+| Readings in MQTT but not in DynamoDB                | CloudWatch log group of the ingest function: `reading_rejected` with `unknown_system` means the systems weren't registered (don't use `--no-register` on a fresh deploy); IoT rule errors go to the `RuleErrors` log group in `SuryaSaathi-Ingest` |
+| Decisions all say `reasonSource: rules`             | Look for `agent_error` in the agent's logs: usually Bedrock model access isn't enabled in `bedrockRegion`, or the model ID is wrong. The rules still decide, so cases continue                                                                     |
+| No Step Functions executions                        | The agent only opens cases on dust or fault days; check `agent_decision` lines for `open_case`                                                                                                                                                     |
+| Executions stuck at Recheck → WaitForReading        | The deadline day's reading hasn't arrived (simulator stopped or slower than one day per minute in demo mode)                                                                                                                                       |
+| `MessageRejected` from SES                          | The account is in the SES sandbox: verify the recipients too, or leave the email flags off                                                                                                                                                         |
+| Docker build fails with `exec format error`         | Building arm64 images on an x86 machine without emulation: add `-c lambdaArchitecture=x86_64`                                                                                                                                                      |
+| Console: "redirect_mismatch" from Cognito           | The console's URL isn't in `consoleUrls`: redeploy `SuryaSaathi-Console` with it, and set `NEXT_PUBLIC_COGNITO_REDIRECT_URI` to `<url>/auth/callback`                                                                                              |
+| Console: HTTP 403                                   | The user isn't in the `admin` group (`admin-add-user-to-group`), then sign out and in again for a fresh token                                                                                                                                      |
+| Console: HTTP 503                                   | No rollup yet: invoke the rollups function as above                                                                                                                                                                                                |
+| Console: figures lag the scenario                   | Outside demo mode the rollup runs nightly, as of yesterday: invoke it with `{"asOf":"latest"}`                                                                                                                                                     |
 
-## 11. Costs and clean-up
+## 11. Costs
 
-Everything is serverless and idle costs are close to zero. The main variable cost is Bedrock:
-by default the agent calls the model only on days something happens (smog, dust, fault, a case
-opened or closed), between one and four calls per system in the 30-day scenarios; routine days
-and days with a case already open use the rule wording. Use `-c agentEnabled=false` for free rehearsals.
+Everything is serverless and billed per request. Nothing in the app bills by the hour or
+keeps capacity warm: there is no VPC, NAT gateway, VPC endpoint, EC2, ECS, OpenSearch, RDS,
+load balancer or customer-managed KMS key, no provisioned or reserved Lambda concurrency, and
+every table is on-demand. `infra/test/stacks.test.ts` asserts all of that, so a future change
+that adds an idle charge fails the build.
 
-Remove everything (tables, logs, the IoT thing and certificate, the state machine, the
-user pool and its users, the console API):
+What does cost something, in rough order:
+
+| Charge                                                                  | When                      | Notes                                                                  |
+| ----------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------- |
+| Bedrock tokens                                                          | Per agent call            | The only meaningful variable cost; see `agentScope` and `agentEnabled` |
+| Secrets Manager                                                         | **$0.40/month, prorated** | One secret, the simulator's certificate. The only true idle charge     |
+| ECR storage                                                             | $0.10/GB-month            | The Lambda container images; roughly 1–2 GB after layer sharing        |
+| S3 (CDK assets)                                                         | $0.023/GB-month           | Template and asset staging, a few hundred MB                           |
+| Lambda, DynamoDB, IoT, Step Functions, API Gateway, Cognito, CloudWatch | Per request               | Comfortably inside the always-free tier at demo volumes                |
+
+Keep the agent proportionate: at the default `agentScope=actions` it calls the model only on
+days something happens (smog, dust, fault, a case opened or closed) — between one and four
+calls per system across a 30-day scenario. `agentScope=all` calls it on every reading, which
+is 30× the tokens. `-c agentEnabled=false` makes rehearsals free.
+
+Log retention defaults to **3 days** (`-c logRetentionDays=`), because log storage is the one
+charge that keeps growing after the demo is over.
+
+The expensive mistake is not the deploy, it's **leaving it up**. With `demoMode=true` the
+rollups rule fires every 5 minutes forever. Run the teardown below once you have the video.
+
+## 12. Teardown
+
+One command. It destroys the seven stacks, then the CDK bootstrap itself — the `CDKToolkit`
+stack, its versioned asset bucket, the container-image repository — and finally the log
+groups CloudFormation leaves behind (the ones CDK's custom-resource Lambdas create are not
+owned by any stack, so `destroy` never removes them).
 
 ```bash
-cd infra
-pnpm cdk destroy --all
+pnpm teardown
+```
+
+It prints what it will delete and asks once before doing anything. `pnpm teardown --yes`
+skips the prompt; `pnpm teardown --keep-bootstrap` removes the application but leaves
+`CDKToolkit` in place so the next deploy doesn't have to bootstrap again.
+
+The script is `tools/teardown.sh`. It refuses to run unless `aws sts get-caller-identity`
+matches the account in `AWS_PROFILE`, so it cannot empty the wrong account's bucket.
+
+To check nothing is left:
+
+```bash
+aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE \
+  --query "StackSummaries[?starts_with(StackName,'SuryaSaathi') || StackName=='CDKToolkit'].StackName"
+aws logs describe-log-groups --query "logGroups[?contains(logGroupName,'uryaaathi') || contains(logGroupName,'SuryaSaathi')].logGroupName"
 ```
 
 All data in these tables is simulated. The certificate secret is scheduled for deletion by
-Secrets Manager; its name is generated, so you can redeploy straight away.
+Secrets Manager rather than removed at once; its name is generated, so you can redeploy
+straight away. `tools/teardown.sh` forces it (`--force-delete-without-recovery`) so it stops
+costing the $0.40/month immediately.

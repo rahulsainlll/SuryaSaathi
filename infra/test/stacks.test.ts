@@ -53,6 +53,62 @@ describe("stacks", () => {
       template.resourceCountIs("AWS::EC2::NatGateway", 0);
     }
   });
+
+  // Everything here is billed per request. Anything that bills by the hour, or that keeps
+  // capacity warm, costs money on an idle demo account and must stay out of the app.
+  it("creates nothing that costs money while idle", () => {
+    const idleCharges = [
+      "AWS::EC2::VPC",
+      "AWS::EC2::NatGateway",
+      "AWS::EC2::VPCEndpoint",
+      "AWS::EC2::Instance",
+      "AWS::ECS::Cluster",
+      "AWS::ECS::Service",
+      "AWS::OpenSearchService::Domain",
+      "AWS::OpenSearchServerless::Collection",
+      "AWS::Elasticsearch::Domain",
+      "AWS::RDS::DBInstance",
+      "AWS::RDS::DBCluster",
+      "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "AWS::KMS::Key",
+      "AWS::MSK::Cluster",
+      "AWS::ElastiCache::CacheCluster",
+      "AWS::DocDB::DBCluster",
+      "AWS::Kinesis::Stream",
+    ];
+    for (const stack of Object.values(t.stacks)) {
+      const template = Template.fromStack(stack);
+      for (const type of idleCharges) template.resourceCountIs(type, 0);
+    }
+  });
+
+  it("keeps every table on-demand and every log group short-lived", () => {
+    for (const table of Object.values(t.data.findResources("AWS::DynamoDB::Table")) as {
+      Properties: Record<string, unknown>;
+    }[]) {
+      expect(table.Properties.BillingMode).toBe("PAY_PER_REQUEST");
+      expect(table.Properties.ProvisionedThroughput).toBeUndefined();
+    }
+    for (const stack of Object.values(t.stacks)) {
+      const groups = Object.values(
+        Template.fromStack(stack).findResources("AWS::Logs::LogGroup"),
+      ) as { Properties: { RetentionInDays?: number } }[];
+      for (const g of groups) expect(g.Properties.RetentionInDays).toBe(3);
+    }
+  });
+
+  it("reserves no Lambda capacity", () => {
+    for (const stack of Object.values(t.stacks)) {
+      const template = Template.fromStack(stack);
+      template.resourceCountIs("AWS::Lambda::Alias", 0);
+      const fns = Object.values(template.findResources("AWS::Lambda::Function")) as {
+        Properties: Record<string, unknown>;
+      }[];
+      for (const fn of fns) {
+        expect(fn.Properties.ReservedConcurrentExecutions).toBeUndefined();
+      }
+    }
+  });
 });
 
 describe("data", () => {
@@ -138,9 +194,9 @@ describe("agents", () => {
     });
   });
 
-  it("configures Bedrock from context, defaulting to Claude Opus 5.5 in the stack region", () => {
+  it("configures Bedrock from context, defaulting to Claude Haiku 4.5 in the stack region", () => {
     expect(env(t.agents, "DiagnosisAgent")).toMatchObject({
-      BEDROCK_MODEL_ID: "anthropic.claude-haiku-4-5-20251001-v1:0",
+      BEDROCK_MODEL_ID: "us.anthropic.claude-haiku-4-5-20251001-v1:0",
       BEDROCK_REGION: "ap-south-1",
       AGENT_SCOPE: "actions",
       DAY_LENGTH_SECONDS: "86400",
@@ -149,7 +205,7 @@ describe("agents", () => {
       PolicyDocument: {
         Statement: Match.arrayWith([
           Match.objectLike({
-            Action: Match.arrayWith(["bedrock-mantle:*", "bedrock:InvokeModel"]),
+            Action: Match.arrayWith(["bedrock:InvokeModel", "bedrock:ConverseStream"]),
           }),
         ]),
       },

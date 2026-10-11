@@ -156,11 +156,13 @@ def test_the_strands_agent_is_wired_to_bedrock_and_the_tools(store: Store) -> No
     fixture = load_fixture("fault")
     register(store, fixture)
     store.put_reading(reading_for(fixture, 0))
-    settings = Settings(bedrock_model_id="anthropic.claude-opus-5-5", bedrock_region="ap-south-1")
+    settings = Settings(
+        bedrock_model_id="us.anthropic.claude-haiku-4-5-20251001-v1:0",
+        bedrock_region="ap-south-1",
+    )
     kit = Toolkit(store, settings, fixture_lookup(fixture), "SS-SIM-0001", "2026-10-01")
     model = bedrock_model(settings)
-    assert type(model.client).__name__ == "AsyncAnthropicBedrockMantle"
-    assert model.config["model_id"] == "anthropic.claude-opus-5-5"
+    assert model.config["model_id"] == "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     agent = build_agent(kit, settings, model)
     assert sorted(agent.tool_names) == [
         "check_diagnosis_rules", "close_case_after_rain", "get_expected_output", "get_readings", "open_case",

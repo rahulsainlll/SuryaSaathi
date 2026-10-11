@@ -57,7 +57,7 @@ export class AgentsStack extends Stack {
       new iam.PolicyStatement({ actions: ["ses:SendEmail"], resources: ["*"] }),
     );
 
-    this.stateMachine = caseWorkflow(this, workflow.fn);
+    this.stateMachine = caseWorkflow(this, workflow.fn, config);
 
     // --- diagnosis agent ---------------------------------------------------------------------
     const agent = new ServiceFunction(this, "DiagnosisAgent", {
@@ -84,12 +84,14 @@ export class AgentsStack extends Stack {
     this.stateMachine.grantStartExecution(agent.fn);
     agent.fn.addToRolePolicy(
       new iam.PolicyStatement({
-        // Claude on Bedrock through the Anthropic SDK's Bedrock (Mantle) endpoint, which
-        // signs requests for the bedrock-mantle service, plus the classic runtime actions.
+        // Claude on Bedrock through the Converse API. The model ID is a cross-region
+        // inference profile, so this has to cover both the profile and the foundation
+        // models it routes to, in every region the profile spans — hence "*".
         actions: [
-          "bedrock-mantle:*",
           "bedrock:InvokeModel",
           "bedrock:InvokeModelWithResponseStream",
+          "bedrock:Converse",
+          "bedrock:ConverseStream",
         ],
         resources: ["*"],
       }),
@@ -145,7 +147,11 @@ export class AgentsStack extends Stack {
 }
 
 /** NotifyVendor → wait → Recheck → Verify, or Escalate / Remind and wait again. */
-function caseWorkflow(scope: Construct, fn: lambda.IFunction): sfn.StateMachine {
+function caseWorkflow(
+  scope: Construct,
+  fn: lambda.IFunction,
+  config: SuryaConfig,
+): sfn.StateMachine {
   const step = (id: string, name: string, extra: Record<string, unknown> = {}) =>
     new tasks.LambdaInvoke(scope, id, {
       lambdaFunction: fn,
@@ -192,7 +198,7 @@ function caseWorkflow(scope: Construct, fn: lambda.IFunction): sfn.StateMachine 
   );
 
   const logGroup = new logs.LogGroup(scope, "CaseWorkflowExecutions", {
-    retention: logs.RetentionDays.ONE_MONTH,
+    retention: config.logRetentionDays as logs.RetentionDays,
     removalPolicy: RemovalPolicy.DESTROY,
   });
   return new sfn.StateMachine(scope, "CaseStateMachine", {

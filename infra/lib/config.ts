@@ -23,6 +23,8 @@ export interface SuryaConfig {
   cognitoDomainPrefix?: string;
   /** ₹ per kWh for the console's money-lost figure. */
   tariffInr: number;
+  /** Days CloudWatch keeps logs. Short by default: logs are the one charge that grows while idle. */
+  logRetentionDays: number;
 }
 
 const flag = (v: unknown, fallback: boolean) =>
@@ -39,7 +41,7 @@ export function readConfig(node: Node): SuryaConfig {
   return {
     demoMode,
     dayLengthSeconds: demoMode ? 60 : 86_400,
-    bedrockModelId: str(c("bedrockModelId")) ?? "anthropic.claude-haiku-4-5-20251001-v1:0",
+    bedrockModelId: str(c("bedrockModelId")) ?? "us.anthropic.claude-haiku-4-5-20251001-v1:0",
     bedrockRegion: str(c("bedrockRegion")),
     agentEnabled: flag(c("agentEnabled"), true),
     agentScope: str(c("agentScope")) === "all" ? "all" : "actions",
@@ -55,5 +57,6 @@ export function readConfig(node: Node): SuryaConfig {
       .filter(Boolean),
     cognitoDomainPrefix: str(c("cognitoDomainPrefix")),
     tariffInr: Number(str(c("tariffInr")) ?? 7),
+    logRetentionDays: Number(str(c("logRetentionDays")) ?? 3),
   };
 }

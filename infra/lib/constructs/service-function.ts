@@ -30,7 +30,7 @@ export class ServiceFunction extends Construct {
     const arm = props.config.architecture === "arm64";
 
     this.logGroup = new logs.LogGroup(this, "Logs", {
-      retention: logs.RetentionDays.ONE_MONTH,
+      retention: props.config.logRetentionDays as logs.RetentionDays,
       removalPolicy: RemovalPolicy.DESTROY,
     });
 

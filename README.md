@@ -297,6 +297,7 @@ Copy `.env.example` to `.env` in each app or service. Key settings:
 | `WHATSAPP_PHONE_NUMBER_ID` | whatsapp | Number linked in End User Messaging Social |
 | `VENDOR_DEADLINE_DAYS` | agents | Days a vendor has to fix an issue (default 3) |
 | `NEXT_PUBLIC_DEMO_API` | web | Rate-limited endpoint for live agent calls from the public demo |
+| `NEXT_PUBLIC_LIVE_API` | web | Public `GET /public/live` endpoint behind the Live from AWS page |
 
 Never commit real credentials. Secrets live in AWS Secrets Manager or SSM Parameter Store.
 

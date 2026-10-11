@@ -127,6 +127,7 @@ class Toolkit:
                     "status": "verified",
                     "resolvedBy": "rain",
                     "verifiedAt": iso(self.now),
+                    "verifiedDate": self.day,
                     "closedReason": reason,
                 },
             )

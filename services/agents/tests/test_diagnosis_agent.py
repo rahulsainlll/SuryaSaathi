@@ -72,6 +72,7 @@ def test_rain_closes_the_open_dust_case(store: Store) -> None:
     assert decisions[13].action == "close_case"
     case = store.get_case(case_id("SS-SIM-0001", "2026-10-13"))
     assert case is not None and case["status"] == "verified" and case["resolvedBy"] == "rain"
+    assert case["verifiedDate"] == "2026-10-14"
     assert (
         decisions[13].reason
         == f"Rain cleaned the panels before the visit. Case {case['caseId']} closed, no visit needed."

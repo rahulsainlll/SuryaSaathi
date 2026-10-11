@@ -298,6 +298,8 @@ Copy `.env.example` to `.env` in each app or service. Key settings:
 | `VENDOR_DEADLINE_DAYS` | agents | Days a vendor has to fix an issue (default 3) |
 | `NEXT_PUBLIC_DEMO_API` | web | Rate-limited endpoint for live agent calls from the public demo |
 | `NEXT_PUBLIC_LIVE_API` | web | Public `GET /public/live` endpoint behind the Live from AWS page |
+| `NEXT_PUBLIC_COGNITO_CLIENT_ID` | web | Cognito app client for the demo sign-in on `/login` |
+| `NEXT_PUBLIC_COGNITO_REGION` | web | Region of that user pool |
 
 Never commit real credentials. Secrets live in AWS Secrets Manager or SSM Parameter Store.
 

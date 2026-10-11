@@ -14,30 +14,39 @@ type State =
   | { kind: "empty"; message: string }
   | { kind: "offline"; message: string };
 
-/** "4s ago", ticking once a second so the page visibly keeps time. */
+/**
+ * "4s ago", ticking once a second so the page visibly keeps time. The clock is read in
+ * the timer, never while rendering: Date.now() during render is not idempotent.
+ */
 function useSecondsSince(at: number | null): number | null {
-  const [, tick] = useState(0);
+  const [age, setAge] = useState(0);
   useEffect(() => {
     if (at === null) return;
-    const id = setInterval(() => tick((n) => n + 1), 1000);
-    return () => clearInterval(id);
+    const tick = () => setAge(Math.max(0, Math.round((Date.now() - at) / 1000)));
+    const first = setTimeout(tick, 0);
+    const id = setInterval(tick, 1000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
   }, [at]);
-  return at === null ? null : Math.max(0, Math.round((Date.now() - at) / 1000));
+  return at === null ? null : age;
 }
 
+/** Whether this build can read the backend at all is known before anything renders. */
+const INITIAL: State = liveConfig.apiUrl
+  ? { kind: "loading" }
+  : {
+      kind: "offline",
+      message: "This build has no NEXT_PUBLIC_LIVE_API set, so there is nothing to read.",
+    };
+
 export function LiveBoard() {
-  const [state, setState] = useState<State>({ kind: "loading" });
+  const [state, setState] = useState<State>(INITIAL);
   // Kept in a ref so a failed refresh can leave the last good data on screen.
   const lastGood = useRef<{ data: LivePayload; at: number } | null>(null);
 
   const load = useCallback(async (signal: AbortSignal) => {
-    if (!liveConfig.apiUrl) {
-      setState({
-        kind: "offline",
-        message: "This build has no NEXT_PUBLIC_LIVE_API set, so there is nothing to read.",
-      });
-      return;
-    }
     try {
       const res = await fetch(liveConfig.apiUrl, { signal, cache: "no-store" });
       if (res.status === 503) {
@@ -72,11 +81,14 @@ export function LiveBoard() {
   }, []);
 
   useEffect(() => {
+    if (!liveConfig.apiUrl) return;
     const controller = new AbortController();
-    void load(controller.signal);
+    // Off the synchronous effect path, so the first render is not chased by a setState.
+    const first = setTimeout(() => void load(controller.signal), 0);
     const id = setInterval(() => void load(controller.signal), liveConfig.refreshMs);
     return () => {
       controller.abort();
+      clearTimeout(first);
       clearInterval(id);
     };
   }, [load]);

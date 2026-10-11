@@ -14,14 +14,12 @@ const OPEN = new Set(["open", "filed", "escalated"]);
  */
 export function VendorBoard() {
   const [data, setData] = useState<LivePayload | null>(null);
-  const [failed, setFailed] = useState(false);
+  // A missing URL is known at build time, so it is the initial state, not an effect.
+  const [failed, setFailed] = useState(!liveConfig.apiUrl);
 
   useEffect(() => {
+    if (!liveConfig.apiUrl) return;
     const controller = new AbortController();
-    if (!liveConfig.apiUrl) {
-      setFailed(true);
-      return;
-    }
     fetch(liveConfig.apiUrl, { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
       .then(setData)

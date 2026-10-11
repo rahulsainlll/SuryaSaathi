@@ -278,7 +278,7 @@
           "enum": ["vendor", "discom", "rain"]
         },
         "pastDeadline": {
-          "description": "Open and the vendor deadline has passed.",
+          "description": "Escalated, or still filed after the vendor deadline.",
           "type": "boolean"
         },
         "daysOverdue": {

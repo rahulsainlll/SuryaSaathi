@@ -1,0 +1,36 @@
+{
+  "name": "@suryasaathi/console-data",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Data access for the DISCOM console: one interface, a mock adapter built from the engine and an API adapter",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "fixtures": "pnpm build && node scripts/export-fixtures.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@suryasaathi/engine": "workspace:*",
+    "@suryasaathi/schemas": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^9.39.5",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.3"
+  }
+}

@@ -147,7 +147,7 @@ export interface CaseSummary {
   verifiedDate?: string;
   resolvedBy?: "vendor" | "discom" | "rain";
   /**
-   * Open and the vendor deadline has passed.
+   * Escalated, or still filed after the vendor deadline.
    */
   pastDeadline: boolean;
   daysOverdue: number;

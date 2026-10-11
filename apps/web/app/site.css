@@ -93,6 +93,26 @@
   }
 }
 
+/*
+ * Element defaults sit in the base layer, below Tailwind's utilities, so pages that use
+ * utilities (the blog) keep their spacing. Tailwind's preflight already zeroes margins.
+ */
+@layer base {
+  .site h1,
+  .site h2,
+  .site h3 {
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+  }
+  .site h3,
+  .site .as-h3 {
+    font-size: 21px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+}
+
 html:has(.site) {
   background: #ffffff;
   scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
@@ -120,14 +140,6 @@ html[data-theme="dark"]:has(.site) {
     margin: 0 auto;
     padding: 0 24px;
   }
-  & h1,
-  & h2,
-  & h3 {
-    margin: 0;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1.04;
-  }
   & .h1 {
     font-size: clamp(44px, 7.2vw, 92px);
     letter-spacing: -0.045em;
@@ -137,15 +149,6 @@ html[data-theme="dark"]:has(.site) {
   }
   & .h2 {
     font-size: clamp(32px, 4.6vw, 56px);
-  }
-  & h3,
-  & .as-h3 {
-    font-size: 21px;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-  & p {
-    margin: 0;
   }
   & .lead {
     font-size: clamp(18px, 2vw, 21px);

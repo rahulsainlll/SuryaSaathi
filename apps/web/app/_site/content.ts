@@ -1,7 +1,7 @@
 /** Links and sources shared by the site and the blog. */
 
 export const REPO = "https://github.com/rahulsainlll/SuryaSaathi";
-export const YOUTUBE_ID = "m6HiN65kmdo";
+export const YOUTUBE_ID = "bkJ0GL8D9BI";
 export const YOUTUBE_URL = `https://www.youtube.com/watch?v=${YOUTUBE_ID}`;
 
 export const SOURCES = {

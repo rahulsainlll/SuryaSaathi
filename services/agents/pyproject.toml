@@ -5,7 +5,8 @@ description = "Strands agents: diagnosis, accountability, messenger"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "strands-agents>=1.20",
+    "anthropic>=0.75",
+    "strands-agents[anthropic]>=1.20",
     "suryasaathi-core",
 ]
 

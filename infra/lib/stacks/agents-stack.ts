@@ -1,4 +1,4 @@
-import { CfnOutput, Duration, RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
+import { ArnFormat, CfnOutput, Duration, RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { DynamoEventSource } from "aws-cdk-lib/aws-lambda-event-sources";
@@ -69,8 +69,13 @@ export class AgentsStack extends Stack {
       environment: {
         ...shared,
         CASE_WORKFLOW_ARN: this.stateMachine.stateMachineArn,
+        MODEL_PROVIDER: config.modelProvider,
         BEDROCK_MODEL_ID: config.bedrockModelId,
         BEDROCK_REGION: config.bedrockRegion ?? this.region,
+        ANTHROPIC_MODEL_ID: config.anthropicModelId,
+        // The name only. The key itself is read from Secrets Manager at runtime, so it
+        // never reaches the template, the Lambda console or anyone with describe rights.
+        ANTHROPIC_SECRET_NAME: config.anthropicSecretName,
         AGENT_ENABLED: String(config.agentEnabled),
         AGENT_SCOPE: config.agentScope,
         AGENT_EFFORT: config.agentEffort,
@@ -96,6 +101,23 @@ export class AgentsStack extends Stack {
         resources: ["*"],
       }),
     );
+    if (config.modelProvider === "anthropic") {
+      // Read-only, and only this one secret. The secret is created outside CDK (see the
+      // runbook) so the key never passes through context, the template or the repository.
+      agent.fn.addToRolePolicy(
+        new iam.PolicyStatement({
+          actions: ["secretsmanager:GetSecretValue"],
+          resources: [
+            Stack.of(this).formatArn({
+              service: "secretsmanager",
+              resource: "secret",
+              resourceName: `${config.anthropicSecretName}-??????`,
+              arnFormat: ArnFormat.COLON_RESOURCE_NAME,
+            }),
+          ],
+        }),
+      );
+    }
     agent.fn.addEventSource(
       new DynamoEventSource(data.readings, {
         startingPosition: lambda.StartingPosition.LATEST,

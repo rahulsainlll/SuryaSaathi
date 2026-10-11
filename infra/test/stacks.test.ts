@@ -212,6 +212,32 @@ describe("agents", () => {
     });
   });
 
+  it("can be pointed at the Anthropic API, taking the key from Secrets Manager", () => {
+    const anthropic = synth({ modelProvider: "anthropic" }).agents;
+    const vars = env(anthropic, "DiagnosisAgent");
+    expect(vars).toMatchObject({
+      MODEL_PROVIDER: "anthropic",
+      ANTHROPIC_MODEL_ID: "claude-haiku-4-5",
+      ANTHROPIC_SECRET_NAME: "suryasaathi/anthropic-api-key",
+    });
+    // The key itself must never be synthesized into the template, in any form.
+    const template = JSON.stringify(anthropic.toJSON());
+    expect(template).not.toMatch(/sk-ant-/);
+    expect(template).not.toMatch(/ANTHROPIC_API_KEY/);
+    expect(template).not.toMatch(/\{\{resolve:secretsmanager/);
+    anthropic.hasResourceProperties("AWS::IAM::Policy", {
+      PolicyDocument: {
+        Statement: Match.arrayWith([Match.objectLike({ Action: "secretsmanager:GetSecretValue" })]),
+      },
+    });
+  });
+
+  it("asks for no secret when it is using Bedrock", () => {
+    const policies = JSON.stringify(t.agents.findResources("AWS::IAM::Policy"));
+    expect(policies).not.toContain("secretsmanager:GetSecretValue");
+    expect(env(t.agents, "DiagnosisAgent")).toMatchObject({ MODEL_PROVIDER: "bedrock" });
+  });
+
   it("defines the case workflow state machine", () => {
     const machines = t.agents.findResources("AWS::StepFunctions::StateMachine");
     const definition = JSON.stringify(Object.values(machines)[0]);

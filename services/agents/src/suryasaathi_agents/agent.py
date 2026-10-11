@@ -1,15 +1,22 @@
-"""The diagnosis agent: Strands Agents on Amazon Bedrock.
+"""The diagnosis agent: Strands Agents on Claude.
 
 The model reads the evidence and the rule results through tools, takes the action the
 rules require, and writes the plain-language reason that goes into the decision log.
-Bedrock is reached through Strands' own Bedrock model, which calls the bedrock-runtime
-Converse API, with the model ID and region from the environment. The model ID is a
-cross-region inference profile (the `us.`-prefixed form), which is what Converse expects
-and the only form Claude 4.5+ models are offered under.
+
+Two ways to reach Claude, chosen by MODEL_PROVIDER:
+
+- "bedrock" (default): Strands' Bedrock model on the bedrock-runtime Converse API. The
+  model ID is a cross-region inference profile (the `us.`-prefixed form), the only form
+  Claude 4.5+ is offered under.
+- "anthropic": the Anthropic API directly. The key is read at runtime from Secrets
+  Manager, never from an environment variable, so it stays out of the CloudFormation
+  template and the Lambda console.
 """
 
 from __future__ import annotations
 
+import json
+from functools import lru_cache
 from typing import Any
 
 from strands import Agent, tool
@@ -106,9 +113,53 @@ def bedrock_model(settings: Settings) -> BedrockModel:
     )
 
 
+@lru_cache(maxsize=4)
+def _anthropic_api_key(secret_name: str, region: str | None) -> str:
+    """The Anthropic API key from Secrets Manager, fetched once per Lambda container.
+
+    The secret may be the bare key or a JSON object with an "apiKey" (or "api_key")
+    field, which is what the AWS console writes when you add a key/value secret.
+    """
+    import boto3
+
+    client = boto3.client("secretsmanager", region_name=region)
+    raw = client.get_secret_value(SecretId=secret_name)["SecretString"].strip()
+    if raw.startswith("{"):
+        parsed = json.loads(raw)
+        for field in ("apiKey", "api_key", "ANTHROPIC_API_KEY"):
+            if parsed.get(field):
+                return str(parsed[field]).strip()
+        raise ValueError(f"secret {secret_name} has no apiKey field")
+    return raw
+
+
+def anthropic_model(settings: Settings) -> Any:
+    """Claude on the Anthropic API, with the key read from Secrets Manager."""
+    import anthropic
+    from strands.models.anthropic import AnthropicModel
+
+    if not settings.anthropic_secret_name:
+        raise ValueError("MODEL_PROVIDER=anthropic needs ANTHROPIC_SECRET_NAME")
+    key = _anthropic_api_key(settings.anthropic_secret_name, settings.bedrock_region)
+    model = AnthropicModel(
+        model_id=settings.anthropic_model_id,
+        max_tokens=4096,
+        params={"output_config": {"effort": settings.agent_effort}},
+    )
+    model.client = anthropic.AsyncAnthropic(api_key=key)  # type: ignore[assignment]
+    return model
+
+
+def build_model(settings: Settings) -> Any:
+    """The model for the configured provider."""
+    if settings.model_provider == "anthropic":
+        return anthropic_model(settings)
+    return bedrock_model(settings)
+
+
 def build_agent(kit: Toolkit, settings: Settings, model: Any | None = None) -> Agent:
     return Agent(
-        model=model or bedrock_model(settings),
+        model=model or build_model(settings),
         tools=build_tools(kit),
         system_prompt=SYSTEM_PROMPT,
         callback_handler=None,

@@ -90,6 +90,35 @@ aws bedrock-runtime converse --model-id us.anthropic.claude-haiku-4-5-20251001-v
 Either way the deploy is safe: the agent falls back to its rules and `reasonSource` stays
 `rules`. See `agent_error` in section 10.
 
+**Using the Anthropic API instead of Bedrock.** `-c modelProvider=anthropic` points the agent
+at `api.anthropic.com` rather than Bedrock. Everything else is unchanged: the same Strands
+agent, the same tools, the same rules. Two reasons to want it — Bedrock model access is
+blocked or pending, or you have Anthropic credits and would rather not bill tokens to the AWS
+account.
+
+The key is **never** passed through CDK context, environment variables or the template:
+`-c` values land in the synthesized CloudFormation and are readable by anyone with describe
+rights on the stack. Put it in Secrets Manager yourself, before deploying, and the Lambda
+reads it at runtime:
+
+```bash
+aws secretsmanager create-secret --name suryasaathi/anthropic-api-key \
+  --description "Anthropic API key for the SuryaSaathi diagnosis agent" \
+  --secret-string "$(read -rsp 'Anthropic API key: ' k && echo "$k")"
+```
+
+`read -rs` keeps the key off the screen and out of your shell history. To rotate it later use
+`put-secret-value` with the same `--secret-id`; the agent picks it up on its next cold start,
+with no redeploy. The deploy grants the agent `secretsmanager:GetSecretValue` on that one
+secret and nothing else, and only when `modelProvider=anthropic`.
+
+A JSON secret works too, if you created it in the console as a key/value pair — the agent
+accepts `{"apiKey": "sk-ant-…"}` as well as the bare string.
+
+Note for write-ups: with `modelProvider=anthropic` the deployed agent does **not** call
+Amazon Bedrock. Bedrock remains the default and is fully wired; switching back is one flag
+and no code change.
+
 **Lambda architecture.** The images build for arm64 (Graviton) by default, which is native on
 Apple silicon. On an Intel or AMD machine either let Docker Desktop emulate arm64 (slower
 first build) or add `-c lambdaArchitecture=x86_64` in step 4.
@@ -125,6 +154,9 @@ Optional context flags (add any of them to the command above):
 | `-c demoMode=true`                                   | false                                         | 60-second workflow days instead of 24 hours                     |
 | `-c bedrockModelId=…`                                | `us.anthropic.claude-haiku-4-5-20251001-v1:0` | Model for the diagnosis agent (inference profile)               |
 | `-c bedrockRegion=…`                                 | stack region                                  | Region the agent calls Bedrock in                               |
+| `-c modelProvider=anthropic`                         | `bedrock`                                     | Call the Anthropic API instead of Bedrock (see below)           |
+| `-c anthropicModelId=…`                              | `claude-haiku-4-5`                            | Model when `modelProvider=anthropic`                            |
+| `-c anthropicSecretName=…`                           | `suryasaathi/anthropic-api-key`               | Secrets Manager secret holding the Anthropic key                |
 | `-c agentEnabled=false`                              | true                                          | Rules only, no Bedrock calls                                    |
 | `-c agentScope=all`                                  | `actions`                                     | Ask the model on every reading, not only when something happens |
 | `-c agentEffort=…`                                   | `low`                                         | Kept for compatibility; not applied on the Converse path        |
@@ -405,13 +437,13 @@ that adds an idle charge fails the build.
 
 What does cost something, in rough order:
 
-| Charge                                                                  | When                      | Notes                                                                  |
-| ----------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------- |
-| Bedrock tokens                                                          | Per agent call            | The only meaningful variable cost; see `agentScope` and `agentEnabled` |
-| Secrets Manager                                                         | **$0.40/month, prorated** | One secret, the simulator's certificate. The only true idle charge     |
-| ECR storage                                                             | $0.10/GB-month            | The Lambda container images; roughly 1–2 GB after layer sharing        |
-| S3 (CDK assets)                                                         | $0.023/GB-month           | Template and asset staging, a few hundred MB                           |
-| Lambda, DynamoDB, IoT, Step Functions, API Gateway, Cognito, CloudWatch | Per request               | Comfortably inside the always-free tier at demo volumes                |
+| Charge                                                                  | When                      | Notes                                                                                                                                  |
+| ----------------------------------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Claude tokens                                                           | Per agent call            | The only meaningful variable cost; see `agentScope` and `agentEnabled`. With `modelProvider=anthropic` they bill to Anthropic, not AWS |
+| Secrets Manager                                                         | **$0.40/month, prorated** | One secret, the simulator's certificate. The only true idle charge                                                                     |
+| ECR storage                                                             | $0.10/GB-month            | The Lambda container images; roughly 1–2 GB after layer sharing                                                                        |
+| S3 (CDK assets)                                                         | $0.023/GB-month           | Template and asset staging, a few hundred MB                                                                                           |
+| Lambda, DynamoDB, IoT, Step Functions, API Gateway, Cognito, CloudWatch | Per request               | Comfortably inside the always-free tier at demo volumes                                                                                |
 
 Keep the agent proportionate: at the default `agentScope=actions` it calls the model only on
 days something happens (smog, dust, fault, a case opened or closed) — between one and four

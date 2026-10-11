@@ -6,7 +6,11 @@ import { describe, expect, it } from "vitest";
 const load = (name: string) =>
   JSON.parse(readFileSync(new URL(`../schemas/${name}.schema.json`, import.meta.url), "utf8"));
 
-const ajv = new Ajv2020({ strict: true, schemas: [load("reading"), load("system"), load("case")] });
+const ajv = new Ajv2020({
+  strict: true,
+  allowUnionTypes: true,
+  schemas: [load("reading"), load("system"), load("case"), load("console")],
+});
 addFormats.default(ajv);
 
 const validate = (name: string, data: unknown) =>
@@ -55,5 +59,22 @@ describe("schemas", () => {
 
   it("rejects a smog case", () => {
     expect(validate("case", { caseId: "c", systemId: "s", cause: "smog" })).toBe(false);
+  });
+
+  it("compiles the console API schema and checks a response", () => {
+    const ok = ajv.validate(
+      "https://suryasaathi.dev/schemas/console.schema.json#/$defs/SearchIndex",
+      {
+        asOf: "2026-10-10",
+        simulated: true,
+        items: [{ type: "system", id: "SS-SIM-0001", label: "SS-SIM-0001", hint: "Dwarka" }],
+      },
+    );
+    expect(ok).toBe(true);
+    expect(
+      ajv.validate("https://suryasaathi.dev/schemas/console.schema.json#/$defs/SearchIndex", {
+        items: [],
+      }),
+    ).toBe(false);
   });
 });

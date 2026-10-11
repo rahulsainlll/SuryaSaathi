@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { REPO } from "../../_landing/content";
+import { REPO } from "../../_site/content";
 import { findPost, POSTS } from "../_posts";
 import { formatDate } from "../format";
 

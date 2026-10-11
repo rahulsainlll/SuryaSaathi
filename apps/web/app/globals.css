@@ -1,98 +1,5 @@
 @import "@suryasaathi/ui/theme.css";
-
-/* The landing page and blog use the brand's night palette (dark theme, purple-tinted). */
-.landing[data-theme="dark"] {
-  --background: #14121c;
-  --surface: #1d1a29;
-  --surface-secondary: #272336;
-  --surface-tertiary: #2f2a40;
-  --overlay: #1d1a29;
-  --border: #322d45;
-  --separator: #2c2840;
-  --muted: #a3a0b3;
-  --accent: #f5a524;
-  --accent-foreground: #14121c;
-  --focus: #f5a524;
-  background: var(--background);
-  color: var(--foreground);
-}
-
-/* No light edge when the landing page or blog overscrolls. */
-html:has(.landing),
-html:has(.landing) body {
-  background: #14121c;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html:has(.landing) {
-    scroll-behavior: smooth;
-  }
-}
-
-@keyframes ss-rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-}
-
-@keyframes ss-dash {
-  to {
-    stroke-dashoffset: -22;
-  }
-}
-
-/* One layer of the stack lights up for a quarter of the cycle. */
-@keyframes ss-light {
-  0%,
-  30%,
-  100% {
-    opacity: 0;
-  }
-  8%,
-  20% {
-    opacity: 1;
-  }
-}
-
-@keyframes ss-pop {
-  0%,
-  12% {
-    opacity: 0;
-    transform: translateY(6px) scale(0.96);
-  }
-  20%,
-  85% {
-    opacity: 1;
-    transform: none;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes ss-grow {
-  0% {
-    transform: scaleX(0.15);
-  }
-  30%,
-  80% {
-    transform: scaleX(1);
-  }
-  100% {
-    transform: scaleX(0.15);
-  }
-}
-
-@keyframes ss-blink {
-  0%,
-  100% {
-    opacity: 0.35;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+@import "./site.css";
 
 /* Long-form text on the blog. */
 .ss-prose {
@@ -138,10 +45,10 @@ html:has(.landing) body {
   margin-top: 0.5em;
 }
 .ss-prose li::marker {
-  color: var(--accent);
+  color: var(--amber-text, var(--accent));
 }
-.ss-prose a {
-  color: var(--accent);
+.ss-prose a:not([class]) {
+  color: var(--amber-text, var(--accent));
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -180,4 +87,9 @@ html:has(.landing) body {
 }
 .ss-prose .not-prose p {
   color: var(--muted);
+}
+
+/* Amber text needs the darker tone on the light theme to keep 4.5:1. */
+.site .text-accent {
+  color: var(--amber-text);
 }

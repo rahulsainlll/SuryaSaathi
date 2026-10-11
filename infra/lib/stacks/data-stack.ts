@@ -2,12 +2,16 @@ import { RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import type { Construct } from "constructs";
 
-/** Systems, readings, cases and the expected-output cache (keys match suryasaathi_core.store). */
+/**
+ * Systems, readings, cases, the expected-output cache (keys match suryasaathi_core.store)
+ * and the console's summary items (suryasaathi_core.summaries).
+ */
 export class DataStack extends Stack {
   readonly systems: dynamodb.Table;
   readonly readings: dynamodb.Table;
   readonly cases: dynamodb.Table;
   readonly expected: dynamodb.Table;
+  readonly summaries: dynamodb.Table;
 
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -47,6 +51,12 @@ export class DataStack extends Stack {
       partitionKey: { name: "systemId", type: S },
       sortKey: { name: "date", type: S },
     });
+    this.summaries = new dynamodb.Table(this, "Summaries", {
+      ...common,
+      tableName: "suryasaathi-summaries",
+      partitionKey: { name: "pk", type: S },
+      sortKey: { name: "sk", type: S },
+    });
   }
 
   /** Table names for the services' environment (read by suryasaathi_core.config). */
@@ -56,6 +66,7 @@ export class DataStack extends Stack {
       READINGS_TABLE: this.readings.tableName,
       CASES_TABLE: this.cases.tableName,
       EXPECTED_TABLE: this.expected.tableName,
+      SUMMARIES_TABLE: this.summaries.tableName,
     };
   }
 }

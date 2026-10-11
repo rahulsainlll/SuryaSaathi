@@ -13,6 +13,8 @@ function synth(context: Record<string, unknown> = {}) {
     ingest: Template.fromStack(stacks.ingest),
     expected: Template.fromStack(stacks.expectedOutput),
     agents: Template.fromStack(stacks.agents),
+    rollups: Template.fromStack(stacks.rollups),
+    console: Template.fromStack(stacks.console),
   };
 }
 
@@ -40,13 +42,29 @@ describe("stacks", () => {
       "SuryaSaathi-Agents",
       "SuryaSaathi-Whatsapp",
       "SuryaSaathi-Rollups",
+      "SuryaSaathi-Console",
     ]);
+  });
+
+  it("creates no VPC or NAT gateway anywhere", () => {
+    for (const stack of Object.values(t.stacks)) {
+      const template = Template.fromStack(stack);
+      template.resourceCountIs("AWS::EC2::VPC", 0);
+      template.resourceCountIs("AWS::EC2::NatGateway", 0);
+    }
   });
 });
 
 describe("data", () => {
   it("creates the tables with the keys suryasaathi_core.store uses", () => {
-    t.data.resourceCountIs("AWS::DynamoDB::Table", 4);
+    t.data.resourceCountIs("AWS::DynamoDB::Table", 5);
+    t.data.hasResourceProperties("AWS::DynamoDB::Table", {
+      TableName: "suryasaathi-summaries",
+      KeySchema: [
+        { AttributeName: "pk", KeyType: "HASH" },
+        { AttributeName: "sk", KeyType: "RANGE" },
+      ],
+    });
     t.data.hasResourceProperties("AWS::DynamoDB::Table", {
       TableName: "suryasaathi-readings",
       KeySchema: [
@@ -169,6 +187,75 @@ describe("agents", () => {
   });
 });
 
+describe("rollups", () => {
+  it("runs nightly at 06:00 IST and writes the summaries", () => {
+    t.rollups.hasResourceProperties("AWS::Events::Rule", {
+      ScheduleExpression: "cron(30 0 * * ? *)",
+    });
+    expect(env(t.rollups, "Rollups")).toMatchObject({
+      SUMMARIES_TABLE: expect.anything(),
+      TARIFF_INR: "7",
+    });
+    const policies = JSON.stringify(t.rollups.findResources("AWS::IAM::Policy"));
+    expect(policies).toContain("dynamodb:BatchWriteItem");
+  });
+});
+
+describe("console", () => {
+  it("has an admin-only user pool with hosted sign-in and a PKCE client", () => {
+    t.console.hasResourceProperties("AWS::Cognito::UserPool", {
+      AdminCreateUserConfig: { AllowAdminCreateUserOnly: true },
+      UsernameAttributes: ["email"],
+    });
+    t.console.hasResourceProperties("AWS::Cognito::UserPoolGroup", { GroupName: "admin" });
+    t.console.hasResourceProperties("AWS::Cognito::UserPoolDomain", {
+      Domain: "suryasaathi-123456789012",
+    });
+    t.console.hasResourceProperties("AWS::Cognito::UserPoolClient", {
+      GenerateSecret: false,
+      AllowedOAuthFlows: ["code"],
+      CallbackURLs: ["http://localhost:3000/auth/callback"],
+      LogoutURLs: ["http://localhost:3000/"],
+    });
+  });
+
+  it("puts the read-only console API behind a Cognito JWT authorizer", () => {
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Api", {
+      ProtocolType: "HTTP",
+      CorsConfiguration: Match.objectLike({
+        AllowOrigins: ["http://localhost:3000"],
+        AllowMethods: ["GET"],
+      }),
+    });
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Authorizer", { AuthorizerType: "JWT" });
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Route", {
+      RouteKey: "GET /{proxy+}",
+      AuthorizationType: "JWT",
+    });
+    t.console.hasResourceProperties("AWS::ApiGatewayV2::Stage", {
+      StageName: "$default",
+      DefaultRouteSettings: { ThrottlingRateLimit: 20, ThrottlingBurstLimit: 40 },
+    });
+    expect(env(t.console, "ConsoleApi")).toMatchObject({ ADMIN_GROUP: "admin" });
+    const policies = JSON.stringify(t.console.findResources("AWS::IAM::Policy"));
+    expect(policies).not.toMatch(/dynamodb:(PutItem|UpdateItem|DeleteItem|BatchWriteItem)/);
+  });
+
+  it("outputs the console's build environment", () => {
+    for (const key of [
+      "NEXTPUBLICCONSOLEDATA",
+      "NEXTPUBLICCONSOLEAPIURL",
+      "NEXTPUBLICCOGNITODOMAIN",
+      "NEXTPUBLICCOGNITOCLIENTID",
+      "NEXTPUBLICCOGNITOREDIRECTURI",
+      "AmplifyEnvironmentVariables",
+      "UserPoolId",
+    ]) {
+      t.console.hasOutput(key, {});
+    }
+  });
+});
+
 describe("context", () => {
   it("demoMode turns workflow days into minutes; other settings pass through", () => {
     const demo = synth({
@@ -185,6 +272,29 @@ describe("context", () => {
     });
     expect(env(demo.agents, "CaseWorkflow")).toMatchObject({ SENDER_EMAIL: "alerts@example.com" });
     demo.agents.hasOutput("DayLengthSeconds", { Value: "60" });
+    demo.rollups.hasResourceProperties("AWS::Events::Rule", {
+      ScheduleExpression: "rate(5 minutes)",
+      Targets: [Match.objectLike({ Input: JSON.stringify({ asOf: "latest" }) })],
+    });
+  }, 120_000);
+
+  it("takes the console's URLs and sign-in domain from context", () => {
+    const custom = synth({
+      consoleUrls: "https://console.example.com/, http://localhost:3000",
+      cognitoDomainPrefix: "discom-console",
+    });
+    custom.console.hasResourceProperties("AWS::Cognito::UserPoolClient", {
+      CallbackURLs: [
+        "https://console.example.com/auth/callback",
+        "http://localhost:3000/auth/callback",
+      ],
+    });
+    custom.console.hasResourceProperties("AWS::Cognito::UserPoolDomain", {
+      Domain: "discom-console",
+    });
+    custom.console.hasOutput("NEXTPUBLICCOGNITOREDIRECTURI", {
+      Value: "https://console.example.com/auth/callback",
+    });
   }, 120_000);
 
   it("rejects an unknown architecture", () => {

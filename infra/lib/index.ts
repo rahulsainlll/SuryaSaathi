@@ -1,6 +1,7 @@
 import { App, type StackProps, Tags } from "aws-cdk-lib";
 import { readConfig, type SuryaConfig } from "./config.js";
 import { AgentsStack } from "./stacks/agents-stack.js";
+import { ConsoleStack } from "./stacks/console-stack.js";
 import { DataStack } from "./stacks/data-stack.js";
 import { ExpectedOutputStack } from "./stacks/expected-output-stack.js";
 import { IngestStack } from "./stacks/ingest-stack.js";
@@ -32,7 +33,8 @@ export function addStacks(
     expectedOutput,
     agents,
     whatsapp: new WhatsappStack(app, "SuryaSaathi-Whatsapp", props),
-    rollups: new RollupsStack(app, "SuryaSaathi-Rollups", props),
+    rollups: new RollupsStack(app, "SuryaSaathi-Rollups", { ...props, config, data }),
+    console: new ConsoleStack(app, "SuryaSaathi-Console", { ...props, config, data }),
   };
   Tags.of(app).add("project", "suryasaathi");
   return stacks;

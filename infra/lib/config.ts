@@ -17,6 +17,12 @@ export interface SuryaConfig {
   vendorEmail?: string;
   discomEmail?: string;
   architecture: "arm64" | "x86_64";
+  /** Where the console runs (origins), for Cognito redirects and CORS. */
+  consoleUrls: string[];
+  /** Prefix of the Cognito hosted sign-in domain; unique per region. */
+  cognitoDomainPrefix?: string;
+  /** ₹ per kWh for the console's money-lost figure. */
+  tariffInr: number;
 }
 
 const flag = (v: unknown, fallback: boolean) =>
@@ -43,5 +49,11 @@ export function readConfig(node: Node): SuryaConfig {
     vendorEmail: str(c("vendorEmail")),
     discomEmail: str(c("discomEmail")),
     architecture,
+    consoleUrls: (str(c("consoleUrls")) ?? "http://localhost:3000")
+      .split(",")
+      .map((u) => u.trim().replace(/\/+$/, ""))
+      .filter(Boolean),
+    cognitoDomainPrefix: str(c("cognitoDomainPrefix")),
+    tariffInr: Number(str(c("tariffInr")) ?? 7),
   };
 }

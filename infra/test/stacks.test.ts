@@ -214,8 +214,8 @@ describe("console", () => {
     t.console.hasResourceProperties("AWS::Cognito::UserPoolClient", {
       GenerateSecret: false,
       AllowedOAuthFlows: ["code"],
-      CallbackURLs: ["http://localhost:3000/auth/callback"],
-      LogoutURLs: ["http://localhost:3000/"],
+      CallbackURLs: ["http://localhost:3001/auth/callback"],
+      LogoutURLs: ["http://localhost:3001/"],
     });
   });
 
@@ -223,7 +223,7 @@ describe("console", () => {
     t.console.hasResourceProperties("AWS::ApiGatewayV2::Api", {
       ProtocolType: "HTTP",
       CorsConfiguration: Match.objectLike({
-        AllowOrigins: ["http://localhost:3000"],
+        AllowOrigins: ["http://localhost:3001"],
         AllowMethods: ["GET"],
       }),
     });
@@ -280,13 +280,13 @@ describe("context", () => {
 
   it("takes the console's URLs and sign-in domain from context", () => {
     const custom = synth({
-      consoleUrls: "https://console.example.com/, http://localhost:3000",
+      consoleUrls: "https://console.example.com/, http://localhost:3001",
       cognitoDomainPrefix: "discom-console",
     });
     custom.console.hasResourceProperties("AWS::Cognito::UserPoolClient", {
       CallbackURLs: [
         "https://console.example.com/auth/callback",
-        "http://localhost:3000/auth/callback",
+        "http://localhost:3001/auth/callback",
       ],
     });
     custom.console.hasResourceProperties("AWS::Cognito::UserPoolDomain", {

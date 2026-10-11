@@ -49,7 +49,7 @@ export function readConfig(node: Node): SuryaConfig {
     vendorEmail: str(c("vendorEmail")),
     discomEmail: str(c("discomEmail")),
     architecture,
-    consoleUrls: (str(c("consoleUrls")) ?? "http://localhost:3000")
+    consoleUrls: (str(c("consoleUrls")) ?? "http://localhost:3001")
       .split(",")
       .map((u) => u.trim().replace(/\/+$/, ""))
       .filter(Boolean),

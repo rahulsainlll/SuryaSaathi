@@ -202,9 +202,11 @@ suryasaathi/
 │   ├── ingest/             # IoT rule handler and source connectors (Python)
 │   ├── expected-output/    # Expected generation from sunlight + haze (Python, pvlib)
 │   ├── whatsapp/           # End User Messaging Social webhook (Python)
-│   └── rollups/            # Nightly aggregation for the console (Python)
+│   ├── rollups/            # Nightly aggregation for the console (Python)
+│   └── console-api/        # Read-only API for the console behind Cognito (Python)
 ├── packages/
 │   ├── schemas/            # Shared JSON schemas: reading, system, case (+ generated TS types)
+│   ├── console-data/       # Console data access: mock (engine) and API adapters
 │   ├── ui/                 # Shared HeroUI theme, tokens and components
 │   └── policies/           # Cedar policies and tests
 ├── infra/                  # AWS CDK app (TypeScript)
@@ -301,7 +303,7 @@ Never commit real credentials. Secrets live in AWS Secrets Manager or SSM Parame
 - [ ] Strands diagnosis agent on Bedrock
 - [ ] Step Functions case workflow with escalation
 - [ ] Public demo on the marketing site
-- [ ] Admin console with vendor leaderboard
+- [x] Admin console with vendor leaderboard
 - [ ] WhatsApp messaging and Hindi voice notes
 - [ ] Production connectors: DISCOM data (India Energy Stack), inverter clouds
 - [ ] Camera-clip firmware on ESP32-CAM

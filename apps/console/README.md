@@ -23,7 +23,7 @@ The console reads everything through `@suryasaathi/console-data`:
 - `NEXT_PUBLIC_CONSOLE_DATA=api`: the deployed console API (`services/console-api`). Set the
   Console stack outputs as `NEXT_PUBLIC_CONSOLE_API_URL`, `NEXT_PUBLIC_COGNITO_DOMAIN`,
   `NEXT_PUBLIC_COGNITO_CLIENT_ID` and `NEXT_PUBLIC_COGNITO_REDIRECT_URI` (the runbook's
-  section 10 writes them to `.env.local`).
+  section 8 writes them to `.env.local`).
 
 In API mode the console signs in with Cognito's hosted page (authorization code with PKCE,
 `lib/auth.ts`); Cognito returns to `/auth/callback`. Tokens are kept in `sessionStorage`
